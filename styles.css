@@ -3,34 +3,7 @@
    Color scheme based on logo: Red, Blue, Gold on Cream
    ========================================== */
 
-/* Custom Fonts */
-@font-face {
-    font-family: 'UVF Centeria';
-    src: url('images/font-uvf/UVF Centeria.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'UTM Facebook';
-    src: url('images/font-uvf/UTM Facebook.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'UVF Aphrodite Pro';
-    src: url('images/font-uvf/UVF Aphrodite Pro.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'UTM FacebookB';
-    src: url('images/font-uvf/UTM FacebookB K&T.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
+/* System Fonts Only - No Custom Fonts */
 
 *,
 *::before,
@@ -204,7 +177,7 @@ img {
 }
 
 /* ==========================================
-   Typography Overrides - UTM FacebookB cho tiêu đề
+   Typography Overrides
    ========================================== */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
