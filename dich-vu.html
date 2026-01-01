@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dịch Vụ Phong Thủy - Minh Phước Feng Shui</title>
+    <meta name="description"
+        content="Các dịch vụ phong thủy chuyên nghiệp: Lập lá tử vi, xem ngày tốt xấu, tư vấn phong thủy nhà ở, văn phòng. Uy tín - Chính xác - Tận tâm.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="logo.jpg" alt="Minh Phước Feng Shui" class="logo-img">
+                <div class="logo-text">
+                    <span class="brand-name">Minh Phước</span>
+                    <span class="brand-tagline">Feng Shui</span>
+                </div>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-yin-yang"></i>
+                            <span>Trang Chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gioi-thieu.html" class="nav-link">
+                            <i class="fas fa-dragon"></i>
+                            <span>Giới Thiệu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="dich-vu.html" class="nav-link active">
+                            <i class="fas fa-hands-praying"></i>
+                            <span>Dịch Vụ</span>
+                            <i class="fas fa-chevron-down dropdown-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+                            <li><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt
+                                    Xấu</a></li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="tin-tuc.html" class="nav-link">
+                            <i class="fas fa-book-open"></i>
+                            <span>Tin Tức</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lien-he.html" class="nav-link">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <span>Liên Hệ</span>
+                        </a>
+                    </li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="#" class="btn-contact">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Đăng Nhập</span>
+                </a>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-list">
+            <li><a href="index.html"><i class="fas fa-yin-yang"></i> Trang Chủ</a></li>
+            <li><a href="gioi-thieu.html"><i class="fas fa-dragon"></i> Giới Thiệu</a></li>
+            <li><a href="dich-vu.html" class="active"><i class="fas fa-hands-praying"></i> Dịch Vụ</a></li>
+            <li class="sub-item"><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+            <li class="sub-item"><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt
+                    Xấu</a></li>
+            <li><a href="tin-tuc.html"><i class="fas fa-book-open"></i> Tin Tức</a></li>
+            <li><a href="lien-he.html"><i class="fas fa-envelope-open-text"></i> Liên Hệ</a></li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Banner -->
+        <section class="page-banner">
+            <div class="banner-container">
+                <h1 class="page-title">Dịch Vụ Của Chúng Tôi</h1>
+                <nav class="breadcrumb">
+                    <a href="index.html">Trang chủ</a>
+                    <span>/</span>
+                    <span>Dịch Vụ</span>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Services Intro -->
+        <section class="services-intro">
+            <div class="intro-container">
+                <div class="section-header">
+                    <span class="section-label">Dịch Vụ Phong Thủy</span>
+                    <h2 class="section-title">Giải Pháp Toàn Diện Cho Cuộc Sống</h2>
+                    <p class="section-subtitle">Minh Phước Feng Shui cung cấp đầy đủ các dịch vụ tư vấn phong thủy, tử
+                        vi chuyên nghiệp, giúp bạn khai thông vận khí và xây dựng cuộc sống thịnh vượng.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Services -->
+        <section class="main-services">
+            <div class="services-detail-container">
+                <!-- Service 1: Tử Vi -->
+                <div class="service-detail-card">
+                    <div class="service-detail-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=350&fit=crop"
+                            alt="Lập Lá Tử Vi">
+                        <div class="service-badge">Phổ Biến</div>
+                    </div>
+                    <div class="service-detail-content">
+                        <div class="service-icon">
+                            <i class="fas fa-star-and-crescent"></i>
+                        </div>
+                        <h3>Lập Lá Tử Vi Đẩu Số</h3>
+                        <p class="service-intro">Khám phá vận mệnh, tính cách và con đường sự nghiệp thông qua lá số Tử
+                            Vi Đẩu Số được lập chính xác theo ngày giờ sinh.</p>
+
+                        <div class="service-includes">
+                            <h4>Dịch vụ bao gồm:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Lập lá số tử vi đầy đủ 12 cung</li>
+                                <li><i class="fas fa-check"></i> Phân tích tính cách, điểm mạnh - yếu</li>
+                                <li><i class="fas fa-check"></i> Luận giải sự nghiệp, tài lộc</li>
+                                <li><i class="fas fa-check"></i> Phân tích tình duyên, gia đạo</li>
+                                <li><i class="fas fa-check"></i> Dự đoán vận hạn theo từng năm</li>
+                                <li><i class="fas fa-check"></i> Tư vấn hướng phát triển</li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="service-price">
+                            <span class="price-label">Chi phí từ:</span>
+                            <span class="price-value">500.000đ</span>
+                        </div>
+
+                        <div class="service-actions">
+                            <a href="lap-la-tu-vi.html" class="btn-primary">
+                                <i class="fas fa-arrow-right"></i>
+                                Xem Chi Tiết
+                            </a>
+                            <a href="lien-he.html" class="btn-outline">
+                                <i class="fas fa-user-circle"></i>
+                                Đặt Lịch
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2: Xem Ngày -->
+                <div class="service-detail-card reverse">
+                    <div class="service-detail-image">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=350&fit=crop"
+                            alt="Xem Ngày Tốt Xấu">
+                    </div>
+                    <div class="service-detail-content">
+                        <div class="service-icon icon-blue">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Xem Ngày Tốt Xấu</h3>
+                        <p class="service-intro">Chọn ngày giờ hoàng đạo cho các sự kiện quan trọng trong cuộc đời như
+                            cưới hỏi, khai trương, động thổ, nhập trạch.</p>
+
+                        <div class="service-includes">
+                            <h4>Dịch vụ bao gồm:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Xem ngày cưới hỏi hợp tuổi</li>
+                                <li><i class="fas fa-check"></i> Ngày khai trương, khởi nghiệp</li>
+                                <li><i class="fas fa-check"></i> Ngày động thổ, xây nhà</li>
+                                <li><i class="fas fa-check"></i> Ngày nhập trạch, dọn nhà mới</li>
+                                <li><i class="fas fa-check"></i> Giờ hoàng đạo xuất hành</li>
+                                <li><i class="fas fa-check"></i> Tư vấn nghi thức theo phong thủy</li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="service-price">
+                            <span class="price-label">Chi phí từ:</span>
+                            <span class="price-value">300.000đ</span>
+                        </div>
+
+                        <div class="service-actions">
+                            <a href="xem-ngay-tot-xau.html" class="btn-primary">
+                                <i class="fas fa-arrow-right"></i>
+                                Xem Chi Tiết
+                            </a>
+                            <a href="lien-he.html" class="btn-outline">
+                                <i class="fas fa-user-circle"></i>
+                                Đặt Lịch
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3: Phong Thủy Nhà -->
+                <div class="service-detail-card">
+                    <div class="service-detail-image">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&h=350&fit=crop"
+                            alt="Phong Thủy Nhà Ở">
+                    </div>
+                    <div class="service-detail-content">
+                        <div class="service-icon icon-gold">
+                            <i class="fas fa-yin-yang"></i>
+                        </div>
+                        <h3>Phong Thủy Nhà Ở</h3>
+                        <p class="service-intro">Tư vấn xem hướng nhà, bố trí nội thất, hóa giải xung sát để ngôi nhà
+                            trở thành nơi thu hút tài lộc và bình an.</p>
+
+                        <div class="service-includes">
+                            <h4>Dịch vụ bao gồm:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Xem hướng nhà hợp tuổi gia chủ</li>
+                                <li><i class="fas fa-check"></i> Bố trí bàn thờ, phòng ngủ, bếp</li>
+                                <li><i class="fas fa-check"></i> Hóa giải các xung sát</li>
+                                <li><i class="fas fa-check"></i> Tư vấn màu sắc, vật phẩm phong thủy</li>
+                                <li><i class="fas fa-check"></i> Bản vẽ bố trí nội thất</li>
+                                <li><i class="fas fa-check"></i> Hỗ trợ sau tư vấn</li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="service-price">
+                            <span class="price-label">Chi phí từ:</span>
+                            <span class="price-value">1.000.000đ</span>
+                        </div>
+
+                        <div class="service-actions">
+                            <a href="lien-he.html" class="btn-primary">
+                                <i class="fas fa-arrow-right"></i>
+                                Liên Hệ Tư Vấn
+                            </a>
+                            <a href="tel:0123456789" class="btn-outline">
+                                <i class="fas fa-user-circle"></i>
+                                Gọi Ngay
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 4: Phong Thủy Văn Phòng -->
+                <div class="service-detail-card reverse">
+                    <div class="service-detail-image">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&h=350&fit=crop"
+                            alt="Phong Thủy Văn Phòng">
+                    </div>
+                    <div class="service-detail-content">
+                        <div class="service-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Phong Thủy Văn Phòng & Kinh Doanh</h3>
+                        <p class="service-intro">Tư vấn bố trí văn phòng, cửa hàng, công ty theo phong thủy để tăng
+                            cường vận khí, thu hút khách hàng và thúc đẩy kinh doanh.</p>
+
+                        <div class="service-includes">
+                            <h4>Dịch vụ bao gồm:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Xem hướng cửa hàng, văn phòng</li>
+                                <li><i class="fas fa-check"></i> Bố trí vị trí ngồi cho sếp, nhân viên</li>
+                                <li><i class="fas fa-check"></i> Thiết kế logo, bảng hiệu theo phong thủy</li>
+                                <li><i class="fas fa-check"></i> Tư vấn màu sắc thương hiệu</li>
+                                <li><i class="fas fa-check"></i> Vật phẩm phong thủy hút tài lộc</li>
+                                <li><i class="fas fa-check"></i> Chọn ngày khai trương</li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="service-price">
+                            <span class="price-label">Chi phí từ:</span>
+                            <span class="price-value">2.000.000đ</span>
+                        </div>
+
+                        <div class="service-actions">
+                            <a href="lien-he.html" class="btn-primary">
+                                <i class="fas fa-arrow-right"></i>
+                                Liên Hệ Tư Vấn
+                            </a>
+                            <a href="tel:0123456789" class="btn-outline">
+                                <i class="fas fa-user-circle"></i>
+                                Gọi Ngay
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process -->
+        <section class="process-section">
+            <div class="process-container">
+                <div class="section-header">
+                    <span class="section-label">Quy Trình</span>
+                    <h2 class="section-title">Quy Trình Làm Việc</h2>
+                </div>
+
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h4>Tiếp Nhận Yêu Cầu</h4>
+                        <p>Bạn liên hệ qua hotline, Zalo hoặc form trên website. Chúng tôi tư vấn sơ bộ và ghi nhận
+                            thông tin.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h4>Xác Nhận & Thanh Toán</h4>
+                        <p>Xác nhận dịch vụ, báo giá chi tiết. Bạn thanh toán qua chuyển khoản hoặc tiền mặt.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h4>Thực Hiện Dịch Vụ</h4>
+                        <p>Thầy nghiên cứu, phân tích và thực hiện dịch vụ trong thời gian cam kết (1-3 ngày làm việc).
+                        </p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h4>Giao Kết Quả & Hỗ Trợ</h4>
+                        <p>Gửi kết quả qua email/Zalo. Tư vấn giải đáp thắc mắc và hỗ trợ sau dịch vụ.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="cta-container">
+                <h2>Bạn Cần Tư Vấn Phong Thủy?</h2>
+                <p>Liên hệ ngay để được hỗ trợ nhanh chóng và tận tâm nhất</p>
+                <div class="cta-buttons">
+                    <a href="lien-he.html" class="btn-primary">
+                        <i class="fas fa-envelope-open-text"></i>
+                        Liên Hệ Ngay
+                    </a>
+                    <a href="tel:0123456789" class="btn-secondary">
+                        <i class="fas fa-comments"></i>
+                        Hotline: 0123 456 789
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="Minh Phước" class="footer-logo-img">
+                        <div>
+                            <span class="brand-name">Minh Phước</span>
+                            <span class="brand-tagline">Feng Shui</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Minh Phước Feng Shui - Dịch vụ tư vấn phong thủy, tử vi chuyên nghiệp, uy tín
+                        hàng đầu Việt Nam.</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Dịch Vụ</h4>
+                        <ul>
+                            <li><a href="lap-la-tu-vi.html">Lập Lá Tử Vi</a></li>
+                            <li><a href="xem-ngay-tot-xau.html">Xem Ngày Tốt Xấu</a></li>
+                            <li><a href="#">Phong Thủy Nhà Ở</a></li>
+                            <li><a href="#">Phong Thủy Văn Phòng</a></li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Kết</h4>
+                        <ul>
+                            <li><a href="index.html">Trang Chủ</a></li>
+                            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
+                            <li><a href="tin-tuc.html">Tin Tức</a></li>
+                            <li><a href="lien-he.html">Liên Hệ</a></li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Hệ</h4>
+                        <ul>
+                            <li><a href="tel:0123456789"><i class="fas fa-user-circle"></i> 0123 456 789</a></li>
+                            <li><a href="mailto:contact@minhphuoc.com"><i class="fas fa-envelope"></i>
+                                    contact@minhphuoc.com</a></li>
+                            <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Minh Phước Feng Shui. Bản quyền thuộc về Minh Phước.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

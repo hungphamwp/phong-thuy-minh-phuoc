@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="yangGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#D4AF37"/>
+    </linearGradient>
+    <linearGradient id="yinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513"/>
+      <stop offset="100%" style="stop-color:#654321"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer decorative ring -->
+  <circle cx="100" cy="100" r="98" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.3"/>
+  <circle cx="100" cy="100" r="92" fill="none" stroke="#D4AF37" stroke-width="0.5" stroke-dasharray="4,2" opacity="0.3"/>
+  
+  <!-- Main Yin-Yang circle -->
+  <circle cx="100" cy="100" r="85" fill="url(#yangGrad)"/>
+  
+  <!-- Yang (light) half -->
+  <path d="M100,15 A85,85 0 0,1 100,185 A42.5,42.5 0 0,1 100,100 A42.5,42.5 0 0,0 100,15" 
+        fill="url(#yangGrad)"/>
+  
+  <!-- Yin (dark) half -->
+  <path d="M100,15 A85,85 0 0,0 100,185 A42.5,42.5 0 0,0 100,100 A42.5,42.5 0 0,1 100,15" 
+        fill="url(#yinGrad)"/>
+  
+  <!-- Yang dot -->
+  <circle cx="100" cy="57.5" r="12" fill="url(#yinGrad)"/>
+  
+  <!-- Yin dot -->
+  <circle cx="100" cy="142.5" r="12" fill="url(#yangGrad)"/>
+  
+  <!-- Decorative border -->
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#D4AF37" stroke-width="2" opacity="0.5"/>
+</svg>

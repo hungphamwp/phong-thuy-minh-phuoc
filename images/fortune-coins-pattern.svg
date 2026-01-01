@@ -1,0 +1,60 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fortune coins pattern - symbol of prosperity in Vietnamese feng shui -->
+  <defs>
+    <pattern id="fortuneCoinsPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+      <!-- Chinese fortune coin 1 -->
+      <g transform="translate(25, 25)" opacity="0.2">
+        <!-- Outer circle -->
+        <circle cx="0" cy="0" r="12" stroke="#FFD700" stroke-width="2" fill="#D4AF37"/>
+
+        <!-- Inner square hole -->
+        <rect x="-4" y="-4" width="8" height="8" fill="#8B0000"/>
+
+        <!-- Decorative marks (prosperity symbols) -->
+        <circle cx="0" cy="-8" r="1" fill="#FFD700"/>
+        <circle cx="8" cy="0" r="1" fill="#FFD700"/>
+        <circle cx="0" cy="8" r="1" fill="#FFD700"/>
+        <circle cx="-8" cy="0" r="1" fill="#FFD700"/>
+      </g>
+
+      <!-- Chinese fortune coin 2 -->
+      <g transform="translate(75, 75)" opacity="0.18">
+        <!-- Outer circle -->
+        <circle cx="0" cy="0" r="12" stroke="#FFD700" stroke-width="2" fill="#D4AF37"/>
+
+        <!-- Inner square hole -->
+        <rect x="-4" y="-4" width="8" height="8" fill="#8B0000"/>
+
+        <!-- Decorative marks -->
+        <circle cx="0" cy="-8" r="1" fill="#FFD700"/>
+        <circle cx="8" cy="0" r="1" fill="#FFD700"/>
+        <circle cx="0" cy="8" r="1" fill="#FFD700"/>
+        <circle cx="-8" cy="0" r="1" fill="#FFD700"/>
+      </g>
+
+      <!-- Small decorative coins -->
+      <g opacity="0.15">
+        <circle cx="75" cy="25" r="6" stroke="#FFD700" stroke-width="1.5" fill="#B8860B"/>
+        <rect x="72" y="22" width="6" height="6" fill="#8B0000"/>
+
+        <circle cx="25" cy="75" r="6" stroke="#FFD700" stroke-width="1.5" fill="#B8860B"/>
+        <rect x="22" y="72" width="6" height="6" fill="#8B0000"/>
+      </g>
+
+      <!-- Connecting ribbons (red ribbon for luck) -->
+      <g opacity="0.12">
+        <path d="M 25,25 Q 50,15 75,25" stroke="#E31B23" stroke-width="2" fill="none"/>
+        <path d="M 25,75 Q 15,50 25,25" stroke="#E31B23" stroke-width="2" fill="none"/>
+        <path d="M 75,75 Q 85,50 75,25" stroke="#E31B23" stroke-width="2" fill="none"/>
+        <path d="M 75,75 Q 50,85 25,75" stroke="#E31B23" stroke-width="2" fill="none"/>
+      </g>
+
+      <!-- Prosperity character elements (stylized) -->
+      <g opacity="0.1">
+        <text x="50" y="52" font-family="serif" font-size="16" fill="#8B0000" text-anchor="middle" font-weight="bold">福</text>
+      </g>
+    </pattern>
+  </defs>
+
+  <rect width="100" height="100" fill="url(#fortuneCoinsPattern)"/>
+</svg>

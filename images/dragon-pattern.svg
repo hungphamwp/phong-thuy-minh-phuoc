@@ -1,0 +1,29 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dragon pattern for feng shui background -->
+  <defs>
+    <pattern id="dragonPattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+      <!-- Traditional Vietnamese cloud pattern -->
+      <path d="M20,40 Q30,35 40,40 T60,40" stroke="#d4af37" stroke-width="1.5" fill="none" opacity="0.3"/>
+      <path d="M140,40 Q150,35 160,40 T180,40" stroke="#d4af37" stroke-width="1.5" fill="none" opacity="0.3"/>
+
+      <!-- Stylized dragon scales -->
+      <circle cx="50" cy="80" r="8" fill="#8B0000" opacity="0.15"/>
+      <circle cx="70" cy="80" r="8" fill="#8B0000" opacity="0.15"/>
+      <circle cx="60" cy="95" r="8" fill="#8B0000" opacity="0.15"/>
+
+      <circle cx="150" cy="80" r="8" fill="#8B0000" opacity="0.15"/>
+      <circle cx="130" cy="80" r="8" fill="#8B0000" opacity="0.15"/>
+      <circle cx="140" cy="95" r="8" fill="#8B0000" opacity="0.15"/>
+
+      <!-- Vietnamese wave pattern -->
+      <path d="M0,130 Q25,120 50,130 T100,130 T150,130 T200,130" stroke="#d4af37" stroke-width="2" fill="none" opacity="0.2"/>
+      <path d="M0,145 Q25,135 50,145 T100,145 T150,145 T200,145" stroke="#d4af37" stroke-width="2" fill="none" opacity="0.2"/>
+
+      <!-- Decorative circles (coins/prosperity symbols) -->
+      <circle cx="100" cy="170" r="12" stroke="#FFD700" stroke-width="2" fill="none" opacity="0.25"/>
+      <circle cx="100" cy="170" r="8" stroke="#FFD700" stroke-width="1" fill="none" opacity="0.25"/>
+    </pattern>
+  </defs>
+
+  <rect width="200" height="200" fill="url(#dragonPattern)"/>
+</svg>

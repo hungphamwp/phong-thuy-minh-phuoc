@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" opacity="0.08">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C4A035;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Outer circle -->
+  <circle cx="200" cy="200" r="195" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+  <circle cx="200" cy="200" r="185" fill="none" stroke="url(#goldGrad)" stroke-width="1"/>
+  
+  <!-- Concentric decorative rings -->
+  <circle cx="200" cy="200" r="170" fill="none" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="8,4"/>
+  <circle cx="200" cy="200" r="150" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+  <circle cx="200" cy="200" r="130" fill="none" stroke="url(#goldGrad)" stroke-width="1"/>
+  <circle cx="200" cy="200" r="110" fill="none" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="3,3"/>
+  <circle cx="200" cy="200" r="90" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+  <circle cx="200" cy="200" r="70" fill="none" stroke="url(#goldGrad)" stroke-width="1"/>
+  <circle cx="200" cy="200" r="50" fill="none" stroke="url(#goldGrad)" stroke-width="1"/>
+  
+  <!-- Star pattern in center -->
+  <polygon points="200,160 210,185 235,190 215,205 220,230 200,215 180,230 185,205 165,190 190,185" 
+           fill="url(#goldGrad)" opacity="0.5"/>
+  
+  <!-- Triangular patterns around rings -->
+  <g stroke="url(#goldGrad)" stroke-width="1" fill="none">
+    <!-- Ring of triangles at r=160 -->
+    <polygon points="200,40 210,55 190,55"/>
+    <polygon points="330,115 320,130 325,100"/>
+    <polygon points="360,200 345,190 345,210"/>
+    <polygon points="330,285 325,300 320,270"/>
+    <polygon points="200,360 210,345 190,345"/>
+    <polygon points="70,285 75,300 80,270"/>
+    <polygon points="40,200 55,190 55,210"/>
+    <polygon points="70,115 80,130 75,100"/>
+  </g>
+  
+  <!-- Decorative dots -->
+  <g fill="url(#goldGrad)" opacity="0.6">
+    <circle cx="200" cy="25" r="3"/>
+    <circle cx="325" cy="75" r="3"/>
+    <circle cx="375" cy="200" r="3"/>
+    <circle cx="325" cy="325" r="3"/>
+    <circle cx="200" cy="375" r="3"/>
+    <circle cx="75" cy="325" r="3"/>
+    <circle cx="25" cy="200" r="3"/>
+    <circle cx="75" cy="75" r="3"/>
+  </g>
+  
+  <!-- Inner decorative pattern -->
+  <g stroke="url(#goldGrad)" stroke-width="0.5" fill="none" opacity="0.7">
+    <path d="M200,100 Q250,150 200,200 Q150,250 200,300"/>
+    <path d="M100,200 Q150,150 200,200 Q250,250 300,200"/>
+    <circle cx="200" cy="200" r="30" stroke-dasharray="5,3"/>
+  </g>
+</svg>
