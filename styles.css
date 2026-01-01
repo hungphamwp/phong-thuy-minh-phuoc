@@ -5713,6 +5713,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .modal-content {
+    position: relative;
     background: white;
     border-radius: 20px;
     max-width: 450px;
@@ -5735,11 +5736,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 2rem;
+    padding-top: 3rem;
     border-bottom: 1px solid var(--color-border);
+    text-align: center;
 }
 
 .modal-header h2 {
@@ -5749,10 +5749,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .modal-close {
-    background: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: white;
     border: none;
     font-size: 1.5rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-dark);
     cursor: pointer;
     width: 40px;
     height: 40px;
@@ -5761,11 +5764,14 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .modal-close:hover {
-    background: var(--color-cream);
-    color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+    transform: rotate(90deg);
 }
 
 .modal-body {
