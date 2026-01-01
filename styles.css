@@ -3354,12 +3354,11 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--color-cream);
 }
 
-/* Override font cho trang Tử Vi - UTM FacebookB */
+/* Override font cho trang Tử Vi */
 .tuvi-section h1,
 .tuvi-section h2,
 .tuvi-section h3,
 .tuvi-section h4 {
-    font-family: 'UTM FacebookB', var(--font-display) !important;
     font-weight: 700;
     letter-spacing: 0.3px;
 }
@@ -3405,7 +3404,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-header h2 {
-    font-family: 'UTM FacebookB', var(--font-display);
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--color-text-dark);
@@ -3666,7 +3664,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .cung-name {
-    font-family: 'UTM Facebook', sans-serif;
     font-weight: 600;
     font-size: 0.9rem;
     color: var(--color-text-dark);
