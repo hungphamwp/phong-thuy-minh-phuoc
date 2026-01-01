@@ -296,6 +296,86 @@ function updateLunarCalendar() {
 }
 
 // ==========================================
+// Login Modal
+// ==========================================
+
+function initLoginModal() {
+    const loginModal = document.getElementById('loginModal');
+    const loginBtns = document.querySelectorAll('.btn-contact, .btn-contact-mobile');
+    const closeModal = document.getElementById('closeLoginModal');
+    const loginForm = document.getElementById('loginForm');
+
+    // Open modal
+    loginBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Close modal
+    const closeLoginModal = () => {
+        loginModal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    if (closeModal) {
+        closeModal.addEventListener('click', closeLoginModal);
+    }
+
+    // Close on backdrop click
+    loginModal.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+            closeLoginModal();
+        }
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && loginModal.classList.contains('active')) {
+            closeLoginModal();
+        }
+    });
+
+    // Handle login form submit
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // TODO: Implement actual login logic here
+            console.log('Login attempt:', { email, rememberMe });
+
+            // Demo: Show success message
+            alert('Chức năng đăng nhập đang được phát triển!\n\nEmail: ' + email);
+            closeLoginModal();
+        });
+    }
+
+    // Handle social login buttons
+    const googleBtn = document.querySelector('.btn-google');
+    const facebookBtn = document.querySelector('.btn-facebook');
+
+    if (googleBtn) {
+        googleBtn.addEventListener('click', () => {
+            console.log('Google login clicked');
+            alert('Đăng nhập bằng Google đang được phát triển!');
+        });
+    }
+
+    if (facebookBtn) {
+        facebookBtn.addEventListener('click', () => {
+            console.log('Facebook login clicked');
+            alert('Đăng nhập bằng Facebook đang được phát triển!');
+        });
+    }
+}
+
+// ==========================================
 // Initialize Everything
 // ==========================================
 
@@ -309,6 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAnimateOnScroll();
     initFloatingCards();
     updateLunarCalendar();
+    initLoginModal();
 
     console.log('Minh Phước Feng Shui - Website loaded successfully!');
 });
