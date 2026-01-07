@@ -6025,3 +6025,47 @@ h1, h2, h3, h4, h5, h6 {
         height: 800px;
     }
 }
+
+/* ==========================================
+   Lich Van Su Iframe Section Styles
+   ========================================== */
+.lichvansu-iframe-section {
+    padding: var(--spacing-4xl) 0;
+    background: var(--color-white);
+}
+
+.lichvansu-iframe-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+}
+
+.lichvansu-iframe-section .section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+}
+
+.lichvansu-iframe-wrapper {
+    width: 100%;
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(46, 93, 168, 0.1);
+}
+
+.lichvansu-iframe-wrapper iframe {
+    display: block;
+    border: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .lichvansu-iframe-section {
+        padding: var(--spacing-3xl) 0;
+    }
+
+    .lichvansu-iframe-wrapper iframe {
+        height: 2000px;
+    }
+}
