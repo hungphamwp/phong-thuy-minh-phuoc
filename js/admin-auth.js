@@ -1,4 +1,4 @@
-ư// Admin Authentication System
+// Admin Authentication System
 // Simple client-side authentication for demo purposes
 
 class AdminAuth {
@@ -11,48 +11,35 @@ class AdminAuth {
     // Initialize default admin user
     initDefaultAdmin() {
         const defaultAdmin = {
-            email: 'admin@minhphuoc.com',
-            password: this.simpleHash('Admin@2026'),
-            name: 'Admin',
+            username: 'hungpham',
+            password: 'hungpham123!@#',
+            name: 'Hung Pham',
             role: 'administrator'
         };
 
-        // Only set if not exists
-        if (!localStorage.getItem(this.ADMIN_USER_KEY)) {
-            localStorage.setItem(this.ADMIN_USER_KEY, JSON.stringify(defaultAdmin));
-        }
-    }
-
-    // Simple hash function (for demo only - use bcrypt in production)
-    simpleHash(str) {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-        }
-        return hash.toString(36);
+        // Always update to latest credentials
+        localStorage.setItem(this.ADMIN_USER_KEY, JSON.stringify(defaultAdmin));
     }
 
     // Login function
-    login(email, password) {
+    login(username, password) {
         const adminUser = JSON.parse(localStorage.getItem(this.ADMIN_USER_KEY));
 
         if (!adminUser) {
             return { success: false, message: 'Không tìm thấy tài khoản admin' };
         }
 
-        if (email !== adminUser.email) {
-            return { success: false, message: 'Email không đúng' };
+        if (username !== adminUser.username) {
+            return { success: false, message: 'Tên đăng nhập không đúng' };
         }
 
-        if (this.simpleHash(password) !== adminUser.password) {
+        if (password !== adminUser.password) {
             return { success: false, message: 'Mật khẩu không đúng' };
         }
 
         // Create session
         const session = {
-            email: adminUser.email,
+            username: adminUser.username,
             name: adminUser.name,
             role: adminUser.role,
             loginTime: new Date().toISOString(),
@@ -89,17 +76,18 @@ class AdminAuth {
     // Logout
     logout() {
         localStorage.removeItem(this.SESSION_KEY);
+        window.location.href = 'admin.html';
     }
 
     // Change password
     changePassword(currentPassword, newPassword) {
         const adminUser = JSON.parse(localStorage.getItem(this.ADMIN_USER_KEY));
 
-        if (this.simpleHash(currentPassword) !== adminUser.password) {
+        if (currentPassword !== adminUser.password) {
             return { success: false, message: 'Mật khẩu hiện tại không đúng' };
         }
 
-        adminUser.password = this.simpleHash(newPassword);
+        adminUser.password = newPassword;
         localStorage.setItem(this.ADMIN_USER_KEY, JSON.stringify(adminUser));
 
         return { success: true, message: 'Đổi mật khẩu thành công' };
