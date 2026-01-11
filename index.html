@@ -434,68 +434,159 @@
         document.getElementById('modalLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const email = document.getElementById('modalLoginEmail').value;
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            const email = document.getElementById('modalLoginEmail').value.trim();
             const password = document.getElementById('modalLoginPassword').value;
             const messageDiv = document.getElementById('modalLoginMessage');
 
             // Clear previous message
             messageDiv.textContent = '';
             messageDiv.className = 'auth-message';
+            messageDiv.style.display = 'none';
+
+            // Validate inputs
+            if (!email) {
+                messageDiv.textContent = 'Vui lòng nhập email!';
+                messageDiv.style.display = 'block';
+                messageDiv.style.padding = '10px';
+                messageDiv.style.background = '#fee';
+                messageDiv.style.color = '#c33';
+                messageDiv.style.borderRadius = '6px';
+                return;
+            }
+
+            if (!password) {
+                messageDiv.textContent = 'Vui lòng nhập mật khẩu!';
+                messageDiv.style.display = 'block';
+                messageDiv.style.padding = '10px';
+                messageDiv.style.background = '#fee';
+                messageDiv.style.color = '#c33';
+                messageDiv.style.borderRadius = '6px';
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
 
             // Attempt login
-            const result = userAuth.login(email, password);
+            setTimeout(() => {
+                const result = userAuth.login(email, password);
 
-            if (result.success) {
-                messageDiv.textContent = 'Đăng nhập thành công! Đang tải lại trang...';
-                messageDiv.classList.add('success');
+                if (result.success) {
+                    messageDiv.textContent = 'Đăng nhập thành công! Đang tải lại trang...';
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.padding = '10px';
+                    messageDiv.style.background = '#efe';
+                    messageDiv.style.color = '#2a2';
+                    messageDiv.style.borderRadius = '6px';
 
-                // Reload page to update UI
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            } else {
-                messageDiv.textContent = result.message;
-                messageDiv.classList.add('error');
-            }
+                    // Reload page to update UI
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    // Re-enable button on error
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+
+                    messageDiv.textContent = result.message;
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.padding = '10px';
+                    messageDiv.style.background = '#fee';
+                    messageDiv.style.color = '#c33';
+                    messageDiv.style.borderRadius = '6px';
+                }
+            }, 100);
         });
 
         // Modal Register Form Handler
         document.getElementById('modalRegisterForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const fullName = document.getElementById('modalRegisterName').value;
-            const email = document.getElementById('modalRegisterEmail').value;
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            const fullName = document.getElementById('modalRegisterName').value.trim();
+            const email = document.getElementById('modalRegisterEmail').value.trim();
             const password = document.getElementById('modalRegisterPassword').value;
             const messageDiv = document.getElementById('modalRegisterMessage');
 
             // Clear previous message
             messageDiv.textContent = '';
             messageDiv.className = 'auth-message';
+            messageDiv.style.display = 'none';
+
+            // Validate inputs
+            if (!fullName) {
+                messageDiv.textContent = 'Vui lòng nhập họ tên!';
+                messageDiv.style.display = 'block';
+                messageDiv.style.padding = '10px';
+                messageDiv.style.background = '#fee';
+                messageDiv.style.color = '#c33';
+                messageDiv.style.borderRadius = '6px';
+                return;
+            }
+
+            if (!email) {
+                messageDiv.textContent = 'Vui lòng nhập email!';
+                messageDiv.style.display = 'block';
+                messageDiv.style.padding = '10px';
+                messageDiv.style.background = '#fee';
+                messageDiv.style.color = '#c33';
+                messageDiv.style.borderRadius = '6px';
+                return;
+            }
 
             // Validate password length
             if (password.length < 6) {
                 messageDiv.textContent = 'Mật khẩu phải có ít nhất 6 ký tự!';
-                messageDiv.classList.add('error');
+                messageDiv.style.display = 'block';
+                messageDiv.style.padding = '10px';
+                messageDiv.style.background = '#fee';
+                messageDiv.style.color = '#c33';
+                messageDiv.style.borderRadius = '6px';
                 return;
             }
 
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
+
             // Attempt registration (phone is optional, set to empty string)
-            const result = userAuth.register(email, password, fullName, '');
+            setTimeout(() => {
+                const result = userAuth.register(email, password, fullName, '');
 
-            if (result.success) {
-                messageDiv.textContent = 'Đăng ký thành công! Bạn có thể đăng nhập ngay.';
-                messageDiv.classList.add('success');
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
 
-                // Switch to login form after 1.5 seconds
-                setTimeout(() => {
-                    switchToLogin();
-                    // Pre-fill email in login form
-                    document.getElementById('modalLoginEmail').value = email;
-                }, 1500);
-            } else {
-                messageDiv.textContent = result.message;
-                messageDiv.classList.add('error');
-            }
+                if (result.success) {
+                    messageDiv.textContent = 'Đăng ký thành công! Chuyển sang đăng nhập...';
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.padding = '10px';
+                    messageDiv.style.background = '#efe';
+                    messageDiv.style.color = '#2a2';
+                    messageDiv.style.borderRadius = '6px';
+
+                    // Switch to login form after 1.5 seconds
+                    setTimeout(() => {
+                        switchToLogin();
+                        // Pre-fill email in login form
+                        document.getElementById('modalLoginEmail').value = email;
+                        messageDiv.style.display = 'none';
+                    }, 1500);
+                } else {
+                    messageDiv.textContent = result.message;
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.padding = '10px';
+                    messageDiv.style.background = '#fee';
+                    messageDiv.style.color = '#c33';
+                    messageDiv.style.borderRadius = '6px';
+                }
+            }, 100);
         });
     </script>
 </body>

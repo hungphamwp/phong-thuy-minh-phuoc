@@ -6160,3 +6160,26 @@ h1, h2, h3, h4, h5, h6 {
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
 }
+
+/* Button states for better feedback */
+#authModal button[type="submit"]:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+    background: #d63c2f !important;
+}
+
+#authModal button[type="submit"]:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+#authModal button[type="submit"]:disabled {
+    opacity: 0.7;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+}
+
+#authModal button[type="button"]:hover {
+    background: #f5f5f5 !important;
+    border-color: #ccc !important;
+    transform: translateY(-1px);
+}
