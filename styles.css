@@ -6118,3 +6118,45 @@ h1, h2, h3, h4, h5, h6 {
         height: 2000px;
     }
 }
+
+/* ==========================================
+   Auth Modal Custom Styles
+   ========================================== */
+
+/* Custom Scrollbar for Modal */
+#authModal > div {
+    scrollbar-width: thin;
+    scrollbar-color: #ddd transparent;
+}
+
+#authModal > div::-webkit-scrollbar {
+    width: 8px;
+}
+
+#authModal > div::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 20px 0;
+}
+
+#authModal > div::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 4px;
+}
+
+#authModal > div::-webkit-scrollbar-thumb:hover {
+    background-color: #bbb;
+}
+
+/* Ensure all interactive elements are clickable */
+#authModal button,
+#authModal input,
+#authModal a {
+    pointer-events: auto !important;
+    cursor: pointer;
+}
+
+#authModal form button[type="submit"],
+#authModal form button[type="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
