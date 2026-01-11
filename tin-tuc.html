@@ -43,20 +43,18 @@
                             <span>Giới Thiệu</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="dich-vu.html" class="nav-link">
-                            <i class="fas fa-hands-praying"></i>
-                            <span>Dịch Vụ</span>
-                            <i class="fas fa-chevron-down dropdown-icon"></i>
+
+                    <li class="nav-item">
+                        <a href="lap-la-tu-vi.html" class="nav-link">
+                            <i class="fas fa-star-and-crescent"></i>
+                            <span>Lập Lá Tử Vi</span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a>
-                            </li>
-                            <li><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt
-                                    Xấu</a></li>
-                            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a>
-                            </li>
-                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="xem-ngay-tot-xau.html" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Xem Ngày Tốt Xấu</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a href="tin-tuc.html" class="nav-link active">
@@ -70,15 +68,29 @@
                             <span>Liên Hệ</span>
                         </a>
                     </li>
-                    <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+
                 </ul>
             </nav>
 
             <div class="header-actions">
-                <a href="admin.html" class="btn-contact">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Đăng Nhập</span>
-                </a>
+                <div id="userAuthButtons">
+                    <!-- Shown when not logged in -->
+                    <div id="guestButtons" style="display: flex; gap: 10px;">
+                        <button onclick="showLoginModal()" class="btn-contact" style="border: none; cursor: pointer;">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Đăng Nhập</span>
+                        </button>
+                    </div>
+                    <!-- Shown when logged in -->
+                    <div id="userButtons" style="display: none; align-items: center; gap: 10px;">
+                        <span id="userNameDisplay" style="color: var(--color-text); font-weight: 500;"></span>
+                        <button onclick="handleUserLogoutGlobal()" class="btn-contact"
+                            style="background: #dc3545; border: none; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -91,12 +103,11 @@
     <div class="mobile-nav" id="mobileNav">
         <ul class="mobile-nav-list">
             <li><a href="index.html"><i class="fas fa-yin-yang"></i> Trang Chủ</a></li>
-            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới Thiệu</a></li>
-            <li><a href="dich-vu.html"><i class="fas fa-hands-praying"></i> Dịch Vụ</a></li>
-            <li class="sub-item"><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a>
-            </li>
-            <li class="sub-item"><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt
-                    Xấu</a></li>
+            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới
+                    Thiệu</a></li>
+
+            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+            <li><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt Xấu</a></li>
             <li><a href="tin-tuc.html" class="active"><i class="fas fa-book-open"></i> Quỹ Khuyến Học</a></li>
             <li><a href="lien-he.html"><i class="fas fa-envelope-open-text"></i> Liên Hệ</a></li>
             <li><a href="admin.html" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
@@ -352,8 +363,6 @@
                         <ul>
                             <li><a href="lap-la-tu-vi.html">Lập Lá Tử Vi</a></li>
                             <li><a href="xem-ngay-tot-xau.html">Xem Ngày Tốt Xấu</a></li>
-                            <li><a href="#">Phong Thủy Nhà Ở</a></li>
-                            <li><a href="#">Phong Thủy Văn Phòng</a></li>
                         </ul>
                     </div>
                     <div class="footer-col">
@@ -389,6 +398,8 @@
         </div>
     </footer>
 
+    <script src="js/user-auth.js"></script>
+    <script src="js/auth-ui.js"></script>
     <script src="js/admin-blog.js"></script>
     <script src="js/blog-renderer.js"></script>
     <script src="script.js"></script>

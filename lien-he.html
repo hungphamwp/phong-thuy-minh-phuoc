@@ -43,18 +43,18 @@
                             <span>Giới Thiệu</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="dich-vu.html" class="nav-link">
-                            <i class="fas fa-hands-praying"></i>
-                            <span>Dịch Vụ</span>
-                            <i class="fas fa-chevron-down dropdown-icon"></i>
+
+                    <li class="nav-item">
+                        <a href="lap-la-tu-vi.html" class="nav-link">
+                            <i class="fas fa-star-and-crescent"></i>
+                            <span>Lập Lá Tử Vi</span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a>
-                            </li>
-                            <li><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt
-                                    Xấu</a></li>
-                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="xem-ngay-tot-xau.html" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Xem Ngày Tốt Xấu</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a href="tin-tuc.html" class="nav-link">
@@ -72,10 +72,24 @@
             </nav>
 
             <div class="header-actions">
-                <a href="#" class="btn-contact">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Đăng Nhập</span>
-                </a>
+                <div id="userAuthButtons">
+                    <!-- Shown when not logged in -->
+                    <div id="guestButtons" style="display: flex; gap: 10px;">
+                        <button onclick="showLoginModal()" class="btn-contact" style="border: none; cursor: pointer;">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Đăng Nhập</span>
+                        </button>
+                    </div>
+                    <!-- Shown when logged in -->
+                    <div id="userButtons" style="display: none; align-items: center; gap: 10px;">
+                        <span id="userNameDisplay" style="color: var(--color-text); font-weight: 500;"></span>
+                        <button onclick="handleUserLogoutGlobal()" class="btn-contact"
+                            style="background: #dc3545; border: none; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -88,12 +102,11 @@
     <div class="mobile-nav" id="mobileNav">
         <ul class="mobile-nav-list">
             <li><a href="index.html"><i class="fas fa-yin-yang"></i> Trang Chủ</a></li>
-            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới Thiệu</a></li>
-            <li><a href="dich-vu.html"><i class="fas fa-hands-praying"></i> Dịch Vụ</a></li>
-            <li class="sub-item"><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a>
-            </li>
-            <li class="sub-item"><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt
-                    Xấu</a></li>
+            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới
+                    Thiệu</a></li>
+
+            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+            <li><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt Xấu</a></li>
             <li><a href="tin-tuc.html"><i class="fas fa-book-open"></i> Quỹ Khuyến Học</a></li>
             <li><a href="lien-he.html" class="active"><i class="fas fa-envelope-open-text"></i> Liên Hệ</a></li>
         </ul>
@@ -152,8 +165,10 @@
                         </div>
                         <h3>Địa Chỉ</h3>
                         <p>Văn phòng tư vấn</p>
-                        <p class="contact-link" style="color: #333; font-weight: 500;"><strong>TP.HCM:</strong> 57 Đường 7A phường An Lạc, TP.HCM</p>
-                        <p class="contact-link" style="color: #333; font-weight: 500;"><strong>Lâm Đồng:</strong> Chùa Quan Âm Cát, xã Phan Rí Cửa, Tỉnh Lâm Đồng</p>
+                        <p class="contact-link" style="color: #333; font-weight: 500;"><strong>TP.HCM:</strong> 57 Đường
+                            7A phường An Lạc, TP.HCM</p>
+                        <p class="contact-link" style="color: #333; font-weight: 500;"><strong>Lâm Đồng:</strong> Chùa
+                            Quan Âm Cát, xã Phan Rí Cửa, Tỉnh Lâm Đồng</p>
                     </div>
                 </div>
 
@@ -240,10 +255,7 @@
                                     <span>Chủ Nhật</span>
                                     <span>9:00 - 15:00</span>
                                 </li>
-                                <li class="note">
-                                    <img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon">
-                                    <span>Hỗ trợ qua Zalo/Hotline 24/7</span>
-                                </li>
+
                             </ul>
                         </div>
 
@@ -278,7 +290,7 @@
                     <h2><i class="fas fa-map-marked-alt"></i> Bản Đồ</h2>
                     <div class="map-wrapper">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4510564025986!2d106.69901567468!3d10.77888008933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f385570472f%3A0x1c5c42d2e8d6b8d9!2zMTIzIMSQxrDhu51uZyBMw6ogTOG7o2ksIFBoxrDhu51uZyBCw6huIE5naMOpLCBRdeG6rW4gMSwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1703001234567!5m2!1svi!2s"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.7814864617617!2d106.61832447456041!3d10.751317159657379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752c2ce66afa5d%3A0x47ad0dffe78315dd!2zNTcgxJDGsOG7nW5nIHPhu5EgNywgQW4gTOG6oWMgQSwgQsOsbmggVMOibiwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1768122537731!5m2!1svi!2s"
                             width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
                         </iframe>
                     </div>
@@ -349,8 +361,6 @@
                         <ul>
                             <li><a href="lap-la-tu-vi.html">Lập Lá Tử Vi</a></li>
                             <li><a href="xem-ngay-tot-xau.html">Xem Ngày Tốt Xấu</a></li>
-                            <li><a href="#">Phong Thủy Nhà Ở</a></li>
-                            <li><a href="#">Phong Thủy Văn Phòng</a></li>
                         </ul>
                     </div>
                     <div class="footer-col">
@@ -386,6 +396,8 @@
         </div>
     </footer>
 
+    <script src="js/user-auth.js"></script>
+    <script src="js/auth-ui.js"></script>
     <script src="script.js"></script>
 </body>
 

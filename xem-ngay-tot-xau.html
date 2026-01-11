@@ -43,18 +43,18 @@
                             <span>Giới Thiệu</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="dich-vu.html" class="nav-link active">
-                            <i class="fas fa-hands-praying"></i>
-                            <span>Dịch Vụ</span>
-                            <i class="fas fa-chevron-down dropdown-icon"></i>
+
+                    <li class="nav-item">
+                        <a href="lap-la-tu-vi.html" class="nav-link">
+                            <i class="fas fa-star-and-crescent"></i>
+                            <span>Lập Lá Tử Vi</span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
-                            <li><a href="xem-ngay-tot-xau.html" class="active"><i class="fas fa-calendar-alt"></i> Xem
-                                    Ngày Tốt Xấu</a></li>
-            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
-                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="xem-ngay-tot-xau.html" class="nav-link active">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Xem Ngày Tốt Xấu</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a href="tin-tuc.html" class="nav-link">
@@ -68,15 +68,29 @@
                             <span>Liên Hệ</span>
                         </a>
                     </li>
-            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+
                 </ul>
             </nav>
 
             <div class="header-actions">
-                <a href="#" class="btn-contact">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Đăng Nhập</span>
-                </a>
+                <div id="userAuthButtons">
+                    <!-- Shown when not logged in -->
+                    <div id="guestButtons" style="display: flex; gap: 10px;">
+                        <button onclick="showLoginModal()" class="btn-contact" style="border: none; cursor: pointer;">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Đăng Nhập</span>
+                        </button>
+                    </div>
+                    <!-- Shown when logged in -->
+                    <div id="userButtons" style="display: none; align-items: center; gap: 10px;">
+                        <span id="userNameDisplay" style="color: var(--color-text); font-weight: 500;"></span>
+                        <button onclick="handleUserLogoutGlobal()" class="btn-contact"
+                            style="background: #dc3545; border: none; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -89,11 +103,12 @@
     <div class="mobile-nav" id="mobileNav">
         <ul class="mobile-nav-list">
             <li><a href="index.html"><i class="fas fa-yin-yang"></i> Trang Chủ</a></li>
-            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới Thiệu</a></li>
-            <li><a href="dich-vu.html"><i class="fas fa-hands-praying"></i> Dịch Vụ</a></li>
-            <li class="sub-item"><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
-            <li class="sub-item"><a href="xem-ngay-tot-xau.html" class="active"><i class="fas fa-calendar-alt"></i>
-                    Xem Ngày Tốt Xấu</a></li>
+            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới
+                    Thiệu</a></li>
+
+            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+            <li><a href="xem-ngay-tot-xau.html" class="active"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt Xấu</a>
+            </li>
             <li><a href="tin-tuc.html"><i class="fas fa-book-open"></i> Quỹ Khuyến Học</a></li>
             <li><a href="lien-he.html"><i class="fas fa-envelope-open-text"></i> Liên Hệ</a></li>
             <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
@@ -110,8 +125,7 @@
                 <nav class="breadcrumb">
                     <a href="index.html">Trang chủ</a>
                     <span>/</span>
-                    <a href="dich-vu.html">Dịch vụ</a>
-                    <span>/</span>
+
                     <span>Xem Ngày Tốt Xấu</span>
                 </nav>
             </div>
@@ -122,45 +136,42 @@
             <div class="ngaytot-container">
                 <!-- Free Version - For non-logged-in users -->
                 <div id="freeCalendar" style="display: none;">
-                    <div class="calendar-notice" style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                    <div class="calendar-notice"
+                        style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center;">
                         <i class="fas fa-info-circle" style="font-size: 2rem; color: #ff6b35; margin-bottom: 10px;"></i>
                         <h3 style="margin-bottom: 10px; color: #333;">Bạn đang xem phiên bản miễn phí</h3>
-                        <p style="margin-bottom: 15px; color: #666;">Đăng nhập để trải nghiệm đầy đủ tính năng lịch vạn sự với nhiều thông tin chi tiết hơn</p>
-                        <a href="login-user.html" class="btn-primary" style="display: inline-block; padding: 12px 30px; background: var(--color-red); color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                        <p style="margin-bottom: 15px; color: #666;">Đăng nhập để trải nghiệm đầy đủ tính năng lịch vạn
+                            sự với nhiều thông tin chi tiết hơn</p>
+                        <a href="#" onclick="showLoginModal(); return false;" class="btn-primary"
+                            style="display: inline-block; padding: 12px 30px; background: var(--color-red); color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
                             <i class="fas fa-sign-in-alt"></i> Đăng nhập ngay
                         </a>
-                        <a href="register-user.html" class="btn-secondary" style="display: inline-block; padding: 12px 30px; margin-left: 10px; background: var(--color-blue); color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                        <a href="#" onclick="showLoginModal(); setTimeout(switchToRegister, 100); return false;"
+                            class="btn-secondary"
+                            style="display: inline-block; padding: 12px 30px; margin-left: 10px; background: var(--color-blue); color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
                             <i class="fas fa-user-plus"></i> Đăng ký tài khoản
                         </a>
                     </div>
-                    <iframe
-                        src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu_free/index.html"
-                        width="100%"
-                        height="2700px"
-                        frameborder="0"
-                        allowfullscreen
-                        title="Lịch Vạn Sự - Phiên bản miễn phí"
-                        style="border: none; border-radius: 8px;">
+                    <iframe src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu_free/index.html"
+                        width="100%" height="2700px" frameborder="0" allowfullscreen
+                        title="Lịch Vạn Sự - Phiên bản miễn phí" style="border: none; border-radius: 8px;">
                     </iframe>
                 </div>
 
                 <!-- Premium Version - For logged-in users -->
                 <div id="premiumCalendar" style="display: none;">
-                    <div class="calendar-notice" style="background: #d4edda; border: 2px solid #28a745; border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                    <div class="calendar-notice"
+                        style="background: #d4edda; border: 2px solid #28a745; border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center;">
                         <i class="fas fa-crown" style="font-size: 2rem; color: #ffd700; margin-bottom: 10px;"></i>
                         <h3 style="margin-bottom: 10px; color: #333;">Chào mừng bạn đã đăng nhập!</h3>
                         <p id="userWelcome" style="margin-bottom: 10px; color: #666;"></p>
-                        <button onclick="handleUserLogout()" class="btn-secondary" style="padding: 8px 20px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                        <button onclick="handleUserLogoutGlobal()" class="btn-secondary"
+                            style="padding: 8px 20px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
                             <i class="fas fa-sign-out-alt"></i> Đăng xuất
                         </button>
                     </div>
-                    <iframe
-                        src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu/index.html"
-                        width="100%"
-                        height="2700px"
-                        frameborder="0"
-                        allowfullscreen
-                        title="Lịch Vạn Sự - Phiên bản đầy đủ"
+                    <iframe src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu/index.html" width="100%"
+                        height="2700px" frameborder="0" allowfullscreen title="Lịch Vạn Sự - Phiên bản đầy đủ"
                         style="border: none; border-radius: 8px;">
                     </iframe>
                 </div>
@@ -379,9 +390,7 @@
                         <ul>
                             <li><a href="lap-la-tu-vi.html">Lập Lá Tử Vi</a></li>
                             <li><a href="xem-ngay-tot-xau.html">Xem Ngày Tốt Xấu</a></li>
-                            <li><a href="dich-vu.html">Phong Thủy Nhà Ở</a></li>
-                            <li><a href="dich-vu.html">Phong Thủy Văn Phòng</a></li>
-            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+
                         </ul>
                     </div>
                     <div class="footer-col">
@@ -414,6 +423,7 @@
 
     <!-- Scripts -->
     <script src="js/user-auth.js"></script>
+    <script src="js/auth-ui.js"></script>
     <script src="js/lunar-calendar.js"></script>
     <script src="js/ngay-tot.js"></script>
     <script src="script.js"></script>
@@ -440,16 +450,8 @@
             }
         }
 
-        // Handle user logout
-        function handleUserLogout() {
-            if (confirm('Bạn có chắc muốn đăng xuất?')) {
-                userAuth.logout();
-                window.location.reload();
-            }
-        }
-
         // Run on page load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             checkUserLoginAndDisplayCalendar();
         });
     </script>
