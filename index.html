@@ -13,6 +13,9 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -266,13 +269,13 @@
 
             <!-- Forgot Password Form -->
             <div id="forgotPasswordForm" style="padding: 50px 40px 30px 40px; display: none;">
-                <h2 style="text-align: center; margin-bottom: 20px; font-size: 2rem; color: #333; font-weight: 700;">ĐẶT LẠI MẬT KHẨU</h2>
-                <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 0.9rem;">Nhập email và mật khẩu mới để đặt lại</p>
+                <h2 style="text-align: center; margin-bottom: 20px; font-size: 2rem; color: #333; font-weight: 700;">QUÊN MẬT KHẨU</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 0.9rem;">Nhập email của bạn, chúng tôi sẽ gửi mật khẩu tạm thời về email</p>
 
                 <form id="modalForgotPasswordForm">
                     <div class="form-message" id="modalForgotPasswordMessage" style="margin-bottom: 15px; padding: 10px; border-radius: 6px; display: none;"></div>
 
-                    <div style="margin-bottom: 20px;">
+                    <div style="margin-bottom: 25px;">
                         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: #666;">
                             <i class="fas fa-envelope" style="color: #e74c3c;"></i>
                             <span style="font-weight: 500;">Email đã đăng ký</span>
@@ -280,34 +283,8 @@
                         <input type="email" id="modalForgotPasswordEmail" required style="width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; box-sizing: border-box;" placeholder="Nhập email của bạn">
                     </div>
 
-                    <div style="margin-bottom: 20px;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: #666;">
-                            <i class="fas fa-lock" style="color: #e74c3c;"></i>
-                            <span style="font-weight: 500;">Mật khẩu mới</span>
-                        </div>
-                        <div style="position: relative;">
-                            <input type="password" id="modalForgotPasswordNew" required minlength="6" style="width: 100%; padding: 14px; padding-right: 45px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; box-sizing: border-box;" placeholder="Nhập mật khẩu mới (tối thiểu 6 ký tự)">
-                            <button type="button" onclick="toggleModalPassword('modalForgotPasswordNew')" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #999;">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom: 25px;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: #666;">
-                            <i class="fas fa-lock" style="color: #e74c3c;"></i>
-                            <span style="font-weight: 500;">Xác nhận mật khẩu</span>
-                        </div>
-                        <div style="position: relative;">
-                            <input type="password" id="modalForgotPasswordConfirm" required minlength="6" style="width: 100%; padding: 14px; padding-right: 45px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; box-sizing: border-box;" placeholder="Nhập lại mật khẩu mới">
-                            <button type="button" onclick="toggleModalPassword('modalForgotPasswordConfirm')" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #999;">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-
                     <button type="submit" style="width: 100%; padding: 15px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-bottom: 20px; transition: all 0.3s; box-sizing: border-box;">
-                        <i class="fas fa-key"></i> Đặt Lại Mật Khẩu
+                        <i class="fas fa-paper-plane"></i> Gửi Mật Khẩu Mới
                     </button>
 
                     <div style="text-align: center; color: #666; font-size: 0.95rem;">
@@ -653,7 +630,24 @@
             }, 100);
         });
 
-        // Modal Reset Password Form Handler
+        // Initialize EmailJS
+        (function() {
+            emailjs.init({
+                publicKey: "YOUR_PUBLIC_KEY", // Bạn cần thay bằng Public Key từ EmailJS
+            });
+        })();
+
+        // Generate random password
+        function generateRandomPassword(length = 8) {
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                password += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+            return password;
+        }
+
+        // Modal Forgot Password Form Handler - Send Email
         document.getElementById('modalForgotPasswordForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -661,8 +655,6 @@
             const originalText = submitBtn.innerHTML;
 
             const email = document.getElementById('modalForgotPasswordEmail').value.trim();
-            const newPassword = document.getElementById('modalForgotPasswordNew').value;
-            const confirmPassword = document.getElementById('modalForgotPasswordConfirm').value;
             const messageDiv = document.getElementById('modalForgotPasswordMessage');
 
             // Clear previous message
@@ -680,46 +672,50 @@
                 return;
             }
 
-            // Validate new password
-            if (!newPassword || newPassword.length < 6) {
-                messageDiv.textContent = 'Mật khẩu mới phải có ít nhất 6 ký tự!';
-                messageDiv.style.display = 'block';
-                messageDiv.style.padding = '10px';
-                messageDiv.style.background = '#fee';
-                messageDiv.style.color = '#c33';
-                messageDiv.style.borderRadius = '6px';
-                return;
-            }
-
-            // Validate password match
-            if (newPassword !== confirmPassword) {
-                messageDiv.textContent = 'Mật khẩu xác nhận không khớp!';
-                messageDiv.style.display = 'block';
-                messageDiv.style.padding = '10px';
-                messageDiv.style.background = '#fee';
-                messageDiv.style.color = '#c33';
-                messageDiv.style.borderRadius = '6px';
-                return;
-            }
-
             // Show loading state
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi email...';
 
-            // Reset password in localStorage
-            setTimeout(() => {
-                const users = JSON.parse(localStorage.getItem('minhphuoc_users') || '[]');
-                const userIndex = users.findIndex(u => u.email === email);
+            // Check if email exists and send reset email
+            const users = JSON.parse(localStorage.getItem('minhphuoc_users') || '[]');
+            const userIndex = users.findIndex(u => u.email === email);
 
+            if (userIndex === -1) {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
 
-                if (userIndex !== -1) {
-                    // Update password
-                    users[userIndex].password = newPassword;
-                    localStorage.setItem('minhphuoc_users', JSON.stringify(users));
+                messageDiv.textContent = 'Email không tồn tại trong hệ thống!';
+                messageDiv.style.display = 'block';
+                messageDiv.style.padding = '10px';
+                messageDiv.style.background = '#fee';
+                messageDiv.style.color = '#c33';
+                messageDiv.style.borderRadius = '6px';
+                return;
+            }
 
-                    messageDiv.textContent = 'Đặt lại mật khẩu thành công! Chuyển sang đăng nhập...';
+            // Generate new temporary password
+            const newPassword = generateRandomPassword(10);
+
+            // Update password in localStorage
+            users[userIndex].password = newPassword;
+            localStorage.setItem('minhphuoc_users', JSON.stringify(users));
+
+            // Send email using EmailJS
+            const templateParams = {
+                to_email: email,
+                to_name: users[userIndex].fullName || 'Khách hàng',
+                new_password: newPassword,
+                website_name: 'Minh Phước Feng Shui'
+            };
+
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully!', response.status, response.text);
+
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+
+                    messageDiv.textContent = 'Mật khẩu mới đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư!';
                     messageDiv.style.display = 'block';
                     messageDiv.style.padding = '10px';
                     messageDiv.style.background = '#efe';
@@ -728,25 +724,26 @@
 
                     // Clear form
                     document.getElementById('modalForgotPasswordEmail').value = '';
-                    document.getElementById('modalForgotPasswordNew').value = '';
-                    document.getElementById('modalForgotPasswordConfirm').value = '';
 
-                    // Show success message for 2 seconds then switch to login
+                    // Show success message for 3 seconds then switch to login
                     setTimeout(() => {
                         switchToLogin();
-                        // Pre-fill email in login form
                         document.getElementById('modalLoginEmail').value = email;
                         messageDiv.style.display = 'none';
-                    }, 2000);
-                } else {
-                    messageDiv.textContent = 'Email không tồn tại trong hệ thống!';
+                    }, 3000);
+                }, function(error) {
+                    console.error('Email send failed:', error);
+
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+
+                    messageDiv.textContent = 'Lỗi khi gửi email. Vui lòng thử lại sau! (Lỗi: ' + error.text + ')';
                     messageDiv.style.display = 'block';
                     messageDiv.style.padding = '10px';
                     messageDiv.style.background = '#fee';
                     messageDiv.style.color = '#c33';
                     messageDiv.style.borderRadius = '6px';
-                }
-            }, 500);
+                });
         });
 
         // Google Login Handler
