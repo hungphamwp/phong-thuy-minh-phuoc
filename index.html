@@ -124,7 +124,12 @@
             <div style="max-width: 1400px; margin: 0 auto;">
                 <div style="text-align: center; margin-bottom: 2rem;">
                     <h2 style="font-size: 2rem; color: var(--color-red); margin-bottom: 0.5rem;">Lịch Vạn Sự</h2>
-                    <p style="color: var(--color-text-light); font-size: 1rem;">Xem lịch âm dương, ngày tốt xấu miễn phí</p>
+                    <p style="color: var(--color-text-light); font-size: 1rem; margin-bottom: 1.5rem;">Xem lịch âm dương, ngày tốt xấu miễn phí</p>
+                    <button onclick="showPremiumFeaturePopup()" style="padding: 12px 30px; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); color: #333; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); transition: transform 0.2s, box-shadow 0.2s; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-star" style="color: #ff6b35;"></i>
+                        Tìm Ngày Tốt - Tính Năng Premium
+                        <i class="fas fa-crown" style="color: #ff6b35;"></i>
+                    </button>
                 </div>
                 <iframe src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu_free/index.html" width="100%"
                     height="2700px" frameborder="0" allowfullscreen title="Lịch Vạn Sự - Minh Phước"
@@ -132,6 +137,71 @@
                 </iframe>
             </div>
         </section>
+
+        <!-- Premium Feature Popup -->
+        <div id="premiumFeaturePopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9999; align-items: center; justify-content: center;">
+            <div style="background: white; border-radius: 16px; max-width: 600px; width: 90%; padding: 40px; position: relative; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); border: 3px solid #ffd700;">
+                <button onclick="closePremiumFeaturePopup()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999; transition: color 0.2s;">
+                    <i class="fas fa-times"></i>
+                </button>
+
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);">
+                        <i class="fas fa-lock" style="font-size: 2.5rem; color: #ff6b35;"></i>
+                    </div>
+                    <h2 style="font-size: 1.8rem; color: #333; margin-bottom: 10px;">Tính Năng Bị Hạn Chế</h2>
+                    <p style="color: #666; font-size: 1rem;">Tính năng <strong style="color: #ffd700;">Tìm ngày tốt</strong> chỉ dành cho thành viên có gói tài trợ.</p>
+                </div>
+
+                <div style="background: #fff9e6; border: 2px solid #ffd700; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+                        <i class="fas fa-gift" style="font-size: 1.5rem; color: #28a745;"></i>
+                        <span style="font-size: 1.1rem; font-weight: 600; color: #333;">Gói tài trợ ưu đãi với mức phí: <strong style="color: #28a745;">868.000 VNĐ/Năm</strong></span>
+                    </div>
+
+                    <h4 style="margin: 20px 0 12px; color: #ff6b35; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-sparkles"></i>
+                        Lợi ích khi nâng cấp:
+                    </h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 8px 0; color: #555; display: flex; align-items: start; gap: 10px;">
+                            <i class="fas fa-check" style="color: #28a745; margin-top: 3px;"></i>
+                            <span>Truy cập đầy đủ các tính năng ứng dụng</span>
+                        </li>
+                        <li style="padding: 8px 0; color: #555; display: flex; align-items: start; gap: 10px;">
+                            <i class="fas fa-check" style="color: #28a745; margin-top: 3px;"></i>
+                            <span>Truy cập đầy đủ các tính năng Kỷ Môn Độn Giáp</span>
+                        </li>
+                        <li style="padding: 8px 0; color: #555; display: flex; align-items: start; gap: 10px;">
+                            <i class="fas fa-check" style="color: #28a745; margin-top: 3px;"></i>
+                            <span>Phân tích Ngũ Phú, Phong Thủy, Mệnh, Chiêu Lực</span>
+                        </li>
+                        <li style="padding: 8px 0; color: #555; display: flex; align-items: start; gap: 10px;">
+                            <i class="fas fa-check" style="color: #28a745; margin-top: 3px;"></i>
+                            <span>Hỗ trợ ưu tiên và cập nhật tính năng mới</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">Liên hệ hỗ trợ để nâng cấp:</p>
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <a href="https://zalo.me/YOUR_ZALO" target="_blank" style="padding: 12px 24px; background: #0068ff; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s;">
+                            <i class="fab fa-zalo" style="font-size: 1.2rem;"></i>
+                            Zalo
+                        </a>
+                        <a href="https://m.me/YOUR_FB" target="_blank" style="padding: 12px 24px; background: #0084ff; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s;">
+                            <i class="fab fa-facebook-messenger" style="font-size: 1.2rem;"></i>
+                            Messenger
+                        </a>
+                    </div>
+                </div>
+
+                <div style="text-align: center; padding-top: 20px; border-top: 1px solid #eee;">
+                    <a href="#" onclick="closePremiumFeaturePopup(); return false;" style="color: #999; text-decoration: underline; font-size: 0.9rem;">Quay lại trang trước</a>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -282,6 +352,44 @@
 
         // Run on page load
         document.addEventListener('DOMContentLoaded', updateHeaderAuthButtons);
+
+        // Premium Feature Popup Functions
+        function showPremiumFeaturePopup() {
+            const popup = document.getElementById('premiumFeaturePopup');
+            if (popup) {
+                popup.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+        }
+
+        function closePremiumFeaturePopup() {
+            const popup = document.getElementById('premiumFeaturePopup');
+            if (popup) {
+                popup.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }
+        }
+
+        // Close popup when clicking outside
+        document.addEventListener('click', function(e) {
+            const popup = document.getElementById('premiumFeaturePopup');
+            if (e.target === popup) {
+                closePremiumFeaturePopup();
+            }
+        });
+
+        // Add hover effect to button
+        const premiumBtn = document.querySelector('button[onclick="showPremiumFeaturePopup()"]');
+        if (premiumBtn) {
+            premiumBtn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 6px 20px rgba(255, 215, 0, 0.6)';
+            });
+            premiumBtn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 4px 15px rgba(255, 215, 0, 0.4)';
+            });
+        }
     </script>
 </body>
 
