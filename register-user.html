@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Tài Khoản - Minh Phước Feng Shui</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+
+<body class="admin-body">
+    <div class="admin-login-container">
+        <div class="admin-login-box">
+            <div class="admin-login-header">
+                <img src="logo.jpg" alt="Minh Phước" class="admin-logo">
+                <h1>Đăng Ký Tài Khoản</h1>
+                <p>Minh Phước Feng Shui</p>
+            </div>
+
+            <form id="userRegisterForm" class="admin-login-form">
+                <div class="form-message" id="registerMessage"></div>
+
+                <div class="form-group">
+                    <label for="userFullName">
+                        <i class="fas fa-user"></i>
+                        Họ và tên
+                    </label>
+                    <input type="text" id="userFullName" name="fullName" required placeholder="Nhập họ và tên"
+                        autocomplete="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="userEmail">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </label>
+                    <input type="email" id="userEmail" name="email" required placeholder="Nhập email của bạn"
+                        autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="userPhone">
+                        <i class="fas fa-phone"></i>
+                        Số điện thoại
+                    </label>
+                    <input type="tel" id="userPhone" name="phone" required placeholder="Nhập số điện thoại"
+                        autocomplete="tel">
+                </div>
+
+                <div class="form-group">
+                    <label for="userPassword">
+                        <i class="fas fa-lock"></i>
+                        Mật khẩu
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="userPassword" name="password" required
+                            placeholder="Nhập mật khẩu (tối thiểu 6 ký tự)" autocomplete="new-password" minlength="6">
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="userPasswordConfirm">
+                        <i class="fas fa-lock"></i>
+                        Xác nhận mật khẩu
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="userPasswordConfirm" name="passwordConfirm" required
+                            placeholder="Nhập lại mật khẩu" autocomplete="new-password" minlength="6">
+                        <button type="button" class="toggle-password" id="togglePasswordConfirm">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-admin-login">
+                    <i class="fas fa-user-plus"></i>
+                    Đăng Ký
+                </button>
+
+                <div class="login-footer">
+                    <a href="login-user.html" class="back-to-site">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Đã có tài khoản? Đăng nhập
+                    </a>
+                    <a href="index.html" class="back-to-site">
+                        <i class="fas fa-arrow-left"></i>
+                        Quay lại trang chủ
+                    </a>
+                </div>
+            </form>
+
+            <div class="admin-login-info">
+                <p><i class="fas fa-info-circle"></i> Tài khoản miễn phí - Nâng cấp sau để trải nghiệm đầy đủ</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/user-auth.js"></script>
+    <script>
+        // Toggle password visibility
+        function setupPasswordToggle(buttonId, inputId) {
+            document.getElementById(buttonId).addEventListener('click', function () {
+                const passwordInput = document.getElementById(inputId);
+                const icon = this.querySelector('i');
+
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        }
+
+        setupPasswordToggle('togglePassword', 'userPassword');
+        setupPasswordToggle('togglePasswordConfirm', 'userPasswordConfirm');
+
+        // Handle register form submission
+        document.getElementById('userRegisterForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('userFullName').value;
+            const email = document.getElementById('userEmail').value;
+            const phone = document.getElementById('userPhone').value;
+            const password = document.getElementById('userPassword').value;
+            const passwordConfirm = document.getElementById('userPasswordConfirm').value;
+            const messageDiv = document.getElementById('registerMessage');
+
+            // Clear previous message
+            messageDiv.textContent = '';
+            messageDiv.className = 'form-message';
+
+            // Validate passwords match
+            if (password !== passwordConfirm) {
+                messageDiv.textContent = 'Mật khẩu xác nhận không khớp!';
+                messageDiv.classList.add('error');
+                return;
+            }
+
+            // Validate password length
+            if (password.length < 6) {
+                messageDiv.textContent = 'Mật khẩu phải có ít nhất 6 ký tự!';
+                messageDiv.classList.add('error');
+                return;
+            }
+
+            // Attempt registration
+            const result = userAuth.register(email, password, fullName, phone);
+
+            if (result.success) {
+                messageDiv.textContent = 'Đăng ký thành công! Đang chuyển đến trang đăng nhập...';
+                messageDiv.classList.add('success');
+
+                // Redirect to login page
+                setTimeout(() => {
+                    window.location.href = 'login-user.html';
+                }, 1500);
+            } else {
+                messageDiv.textContent = result.message;
+                messageDiv.classList.add('error');
+            }
+        });
+
+        // Add animation on load
+        window.addEventListener('load', function () {
+            document.querySelector('.admin-login-box').classList.add('fade-in');
+        });
+    </script>
+</body>
+
+</html>

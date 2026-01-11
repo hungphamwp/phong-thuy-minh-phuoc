@@ -120,7 +120,52 @@
         <!-- Ngay Tot Tool Section - Traditional Style -->
         <section class="ngaytot-section fengshui-theme">
             <div class="ngaytot-container">
-                <div style="display: grid; grid-template-columns: 1fr 280px; gap: 2rem;">
+                <!-- Free Version - For non-logged-in users -->
+                <div id="freeCalendar" style="display: none;">
+                    <div class="calendar-notice" style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                        <i class="fas fa-info-circle" style="font-size: 2rem; color: #ff6b35; margin-bottom: 10px;"></i>
+                        <h3 style="margin-bottom: 10px; color: #333;">Bạn đang xem phiên bản miễn phí</h3>
+                        <p style="margin-bottom: 15px; color: #666;">Đăng nhập để trải nghiệm đầy đủ tính năng lịch vạn sự với nhiều thông tin chi tiết hơn</p>
+                        <a href="login-user.html" class="btn-primary" style="display: inline-block; padding: 12px 30px; background: var(--color-red); color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                            <i class="fas fa-sign-in-alt"></i> Đăng nhập ngay
+                        </a>
+                        <a href="register-user.html" class="btn-secondary" style="display: inline-block; padding: 12px 30px; margin-left: 10px; background: var(--color-blue); color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                            <i class="fas fa-user-plus"></i> Đăng ký tài khoản
+                        </a>
+                    </div>
+                    <iframe
+                        src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu_free/index.html"
+                        width="100%"
+                        height="2700px"
+                        frameborder="0"
+                        allowfullscreen
+                        title="Lịch Vạn Sự - Phiên bản miễn phí"
+                        style="border: none; border-radius: 8px;">
+                    </iframe>
+                </div>
+
+                <!-- Premium Version - For logged-in users -->
+                <div id="premiumCalendar" style="display: none;">
+                    <div class="calendar-notice" style="background: #d4edda; border: 2px solid #28a745; border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                        <i class="fas fa-crown" style="font-size: 2rem; color: #ffd700; margin-bottom: 10px;"></i>
+                        <h3 style="margin-bottom: 10px; color: #333;">Chào mừng bạn đã đăng nhập!</h3>
+                        <p id="userWelcome" style="margin-bottom: 10px; color: #666;"></p>
+                        <button onclick="handleUserLogout()" class="btn-secondary" style="padding: 8px 20px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                        </button>
+                    </div>
+                    <iframe
+                        src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu/index.html"
+                        width="100%"
+                        height="2700px"
+                        frameborder="0"
+                        allowfullscreen
+                        title="Lịch Vạn Sự - Phiên bản đầy đủ"
+                        style="border: none; border-radius: 8px;">
+                    </iframe>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 280px; gap: 2rem; display: none;">
                     <!-- Main Content -->
                     <div>
                         <!-- Traditional Form Card -->
@@ -368,9 +413,46 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="js/user-auth.js"></script>
     <script src="js/lunar-calendar.js"></script>
     <script src="js/ngay-tot.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Check user login status and display appropriate calendar
+        function checkUserLoginAndDisplayCalendar() {
+            const freeCalendar = document.getElementById('freeCalendar');
+            const premiumCalendar = document.getElementById('premiumCalendar');
+            const userWelcome = document.getElementById('userWelcome');
+
+            if (userAuth.isLoggedIn()) {
+                // User is logged in - show premium calendar
+                const session = userAuth.getSession();
+                freeCalendar.style.display = 'none';
+                premiumCalendar.style.display = 'block';
+
+                if (userWelcome && session) {
+                    userWelcome.textContent = `Xin chào, ${session.fullName}! Bạn đang sử dụng phiên bản đầy đủ.`;
+                }
+            } else {
+                // User is not logged in - show free calendar
+                freeCalendar.style.display = 'block';
+                premiumCalendar.style.display = 'none';
+            }
+        }
+
+        // Handle user logout
+        function handleUserLogout() {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                userAuth.logout();
+                window.location.reload();
+            }
+        }
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkUserLoginAndDisplayCalendar();
+        });
+    </script>
     <script>
         // Ngay Tot Page Script - Traditional List Style
         document.addEventListener('DOMContentLoaded', function () {

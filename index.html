@@ -72,10 +72,27 @@
             </nav>
 
             <div class="header-actions">
-                <a href="admin.html" class="btn-contact">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Đăng Nhập</span>
-                </a>
+                <div id="userAuthButtons">
+                    <!-- Shown when not logged in -->
+                    <div id="guestButtons" style="display: flex; gap: 10px;">
+                        <a href="login-user.html" class="btn-contact">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Đăng Nhập</span>
+                        </a>
+                        <a href="register-user.html" class="btn-contact" style="background: var(--color-blue);">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Đăng Ký</span>
+                        </a>
+                    </div>
+                    <!-- Shown when logged in -->
+                    <div id="userButtons" style="display: none; align-items: center; gap: 10px;">
+                        <span id="userNameDisplay" style="color: var(--color-text); font-weight: 500;"></span>
+                        <button onclick="handleUserLogoutGlobal()" class="btn-contact" style="background: #dc3545; border: none; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -229,7 +246,39 @@
         </div>
     </div>
 
+    <script src="js/user-auth.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Global function to handle user logout from header
+        function handleUserLogoutGlobal() {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                userAuth.logout();
+                window.location.reload();
+            }
+        }
+
+        // Check and update header based on login status
+        function updateHeaderAuthButtons() {
+            const guestButtons = document.getElementById('guestButtons');
+            const userButtons = document.getElementById('userButtons');
+            const userNameDisplay = document.getElementById('userNameDisplay');
+
+            if (userAuth.isLoggedIn()) {
+                const session = userAuth.getSession();
+                if (guestButtons) guestButtons.style.display = 'none';
+                if (userButtons) userButtons.style.display = 'flex';
+                if (userNameDisplay && session) {
+                    userNameDisplay.textContent = session.fullName;
+                }
+            } else {
+                if (guestButtons) guestButtons.style.display = 'flex';
+                if (userButtons) userButtons.style.display = 'none';
+            }
+        }
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', updateHeaderAuthButtons);
+    </script>
 </body>
 
 </html>
