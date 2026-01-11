@@ -175,7 +175,7 @@
                             <input type="checkbox" style="cursor: pointer;">
                             <span>Ghi nhớ đăng nhập</span>
                         </label>
-                        <a href="#" style="color: #e74c3c; font-size: 0.9rem; text-decoration: none;">Quên mật khẩu?</a>
+                        <a href="#" onclick="switchToForgotPassword(); return false;" style="color: #e74c3c; font-size: 0.9rem; text-decoration: none;">Quên mật khẩu?</a>
                     </div>
 
                     <button type="submit" style="width: 100%; padding: 15px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-bottom: 20px; transition: all 0.3s; box-sizing: border-box;">
@@ -200,7 +200,7 @@
                     </div>
 
                     <div style="text-align: center; margin-top: 12px;">
-                        <a href="#" style="color: #ffa500; font-size: 0.9rem; text-decoration: none; font-weight: 600;">QUÊN MẬT KHẨU?</a>
+                        <a href="#" onclick="switchToForgotPassword(); return false;" style="color: #ffa500; font-size: 0.9rem; text-decoration: none; font-weight: 600;">QUÊN MẬT KHẨU?</a>
                     </div>
                 </form>
             </div>
@@ -259,6 +259,33 @@
 
                     <div style="text-align: center; color: #666; font-size: 0.95rem;">
                         Đã có tài khoản?
+                        <a href="#" onclick="switchToLogin(); return false;" style="color: #ffa500; font-weight: 700; text-decoration: none;">ĐĂNG NHẬP</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Forgot Password Form -->
+            <div id="forgotPasswordForm" style="padding: 50px 40px 30px 40px; display: none;">
+                <h2 style="text-align: center; margin-bottom: 20px; font-size: 2rem; color: #333; font-weight: 700;">QUÊN MẬT KHẨU</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 0.9rem;">Nhập email của bạn, chúng tôi sẽ gửi liên kết đặt lại mật khẩu</p>
+
+                <form id="modalForgotPasswordForm">
+                    <div class="form-message" id="modalForgotPasswordMessage" style="margin-bottom: 15px; padding: 10px; border-radius: 6px; display: none;"></div>
+
+                    <div style="margin-bottom: 25px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: #666;">
+                            <i class="fas fa-envelope" style="color: #e74c3c;"></i>
+                            <span style="font-weight: 500;">Email</span>
+                        </div>
+                        <input type="email" id="modalForgotPasswordEmail" required style="width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; box-sizing: border-box;" placeholder="Nhập email của bạn">
+                    </div>
+
+                    <button type="submit" style="width: 100%; padding: 15px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-bottom: 20px; transition: all 0.3s; box-sizing: border-box;">
+                        <i class="fas fa-paper-plane"></i> Gửi Liên Kết
+                    </button>
+
+                    <div style="text-align: center; color: #666; font-size: 0.95rem;">
+                        Nhớ mật khẩu?
                         <a href="#" onclick="switchToLogin(); return false;" style="color: #ffa500; font-weight: 700; text-decoration: none;">ĐĂNG NHẬP</a>
                     </div>
                 </form>
@@ -403,8 +430,19 @@
         function switchToLogin() {
             const loginDiv = document.querySelector('#authModal #loginForm');
             const registerDiv = document.querySelector('#authModal #registerForm');
+            const forgotDiv = document.querySelector('#authModal #forgotPasswordForm');
             if (registerDiv) registerDiv.style.display = 'none';
+            if (forgotDiv) forgotDiv.style.display = 'none';
             if (loginDiv) loginDiv.style.display = 'block';
+        }
+
+        function switchToForgotPassword() {
+            const loginDiv = document.querySelector('#authModal #loginForm');
+            const registerDiv = document.querySelector('#authModal #registerForm');
+            const forgotDiv = document.querySelector('#authModal #forgotPasswordForm');
+            if (loginDiv) loginDiv.style.display = 'none';
+            if (registerDiv) registerDiv.style.display = 'none';
+            if (forgotDiv) forgotDiv.style.display = 'block';
         }
 
         function toggleModalPassword(inputId) {
@@ -587,6 +625,99 @@
                     messageDiv.style.borderRadius = '6px';
                 }
             }, 100);
+        });
+
+        // Modal Forgot Password Form Handler
+        document.getElementById('modalForgotPasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            const email = document.getElementById('modalForgotPasswordEmail').value.trim();
+            const messageDiv = document.getElementById('modalForgotPasswordMessage');
+
+            // Clear previous message
+            messageDiv.textContent = '';
+            messageDiv.style.display = 'none';
+
+            // Validate email
+            if (!email) {
+                messageDiv.textContent = 'Vui lòng nhập email!';
+                messageDiv.style.display = 'block';
+                messageDiv.style.padding = '10px';
+                messageDiv.style.background = '#fee';
+                messageDiv.style.color = '#c33';
+                messageDiv.style.borderRadius = '6px';
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+
+            // Simulate sending reset link
+            setTimeout(() => {
+                // Check if email exists in localStorage
+                const users = JSON.parse(localStorage.getItem('minhphuoc_users') || '[]');
+                const userExists = users.find(u => u.email === email);
+
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+
+                if (userExists) {
+                    messageDiv.textContent = 'Đã gửi liên kết đặt lại mật khẩu đến email của bạn. Vui lòng kiểm tra hộp thư!';
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.padding = '10px';
+                    messageDiv.style.background = '#efe';
+                    messageDiv.style.color = '#2a2';
+                    messageDiv.style.borderRadius = '6px';
+
+                    // Clear form
+                    document.getElementById('modalForgotPasswordEmail').value = '';
+
+                    // Show success message for 3 seconds then switch to login
+                    setTimeout(() => {
+                        switchToLogin();
+                        messageDiv.style.display = 'none';
+                    }, 3000);
+                } else {
+                    messageDiv.textContent = 'Email không tồn tại trong hệ thống!';
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.padding = '10px';
+                    messageDiv.style.background = '#fee';
+                    messageDiv.style.color = '#c33';
+                    messageDiv.style.borderRadius = '6px';
+                }
+            }, 1000);
+        });
+
+        // Google Login Handler
+        function handleGoogleLogin() {
+            alert('Tính năng đăng nhập Google sẽ được tích hợp sớm!\n\nGoogle OAuth đang được cấu hình...');
+            // TODO: Implement Google OAuth
+            // const provider = new firebase.auth.GoogleAuthProvider();
+            // firebase.auth().signInWithPopup(provider)
+        }
+
+        // Facebook Login Handler
+        function handleFacebookLogin() {
+            alert('Tính năng đăng nhập Facebook sẽ được tích hợp sớm!\n\nFacebook Login đang được cấu hình...');
+            // TODO: Implement Facebook Login
+            // const provider = new firebase.auth.FacebookAuthProvider();
+            // firebase.auth().signInWithPopup(provider)
+        }
+
+        // Add event listeners for social login buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const googleButtons = document.querySelectorAll('#authModal button:not([type="submit"]):not([type="button"][onclick])');
+            googleButtons.forEach(button => {
+                if (button.textContent.includes('GOOGLE')) {
+                    button.addEventListener('click', handleGoogleLogin);
+                } else if (button.textContent.includes('FACEBOOK')) {
+                    button.addEventListener('click', handleFacebookLogin);
+                }
+            });
         });
     </script>
 </body>
