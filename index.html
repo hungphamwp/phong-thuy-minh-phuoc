@@ -75,14 +75,10 @@
                 <div id="userAuthButtons">
                     <!-- Shown when not logged in -->
                     <div id="guestButtons" style="display: flex; gap: 10px;">
-                        <a href="login-user.html" class="btn-contact">
+                        <button onclick="showLoginModal()" class="btn-contact" style="border: none; cursor: pointer;">
                             <i class="fas fa-sign-in-alt"></i>
                             <span>Đăng Nhập</span>
-                        </a>
-                        <a href="register-user.html" class="btn-contact" style="background: var(--color-blue);">
-                            <i class="fas fa-user-plus"></i>
-                            <span>Đăng Ký</span>
-                        </a>
+                        </button>
                     </div>
                     <!-- Shown when logged in -->
                     <div id="userButtons" style="display: none; align-items: center; gap: 10px;">
@@ -138,6 +134,104 @@
             </div>
         </section>
     </main>
+
+    <!-- Login/Register Modal -->
+    <div id="authModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 10000; align-items: center; justify-content: center;">
+        <div style="background: white; border-radius: 16px; width: 90%; max-width: 450px; position: relative; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); max-height: 90vh; overflow-y: auto;">
+            <button onclick="closeAuthModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #ffa500; z-index: 1; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">
+                <i class="fas fa-times-circle"></i>
+            </button>
+
+            <!-- Login Form -->
+            <div id="loginForm" style="padding: 40px 30px;">
+                <h2 style="text-align: center; margin-bottom: 30px; font-size: 1.8rem; color: #333;">ĐĂNG NHẬP</h2>
+
+                <form id="modalLoginForm">
+                    <div class="form-message" id="modalLoginMessage" style="margin-bottom: 15px; padding: 10px; border-radius: 6px; display: none;"></div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Email</label>
+                        <input type="email" id="modalLoginEmail" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;" placeholder="Nhập email của bạn">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Mật khẩu</label>
+                        <div style="position: relative;">
+                            <input type="password" id="modalLoginPassword" required style="width: 100%; padding: 12px; padding-right: 45px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;" placeholder="Nhập mật khẩu">
+                            <button type="button" onclick="toggleModalPassword('modalLoginPassword')" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #999;">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-bottom: 15px; transition: transform 0.2s;">
+                        ĐĂNG NHẬP
+                    </button>
+
+                    <div style="text-align: center; margin-bottom: 15px; color: #999;">Hoặc</div>
+
+                    <button type="button" style="width: 100%; padding: 12px; background: white; color: #333; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; transition: background 0.2s;">
+                        <i class="fab fa-google" style="font-size: 1.2rem; color: #db4437;"></i>
+                        ĐĂNG NHẬP VỚI GOOGLE
+                    </button>
+
+                    <div style="text-align: center; color: #666;">
+                        Chưa có tài khoản?
+                        <a href="#" onclick="switchToRegister(); return false;" style="color: #ffa500; font-weight: 600; text-decoration: none;">ĐĂNG KÝ NGAY</a>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 10px;">
+                        <a href="#" style="color: #ffa500; font-size: 0.9rem; text-decoration: none;">QUÊN MẬT KHẨU?</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" style="padding: 40px 30px; display: none;">
+                <h2 style="text-align: center; margin-bottom: 30px; font-size: 1.8rem; color: #333;">ĐĂNG KÝ</h2>
+
+                <form id="modalRegisterForm">
+                    <div class="form-message" id="modalRegisterMessage" style="margin-bottom: 15px; padding: 10px; border-radius: 6px; display: none;"></div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Họ tên</label>
+                        <input type="text" id="modalRegisterName" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;" placeholder="Nhập họ và tên">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Email</label>
+                        <input type="email" id="modalRegisterEmail" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;" placeholder="Nhập email của bạn">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Mật khẩu</label>
+                        <div style="position: relative;">
+                            <input type="password" id="modalRegisterPassword" required minlength="6" style="width: 100%; padding: 12px; padding-right: 45px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;" placeholder="Nhập mật khẩu">
+                            <button type="button" onclick="toggleModalPassword('modalRegisterPassword')" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #999;">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-bottom: 15px; transition: transform 0.2s;">
+                        ĐĂNG KÝ
+                    </button>
+
+                    <div style="text-align: center; margin-bottom: 15px; color: #999;">Hoặc</div>
+
+                    <button type="button" style="width: 100%; padding: 12px; background: white; color: #333; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; transition: background 0.2s;">
+                        <i class="fab fa-google" style="font-size: 1.2rem; color: #db4437;"></i>
+                        ĐĂNG NHẬP VỚI GOOGLE
+                    </button>
+
+                    <div style="text-align: center; color: #666;">
+                        Đã có tài khoản?
+                        <a href="#" onclick="switchToLogin(); return false;" style="color: #ffa500; font-weight: 600; text-decoration: none;">ĐĂNG NHẬP</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -300,6 +394,125 @@
                 this.style.boxShadow = '0 4px 15px rgba(255, 215, 0, 0.4)';
             });
         }
+
+        // Modal Authentication Functions
+        function showLoginModal() {
+            document.getElementById('authModal').style.display = 'flex';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            // Clear form messages
+            const loginMsg = document.getElementById('modalLoginMessage');
+            const registerMsg = document.getElementById('modalRegisterMessage');
+            if (loginMsg) loginMsg.textContent = '';
+            if (registerMsg) registerMsg.textContent = '';
+        }
+
+        function switchToRegister() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function switchToLogin() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        function toggleModalPassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = event.target.closest('button');
+            const icon = button.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('authModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAuthModal();
+            }
+        });
+
+        // Modal Login Form Handler
+        document.getElementById('modalLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('modalLoginEmail').value;
+            const password = document.getElementById('modalLoginPassword').value;
+            const messageDiv = document.getElementById('modalLoginMessage');
+
+            // Clear previous message
+            messageDiv.textContent = '';
+            messageDiv.className = 'auth-message';
+
+            // Attempt login
+            const result = userAuth.login(email, password);
+
+            if (result.success) {
+                messageDiv.textContent = 'Đăng nhập thành công! Đang tải lại trang...';
+                messageDiv.classList.add('success');
+
+                // Reload page to update UI
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                messageDiv.textContent = result.message;
+                messageDiv.classList.add('error');
+            }
+        });
+
+        // Modal Register Form Handler
+        document.getElementById('modalRegisterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('modalRegisterName').value;
+            const email = document.getElementById('modalRegisterEmail').value;
+            const password = document.getElementById('modalRegisterPassword').value;
+            const messageDiv = document.getElementById('modalRegisterMessage');
+
+            // Clear previous message
+            messageDiv.textContent = '';
+            messageDiv.className = 'auth-message';
+
+            // Validate password length
+            if (password.length < 6) {
+                messageDiv.textContent = 'Mật khẩu phải có ít nhất 6 ký tự!';
+                messageDiv.classList.add('error');
+                return;
+            }
+
+            // Attempt registration (phone is optional, set to empty string)
+            const result = userAuth.register(email, password, fullName, '');
+
+            if (result.success) {
+                messageDiv.textContent = 'Đăng ký thành công! Bạn có thể đăng nhập ngay.';
+                messageDiv.classList.add('success');
+
+                // Switch to login form after 1.5 seconds
+                setTimeout(() => {
+                    switchToLogin();
+                    // Pre-fill email in login form
+                    document.getElementById('modalLoginEmail').value = email;
+                }, 1500);
+            } else {
+                messageDiv.textContent = result.message;
+                messageDiv.classList.add('error');
+            }
+        });
     </script>
 </body>
 
