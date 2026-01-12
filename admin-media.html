@@ -756,7 +756,7 @@
 
                 return `
                     <div class="wp-media-item ${isSelected ? 'selected' : ''} ${bulkMode ? 'bulk-mode' : ''}" 
-                         data-id="${m.id}" onclick="handleItemClick('${m.id}', event)">
+                         data-id="${m.id}" onclick="handleItemClick('${m.id}', event, this)">
                         <div class="check">
                             ${isSelected ? '<i class="fas fa-check"></i>' : ''}
                         </div>
@@ -797,10 +797,13 @@
         }
 
         // Handle item click
-        function handleItemClick(id, event) {
+        function handleItemClick(id, event, element) {
             if (bulkMode) {
                 toggleSelection(id);
             } else {
+                // Highlight selected item
+                document.querySelectorAll('.wp-media-item').forEach(item => item.classList.remove('selected'));
+                element.classList.add('selected');
                 showDetails(id);
             }
         }

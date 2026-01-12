@@ -4,8 +4,9 @@
 class MediaManager {
     constructor() {
         this.MEDIA_KEY = 'minhphuoc_media_library';
+        this.BUCKET_NAME = 'media'; // Chuẩn hóa tên bucket
         this.MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-        this.ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+        this.ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'];
     }
 
     // Get all media items
@@ -40,12 +41,14 @@ class MediaManager {
             id: item.id,
             filename: item.file_name,
             url: item.file_url,
-            type: item.file_type === 'image' ? 'image/jpeg' : item.file_type, // Approximation
+            type: item.file_type === 'image' ? 'image/jpeg' : item.file_type,
             size: item.file_size,
             uploadDate: item.created_at,
             title: item.caption || item.file_name,
             alt: item.alt_text || '',
-            usedIn: [] // Supabase implementation might need a separate relation for usage
+            caption: item.caption || '',
+            userId: item.uploaded_by,
+            usedIn: []
         }));
     }
 
@@ -108,12 +111,20 @@ class MediaManager {
             try {
                 const client = supabaseClient.getClient();
 
+                // Get current user for uploaded_by
+                let userId = null;
+                if (typeof auth !== 'undefined') {
+                    const session = auth.getSession();
+                    if (session) userId = session.id;
+                }
+
                 // 1. Upload to Storage
-                const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-                // Need to ensure bucket 'images' exists
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
+
                 const { data: uploadData, error: uploadError } = await client
                     .storage
-                    .from('images') // Assumed bucket name
+                    .from(this.BUCKET_NAME)
                     .upload(fileName, file);
 
                 if (uploadError) throw uploadError;
@@ -121,17 +132,18 @@ class MediaManager {
                 // 2. Get Public URL
                 const { data: urlData } = client
                     .storage
-                    .from('images')
+                    .from(this.BUCKET_NAME)
                     .getPublicUrl(fileName);
 
                 // 3. Save to Database
                 const mediaItem = {
-                    file_name: fileName,
+                    file_name: file.name,
                     file_url: urlData.publicUrl,
                     file_type: file.type.startsWith('image') ? 'image' : 'other',
                     file_size: file.size,
                     alt_text: metadata.alt || '',
-                    caption: metadata.title || file.name.split('.')[0]
+                    caption: metadata.title || file.name.split('.')[0],
+                    uploaded_by: userId
                 };
 
                 const { data, error } = await client
@@ -144,7 +156,7 @@ class MediaManager {
                 return { success: true, media: this.convertSupabaseToLocal(data)[0] };
             } catch (error) {
                 console.error('Supabase upload error:', error);
-                return { success: false, error: 'Lỗi Supabase: ' + error.message };
+                return { success: false, error: 'Lỗi Supabase: ' + (error.message || error.error_description) };
             }
         }
 
@@ -243,7 +255,7 @@ class MediaManager {
                 const { data: item } = await client.from('media_library').select('file_name').eq('id', id).single();
 
                 if (item) {
-                    await client.storage.from('images').remove([item.file_name]);
+                    await client.storage.from(this.BUCKET_NAME).remove([item.file_name]);
                 }
 
                 const { error } = await client

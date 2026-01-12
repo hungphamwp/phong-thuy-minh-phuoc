@@ -658,7 +658,7 @@
 
             noMediaMsg.style.display = 'none';
             grid.innerHTML = media.map(m => `
-                <div class="media-picker-item" data-id="${m.id}" onclick="selectMediaItem('${m.id}')">
+                <div class="media-picker-item" data-id="${m.id}" onclick="selectMediaItem('${m.id}', this)">
                     <img src="${m.url}" alt="${m.filename}">
                     <div class="media-picker-item-info">
                         <div class="media-picker-filename">${m.filename}</div>
@@ -672,11 +672,11 @@
         }
 
         // Select media item
-        window.selectMediaItem = function (id) {
+        window.selectMediaItem = function (id, element) {
             document.querySelectorAll('.media-picker-item').forEach(item => {
                 item.classList.remove('selected');
             });
-            event.currentTarget.classList.add('selected');
+            element.classList.add('selected');
             selectedMediaId = id;
             document.getElementById('selectMedia').disabled = false;
         };
@@ -785,7 +785,7 @@
             }
 
             grid.innerHTML = media.map(m => `
-                <div class="media-picker-item" data-id="${m.id}" onclick="selectMediaItem('${m.id}')">
+                <div class="media-picker-item" data-id="${m.id}" onclick="selectMediaItem('${m.id}', this)">
                     <img src="${m.url}" alt="${m.filename}">
                     <div class="media-picker-item-info">
                         <div class="media-picker-filename">${m.filename}</div>
