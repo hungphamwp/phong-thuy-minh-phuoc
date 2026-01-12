@@ -478,6 +478,29 @@
             if (isValid) {
                 // Save code to localStorage
                 localStorage.setItem(ACCESS_KEY, code);
+
+                // Update user package in Supabase if logged in
+                if (typeof userAuth !== 'undefined' && userAuth.isLoggedIn()) {
+                    const session = userAuth.getSession();
+                    if (session && session.type === 'supabase') {
+                        try {
+                            const client = supabaseClient.getClient();
+                            const { error: upgradeError } = await client
+                                .from('users')
+                                .update({ package_level: 'premium' })
+                                .eq('id', session.id);
+
+                            if (!upgradeError) {
+                                // Refresh session to reflect changes
+                                await userAuth.refreshSession();
+                                console.log('User upgraded to premium in DB');
+                            }
+                        } catch (e) {
+                            console.error('Error upgrading user level:', e);
+                        }
+                    }
+                }
+
                 // Hide error if shown
                 errorMsg.classList.remove('show');
                 // Show premium content
