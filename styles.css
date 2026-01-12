@@ -1436,14 +1436,16 @@ h6 {
    ========================================== */
 .footer {
     padding-top: var(--spacing-3xl);
+    padding-bottom: var(--spacing-3xl);
     position: relative;
     background-image: url('images/nen1.jpg');
-    background-size: 100% auto;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: #1a1a1a;
     border-top: 3px solid var(--color-gold);
-    min-height: 100vh;
+    min-height: auto;
+    /* Thường footer không nên để 100vh cố định */
     display: flex;
     align-items: center;
 }
