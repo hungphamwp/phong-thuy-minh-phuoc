@@ -84,13 +84,24 @@
                         </button>
                     </div>
                     <!-- Shown when logged in -->
-                    <div id="userButtons" style="display: none; align-items: center; gap: 10px;">
-                        <span id="userNameDisplay" style="color: var(--color-text); font-weight: 500;"></span>
-                        <button onclick="handleUserLogoutGlobal()" class="btn-contact"
-                            style="background: #dc3545; border: none; cursor: pointer;">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span>Đăng Xuất</span>
+                    <div id="userButtons" style="display: none; align-items: center; position: relative;">
+                        <button id="userDropdownBtn"
+                            style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-size: 0.95rem; color: #333; border-radius: 8px; transition: background 0.3s;">
+                            <i class="fas fa-user"></i>
+                            <span>Xin chào, <strong id="userNameDisplay">Người dùng</strong></span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.25rem;"></i>
                         </button>
+                        <div id="userDropdownMenu"
+                            style="display: none; position: absolute; right: 0; top: 100%; margin-top: 0.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 200px; overflow: hidden; z-index: 1000; border: 1px solid #e0e0e0;">
+                            <a href="profile.html"
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.25rem; color: #333; text-decoration: none; transition: background 0.3s; border-bottom: 1px solid #f0f0f0;">
+                                <i class="fas fa-user" style="color: #666;"></i> Thông tin cá nhân
+                            </a>
+                            <a href="#" onclick="handleUserLogoutGlobal(); return false;"
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.25rem; color: #e74c3c; text-decoration: none; transition: background 0.3s;">
+                                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

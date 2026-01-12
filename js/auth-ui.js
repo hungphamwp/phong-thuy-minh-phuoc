@@ -197,13 +197,38 @@ function updateHeaderAuthButtons() {
         if (userButtons) {
             userButtons.style.display = 'flex';
             if (userNameDisplay && session) {
-                userNameDisplay.textContent = session.fullName;
+                userNameDisplay.textContent = session.fullName || session.name || 'Người dùng';
             }
+        }
+
+        // Setup dropdown toggle
+        const dropdownBtn = document.getElementById('userDropdownBtn');
+        const dropdownMenu = document.getElementById('userDropdownMenu');
+
+        if (dropdownBtn && dropdownMenu) {
+            dropdownBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                dropdownMenu.style.display = dropdownMenu.style.display === 'none' ? 'block' : 'none';
+            });
+
+            document.addEventListener('click', function () {
+                dropdownMenu.style.display = 'none';
+            });
+
+            // Hover effects for dropdown items
+            dropdownMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('mouseenter', function () {
+                    this.style.background = '#f5f5f5';
+                });
+                link.addEventListener('mouseleave', function () {
+                    this.style.background = 'transparent';
+                });
+            });
         }
 
         // Update Mobile Menu
         if (mobileAuthLink) {
-            mobileAuthLink.innerHTML = `<i class="fas fa-sign-out-alt"></i> Đăng Xuất (${session.fullName})`;
+            mobileAuthLink.innerHTML = `<i class="fas fa-sign-out-alt"></i> Đăng Xuất (${session.fullName || session.name})`;
             mobileAuthLink.href = "#";
             mobileAuthLink.onclick = function (e) {
                 e.preventDefault();
