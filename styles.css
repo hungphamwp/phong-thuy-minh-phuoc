@@ -1701,8 +1701,8 @@ h6 {
 .page-banner {
     padding-top: 120px;
     padding-bottom: var(--spacing-3xl);
-    background: linear-gradient(135deg, #FFD1D4 0%, #FF858A 100%);
-    /* Đỏ nhạt hơn rất nhiều (pastel red) */
+    background: linear-gradient(135deg, #FF9B9F 0%, #FF4D54 100%);
+    /* Đậm hơn một chút so với pastel cũ */
     text-align: center;
     position: relative;
     overflow: hidden;
