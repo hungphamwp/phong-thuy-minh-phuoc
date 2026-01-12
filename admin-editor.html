@@ -140,10 +140,7 @@
                                 </label>
                                 <select id="postCategory" required
                                     style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95rem;">
-                                    <option value="Phong Thủy">Phong Thủy</option>
-                                    <option value="Tử Vi">Tử Vi</option>
-                                    <option value="Ngày Tốt">Ngày Tốt</option>
-                                    <option value="Hướng Dẫn">Hướng Dẫn</option>
+                                    <option value="">Đang tải danh mục...</option>
                                 </select>
                             </div>
 
@@ -306,6 +303,7 @@
     <script src="js/admin-auth.js"></script>
     <script src="js/admin-media.js"></script>
     <script src="js/admin-blog.js"></script>
+    <script src="js/admin-categories.js"></script>
     <script>
         (async function () {
             // Protect this page
@@ -319,6 +317,11 @@
             // Đảm bảo BlogManager sử dụng Supabase nếu đã kết nối
             if (typeof blogManager !== 'undefined') {
                 await blogManager.checkSupabaseConnection();
+            }
+
+            // Load categories từ database
+            if (typeof categoryManager !== 'undefined') {
+                await categoryManager.checkSupabaseConnection();
             }
 
             // Display user info
@@ -343,7 +346,6 @@
                     // Load post data
                     document.getElementById('postTitle').value = currentPost.title;
                     document.getElementById('postSlug').value = currentPost.slug;
-                    document.getElementById('postCategory').value = currentPost.category;
                     document.getElementById('postAuthor').value = currentPost.author;
                     document.getElementById('postImage').value = currentPost.featuredImage || '';
                     document.getElementById('postExcerpt').value = currentPost.excerpt;
@@ -360,6 +362,9 @@
                     }
                 }
             }
+
+            // Load categories after post data (so we can set the correct selected value)
+            await loadCategoryOptions();
         })();
 
         // Logout handler
@@ -413,6 +418,44 @@
         const urlParams = new URLSearchParams(window.location.search);
         const editingPostId = urlParams.get('id');
         let currentPost = null;
+
+        // Load categories from database
+        async function loadCategoryOptions() {
+            const select = document.getElementById('postCategory');
+            try {
+                const categories = await categoryManager.getAllCategories();
+
+                if (categories.length === 0) {
+                    // Fallback to default categories if none exist
+                    select.innerHTML = `
+                        <option value="Quỹ Khuyến Học">Quỹ Khuyến Học</option>
+                        <option value="Phong Thủy">Phong Thủy</option>
+                        <option value="Tử Vi">Tử Vi</option>
+                        <option value="Ngày Tốt Xấu">Ngày Tốt Xấu</option>
+                        <option value="Hướng Dẫn">Hướng Dẫn</option>
+                    `;
+                } else {
+                    select.innerHTML = categories.map(cat =>
+                        `<option value="${cat.name}">${cat.name}</option>`
+                    ).join('');
+                }
+
+                // If editing, set the current category
+                if (currentPost && currentPost.category) {
+                    select.value = currentPost.category;
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+                // Fallback
+                select.innerHTML = `
+                    <option value="Quỹ Khuyến Học">Quỹ Khuyến Học</option>
+                    <option value="Phong Thủy">Phong Thủy</option>
+                    <option value="Tử Vi">Tử Vi</option>
+                    <option value="Ngày Tốt Xấu">Ngày Tốt Xấu</option>
+                    <option value="Hướng Dẫn">Hướng Dẫn</option>
+                `;
+            }
+        }
 
         // Show message
         function showMessage(message, type = 'success') {
