@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm Ngày Tốt - Tính Năng Premium - Minh Phước Feng Shui</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .premium-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 100px 20px 50px;
+        }
+
+        .premium-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border: 3px solid #ffd700;
+        }
+
+        .premium-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        .premium-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .premium-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .premium-subtitle strong {
+            color: #ffd700;
+            font-weight: 700;
+        }
+
+        .premium-price-box {
+            background: #fff9e6;
+            border: 2px solid #ffd700;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .premium-price {
+            font-size: 2.5rem;
+            color: #28a745;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .premium-price-label {
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .premium-benefits {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .premium-benefits h3 {
+            color: #ff6b35;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .premium-benefits ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .premium-benefits li {
+            padding: 12px 0;
+            color: #555;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .premium-benefits li:last-child {
+            border-bottom: none;
+        }
+
+        .premium-benefits i.fa-check {
+            color: #28a745;
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .premium-contact {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .premium-contact p {
+            color: #666;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-zalo,
+        .btn-messenger {
+            padding: 15px 35px;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-zalo {
+            background: linear-gradient(135deg, #0068ff 0%, #0052cc 100%);
+        }
+
+        .btn-messenger {
+            background: linear-gradient(135deg, #0084ff 0%, #0066cc 100%);
+        }
+
+        .btn-zalo:hover,
+        .btn-messenger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .premium-back {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .premium-back a {
+            color: #666;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .premium-back a:hover {
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .premium-container {
+                padding: 30px 20px;
+            }
+
+            .premium-title {
+                font-size: 1.8rem;
+            }
+
+            .premium-price {
+                font-size: 2rem;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+            }
+
+            .btn-zalo,
+            .btn-messenger {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="premium-page">
+        <div class="premium-container">
+            <!-- Icon -->
+            <div class="premium-icon">
+                <i class="fas fa-lock" style="font-size: 3rem; color: #ff6b35;"></i>
+            </div>
+
+            <!-- Title -->
+            <h1 class="premium-title">Tính Năng Bị Hạn Chế</h1>
+            <p class="premium-subtitle">
+                Tính năng <strong>Tìm ngày tốt</strong> chỉ dành cho thành viên có gói tài trợ.
+            </p>
+
+            <!-- Price Box -->
+            <div class="premium-price-box">
+                <div
+                    style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
+                    <i class="fas fa-gift" style="font-size: 2rem; color: #28a745;"></i>
+                    <div class="premium-price-label">Gói tài trợ ưu đãi với mức phí:</div>
+                </div>
+                <div class="premium-price">199.000 VNĐ/Năm</div>
+            </div>
+
+            <!-- Benefits -->
+            <div class="premium-benefits">
+                <h3>
+                    <i class="fas fa-sparkles"></i>
+                    Lợi ích khi nâng cấp:
+                </h3>
+                <ul>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Truy cập đầy đủ các tính năng ứng dụng</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Truy cập đầy đủ các tính năng Kỷ Môn Độn Giáp</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Phân tích Ngũ Phú, Phong Thủy, Mệnh, Chiêu Lực</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Hỗ trợ ưu tiên và cập nhật tính năng mới</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="premium-contact">
+                <p><strong>Liên hệ hỗ trợ để nâng cấp:</strong></p>
+                <div class="contact-buttons">
+                    <a href="https://zalo.me/0888081050" target="_blank" class="btn-zalo">
+                        <i class="fab fa-z" style="font-size: 1.3rem;"></i>
+                        Zalo
+                    </a>
+                    <a href="https://m.me/YOUR_FB" target="_blank" class="btn-messenger">
+                        <i class="fab fa-facebook-messenger" style="font-size: 1.3rem;"></i>
+                        Messenger
+                    </a>
+                </div>
+            </div>
+
+            <!-- Back Link -->
+            <div class="premium-back">
+                <a href="index.html">
+                    <i class="fas fa-arrow-left"></i>
+                    Quay lại trang trước
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

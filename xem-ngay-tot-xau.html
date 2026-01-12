@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xem Ngày Tốt Xấu - Minh Phước Feng Shui</title>
+    <meta name="description"
+        content="Xem ngày tốt xấu, ngày hoàng đạo cho cưới hỏi, khai trương, động thổ, nhập trạch. Tính toán chính xác giờ hoàng đạo.">
+
+    <!-- Using System Fonts - No External Fonts -->
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="logo.jpg" alt="Minh Phước Feng Shui" class="logo-img">
+                <div class="logo-text">
+                    <span class="brand-name">Minh Phước</span>
+                    <span class="brand-tagline">Feng Shui</span>
+                </div>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-yin-yang"></i>
+                            <span>Trang Chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gioi-thieu.html" class="nav-link">
+                            <img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon">
+                            <span>Giới Thiệu</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="lap-la-tu-vi.html" class="nav-link">
+                            <i class="fas fa-star-and-crescent"></i>
+                            <span>Lập Lá Tử Vi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="xem-ngay-tot-xau.html" class="nav-link active">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Xem Ngày Tốt Xấu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="tin-tuc.html" class="nav-link">
+                            <i class="fas fa-book-open"></i>
+                            <span>Quỹ Khuyến Học</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lien-he.html" class="nav-link">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <span>Liên Hệ</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <div id="userAuthButtons">
+                    <!-- Shown when not logged in -->
+                    <div id="guestButtons" style="display: flex; gap: 10px;">
+                        <button onclick="showLoginModal()" class="btn-contact" style="border: none; cursor: pointer;">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Đăng Nhập</span>
+                        </button>
+                    </div>
+                    <!-- Shown when logged in -->
+                    <div id="userButtons" style="display: none; align-items: center; gap: 10px;">
+                        <span id="userNameDisplay" style="color: var(--color-text); font-weight: 500;"></span>
+                        <button onclick="handleUserLogoutGlobal()" class="btn-contact"
+                            style="background: #dc3545; border: none; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-list">
+            <li><a href="index.html"><i class="fas fa-yin-yang"></i> Trang Chủ</a></li>
+            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới
+                    Thiệu</a></li>
+
+            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+            <li><a href="xem-ngay-tot-xau.html" class="active"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt Xấu</a>
+            </li>
+            <li><a href="tin-tuc.html"><i class="fas fa-book-open"></i> Quỹ Khuyến Học</a></li>
+            <li><a href="lien-he.html"><i class="fas fa-envelope-open-text"></i> Liên Hệ</a></li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Banner -->
+        <section class="page-banner">
+            <div class="page-banner-overlay"></div>
+            <div class="page-banner-content">
+                <h1 class="page-title">Xem Ngày Tốt Xấu</h1>
+                <nav class="breadcrumb">
+                    <a href="index.html">Trang chủ</a>
+                    <span>/</span>
+
+                    <span>Xem Ngày Tốt Xấu</span>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Ngay Tot Tool Section - Traditional Style -->
+        <section class="ngaytot-section fengshui-theme">
+            <div class="ngaytot-container">
+                <!-- Free Version - For non-logged-in users -->
+                <div id="freeCalendar" style="display: none;">
+                    <div class="calendar-notice"
+                        style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                        <i class="fas fa-info-circle" style="font-size: 2rem; color: #ff6b35; margin-bottom: 10px;"></i>
+                        <h3 style="margin-bottom: 10px; color: #333;">Bạn đang xem phiên bản miễn phí</h3>
+                        <p style="margin-bottom: 15px; color: #666;">Đăng nhập để trải nghiệm đầy đủ tính năng lịch vạn
+                            sự với nhiều thông tin chi tiết hơn</p>
+                        <a href="#" onclick="showLoginModal(); return false;" class="btn-primary"
+                            style="display: inline-block; padding: 12px 30px; background: var(--color-red); color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                            <i class="fas fa-sign-in-alt"></i> Đăng nhập ngay
+                        </a>
+                        <a href="#" onclick="showLoginModal(); setTimeout(switchToRegister, 100); return false;"
+                            class="btn-secondary"
+                            style="display: inline-block; padding: 12px 30px; margin-left: 10px; background: var(--color-blue); color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                            <i class="fas fa-user-plus"></i> Đăng ký tài khoản
+                        </a>
+                    </div>
+                    <iframe src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu_free/index.html"
+                        width="100%" height="2700px" frameborder="0" allowfullscreen
+                        title="Lịch Vạn Sự - Phiên bản miễn phí" style="border: none; border-radius: 8px;">
+                    </iframe>
+                </div>
+
+                <!-- Premium Version - For logged-in users -->
+                <div id="premiumCalendar" style="display: none;">
+                    <div class="calendar-notice"
+                        style="background: #d4edda; border: 2px solid #28a745; border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                        <i class="fas fa-crown" style="font-size: 2rem; color: #ffd700; margin-bottom: 10px;"></i>
+                        <h3 style="margin-bottom: 10px; color: #333;">Chào mừng bạn đã đăng nhập!</h3>
+                        <p id="userWelcome" style="margin-bottom: 10px; color: #666;"></p>
+                        <button onclick="handleUserLogoutGlobal()" class="btn-secondary"
+                            style="padding: 8px 20px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                        </button>
+                    </div>
+                    <iframe src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu/index.html" width="100%"
+                        height="2700px" frameborder="0" allowfullscreen title="Lịch Vạn Sự - Phiên bản đầy đủ"
+                        style="border: none; border-radius: 8px;">
+                    </iframe>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 280px; gap: 2rem; display: none;">
+                    <!-- Main Content -->
+                    <div>
+                        <!-- Traditional Form Card -->
+                        <div class="form-card-traditional">
+                            <form id="ngaytotForm">
+                                <div
+                                    style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 1rem; align-items: end;">
+                                    <div>
+                                        <label for="phanLoai">Phân loại ngày</label>
+                                        <select id="phanLoai" name="phanLoai" class="select-traditional">
+                                            <option value="all">Theo thứ tự ngày</option>
+                                            <option value="cuoiHoi">Ngày cưới hỏi</option>
+                                            <option value="khaiTruong">Ngày khai trương</option>
+                                            <option value="dongTho">Ngày động thổ</option>
+                                            <option value="nhapTrach">Ngày nhập trạch</option>
+                                            <option value="xuatHanh">Ngày xuất hành</option>
+                                            <option value="muaXe">Ngày mua xe</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="thangXem">Tháng cần xem</label>
+                                        <select id="thangXem" name="thangXem" class="select-traditional">
+                                            <!-- Generated by JS -->
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="namXem">Năm</label>
+                                        <select id="namXem" name="namXem" class="select-traditional">
+                                            <!-- Generated by JS -->
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn-submit-traditional"
+                                        style="margin-top: 0; padding: 12px 24px;">
+                                        Xem ngày
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Section Banner -->
+                        <div class="section-banner-traditional">
+                            <h2><em>Danh sách ngày tốt xấu</em> <span id="bannerMonthYear">tháng 12 năm 2025</span></h2>
+                        </div>
+
+                        <!-- Day List -->
+                        <div class="day-list-container" id="dayListContainer">
+                            <!-- Days will be generated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div>
+                        <div class="sidebar-traditional">
+                            <div class="sidebar-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h3>Điền Thông Tin</h3>
+                            <p style="text-align: center; font-size: 0.9rem; margin-bottom: 1.5rem; opacity: 0.9;">
+                                Chọn tháng và năm để xem danh sách ngày tốt xấu chi tiết
+                            </p>
+
+                            <h3 style="margin-top: 2rem;">Xem 12 Tháng</h3>
+                            <div class="months-grid" id="monthsGrid">
+                                <!-- Generated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Day Detail Modal -->
+        <div class="day-detail-modal" id="dayDetailModal" style="display: none;">
+            <div class="day-detail-content">
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+
+                <div class="day-detail-header">
+                    <div class="day-number" id="detailDayNumber">19</div>
+                    <div class="day-info">
+                        <div class="solar-date" id="detailSolarDate">Thứ Năm, 19/12/2024</div>
+                        <div class="lunar-date" id="detailLunarDate">19/11 Âm lịch</div>
+                        <div class="can-chi" id="detailCanChi">Ngày Giáp Tý</div>
+                    </div>
+                    <div class="day-score" id="detailScore">
+                        <div class="score-value">85</div>
+                        <div class="score-label">điểm</div>
+                    </div>
+                </div>
+
+                <div class="day-detail-rating" id="detailRating">
+                    <span class="rating-badge excellent">Rất tốt</span>
+                    <span class="rating-text">cho cưới hỏi</span>
+                </div>
+
+                <div class="day-detail-section">
+                    <h4><i class="fas fa-sun"></i> Sao Ngày</h4>
+                    <div class="sao-ngay-info" id="detailSaoNgay">
+                        <span class="sao-badge hoang-dao">Hoàng Đạo - Thanh Long</span>
+                        <p>Cát tinh, rất tốt cho mọi việc</p>
+                    </div>
+                </div>
+
+                <div class="day-detail-section">
+                    <h4><i class="fas fa-calendar-day"></i> Trực Ngày</h4>
+                    <div class="truc-info" id="detailTruc">
+                        <span class="truc-badge tot">Trực Thành</span>
+                        <p>Tốt cho: Cưới hỏi, Khai trương, Ký kết</p>
+                    </div>
+                </div>
+
+                <div class="day-detail-section">
+                    <h4><i class="fas fa-clock"></i> Giờ Hoàng Đạo</h4>
+                    <div class="gio-hoang-dao-grid" id="detailGioHoangDao">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <div class="day-detail-section">
+                    <h4><i class="fas fa-list-check"></i> Phân tích chi tiết</h4>
+                    <div class="factors-list" id="detailFactors">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <div class="day-detail-section" id="detailWarnings" style="display: none;">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Cảnh báo</h4>
+                    <div class="warnings-list" id="detailWarningsList">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <section class="ngaytot-info-section">
+            <div class="info-container">
+                <div class="section-header">
+                    <h2>Hướng dẫn xem ngày tốt xấu</h2>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <h3>Chọn ngày Hoàng Đạo</h3>
+                        <p>Ngày Hoàng Đạo là ngày có sao cát như Thanh Long, Minh Đường, Kim Quỹ, Thiên Đức, Ngọc Đường,
+                            Tư Mệnh. Phù hợp cho các việc hệ trọng.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-clock"></i></div>
+                        <h3>Giờ Hoàng Đạo</h3>
+                        <p>Mỗi ngày có 6 giờ Hoàng Đạo (giờ tốt) và 6 giờ Hắc Đạo (giờ xấu). Nên khởi sự vào giờ Hoàng
+                            Đạo để công việc thuận lợi.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-ban"></i></div>
+                        <h3>Tránh ngày xấu</h3>
+                        <p>Các ngày Tam Nương (3, 7, 13, 18, 22, 27 âm lịch), Nguyệt Kỵ (5, 14, 23), Thọ Tử nên tránh
+                            làm việc lớn, đặc biệt cưới hỏi.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-user"></i></div>
+                        <h3>Hợp tuổi</h3>
+                        <p>Khi chọn ngày cần xem xét tuổi của gia chủ/đôi uyên ương. Tránh ngày xung với tuổi sẽ giúp
+                            công việc được thuận lợi hơn.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-container">
+                <div class="cta-content">
+                    <h2>Cần tư vấn chọn ngày chính xác?</h2>
+                    <p>Liên hệ với chuyên gia phong thủy để được tư vấn chọn ngày phù hợp nhất với tuổi và mệnh của bạn
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="tel:0888081050" class="btn-primary">
+                            <i class="fas fa-user-circle"></i> Gọi ngay: 0888.08.1050
+                        </a>
+                        <a href="lien-he.html" class="btn-secondary">
+                            <i class="fas fa-envelope"></i> Gửi yêu cầu
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="Minh Phước" class="footer-logo-img">
+                        <div>
+                            <span class="brand-name">Minh Phước</span>
+                            <span class="brand-tagline">Feng Shui</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Minh Phước Feng Shui - Dịch vụ tư vấn phong thủy, tử vi chuyên nghiệp, uy tín
+                        hàng đầu Việt Nam.</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Dịch Vụ</h4>
+                        <ul>
+                            <li><a href="lap-la-tu-vi.html">Lập Lá Tử Vi</a></li>
+                            <li><a href="xem-ngay-tot-xau.html">Xem Ngày Tốt Xấu</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Kết</h4>
+                        <ul>
+                            <li><a href="index.html">Trang Chủ</a></li>
+                            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
+                            <li><a href="tin-tuc.html">Quỹ Khuyến Học</a></li>
+                            <li><a href="lien-he.html">Liên Hệ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Hệ</h4>
+                        <ul>
+                            <li><a href="tel:0888081050"><i class="fas fa-phone"></i> 0888.08.1050</a></li>
+                            <li><a href="mailto:contact@minhphuoc.com"><i class="fas fa-envelope"></i>
+                                    contact@minhphuoc.com</a></li>
+                            <li><i class="fas fa-map-marker-alt"></i> 57 Đường 7A phường An Lạc, TP.HCM</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Chùa Quan Âm Cát, xã Phan Rí Cửa, Lâm Đồng</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2024 Minh Phước Feng Shui. Bản quyền thuộc về Minh Phước.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/user-auth.js"></script>
+    <script src="js/auth-ui.js"></script>
+    <script src="js/lunar-calendar.js"></script>
+    <script src="js/ngay-tot.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Check user login status and display appropriate calendar
+        function checkUserLoginAndDisplayCalendar() {
+            const freeCalendar = document.getElementById('freeCalendar');
+            const premiumCalendar = document.getElementById('premiumCalendar');
+            const userWelcome = document.getElementById('userWelcome');
+
+            if (userAuth.isLoggedIn()) {
+                // User is logged in - show premium calendar
+                const session = userAuth.getSession();
+                freeCalendar.style.display = 'none';
+                premiumCalendar.style.display = 'block';
+
+                if (userWelcome && session) {
+                    userWelcome.textContent = `Xin chào, ${session.fullName}! Bạn đang sử dụng phiên bản đầy đủ.`;
+                }
+            } else {
+                // User is not logged in - show free calendar
+                freeCalendar.style.display = 'block';
+                premiumCalendar.style.display = 'none';
+            }
+        }
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            checkUserLoginAndDisplayCalendar();
+        });
+    </script>
+    <script>
+        // Ngay Tot Page Script - Traditional List Style
+        document.addEventListener('DOMContentLoaded', function () {
+            let currentYear = new Date().getFullYear();
+            let currentMonth = new Date().getMonth() + 1;
+            let selectedEvent = 'all';
+
+            const weekdayNames = ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+
+            // Generate tháng xem options
+            const thangXemSelect = document.getElementById('thangXem');
+            for (let m = 1; m <= 12; m++) {
+                const opt = document.createElement('option');
+                opt.value = m;
+                opt.textContent = 'Tháng ' + m;
+                if (m === currentMonth) opt.selected = true;
+                thangXemSelect.appendChild(opt);
+            }
+
+            // Generate năm xem options
+            const namXemSelect = document.getElementById('namXem');
+            for (let y = currentYear; y <= currentYear + 2; y++) {
+                const opt = document.createElement('option');
+                opt.value = y;
+                opt.textContent = y;
+                namXemSelect.appendChild(opt);
+            }
+
+            // Generate months grid
+            const monthsGrid = document.getElementById('monthsGrid');
+            for (let m = 1; m <= 12; m++) {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.className = 'month-link';
+                link.textContent = 'Tháng ' + m;
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    currentMonth = m;
+                    document.getElementById('thangXem').value = m;
+                    renderDayList();
+                });
+                monthsGrid.appendChild(link);
+            }
+
+            // Form submit
+            document.getElementById('ngaytotForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                selectedEvent = document.getElementById('phanLoai').value;
+                currentMonth = parseInt(document.getElementById('thangXem').value);
+                currentYear = parseInt(document.getElementById('namXem').value);
+                renderDayList();
+            });
+
+            // Modal close
+            document.getElementById('modalClose').addEventListener('click', function () {
+                document.getElementById('dayDetailModal').style.display = 'none';
+            });
+
+            document.getElementById('dayDetailModal').addEventListener('click', function (e) {
+                if (e.target === this) {
+                    this.style.display = 'none';
+                }
+            });
+
+            // Render day list (tuvi.vn style)
+            function renderDayList() {
+                // Update banner
+                document.getElementById('bannerMonthYear').textContent =
+                    `tháng ${currentMonth} năm ${currentYear}`;
+
+                const container = document.getElementById('dayListContainer');
+                container.innerHTML = '';
+
+                const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+                const eventType = selectedEvent === 'all' ? 'cuoiHoi' : selectedEvent;
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const date = new Date(currentYear, currentMonth - 1, day);
+                    const weekday = weekdayNames[date.getDay()];
+
+                    // Get lunar date
+                    const lunar = LunarCalendar.solarToLunar(currentYear, currentMonth, day);
+                    if (!lunar) continue;
+
+                    // Get day evaluation
+                    const evaluation = NgayTotEngine.evaluateDay(currentYear, currentMonth, day, eventType, null);
+                    if (!evaluation) continue;
+
+                    // Get Can Chi info
+                    const dayCanChi = LunarCalendar.getDayCanChi(currentYear, currentMonth, day);
+                    const monthCanChi = LunarCalendar.getMonthCanChi(lunar.year, lunar.month);
+                    const yearCanChi = LunarCalendar.getYearCanChi(lunar.year);
+
+                    // Create day card
+                    const card = document.createElement('div');
+                    card.className = 'day-card';
+                    card.innerHTML = `
+                        <div class="day-card-number">
+                            <span class="weekday">${weekday}</span>
+                            <span class="day">${day}</span>
+                            <span class="lunar-small">Tháng ${currentMonth}</span>
+                        </div>
+                        <div class="day-card-content">
+                            <div class="date-line">
+                                - ${weekday}, <a href="#" class="day-link" data-day="${day}">Ngày ${day}/${currentMonth}/${currentYear}</a> - ${lunar.day}/${lunar.month}/${lunar.year} Âm lịch.
+                            </div>
+                            <div class="bat-tu">
+                                - Bát tự: Ngày: <strong>${dayCanChi.full}</strong>, Tháng: <strong>${monthCanChi.full}</strong>, Năm: <strong>${yearCanChi.full}</strong>
+                            </div>
+                            <div class="sao-ngay">
+                                - <em>${evaluation.saoNgay.sao.description}</em>
+                            </div>
+                            <div>
+                                <span class="hoang-dao-info ${evaluation.saoNgay.type === 'hoangDao' ? 'hoang-dao' : 'hac-dao'}">
+                                    Là ngày ${evaluation.saoNgay.sao.name} ${evaluation.saoNgay.type === 'hoangDao' ? 'Hoàng Đạo' : 'Hắc Đạo'}
+                                </span>
+                            </div>
+                            <div class="truc-info">
+                                - Trực: <strong>${evaluation.truc.name}</strong>
+                            </div>
+                        </div>
+                    `;
+
+                    // Add click handler
+                    card.querySelector('.day-link').addEventListener('click', function (e) {
+                        e.preventDefault();
+                        showDayDetail(currentYear, currentMonth, day);
+                    });
+
+                    container.appendChild(card);
+                }
+            }
+
+            // Show day detail modal
+            function showDayDetail(year, month, day) {
+                const eventType = selectedEvent === 'all' ? 'cuoiHoi' : selectedEvent;
+                const evaluation = NgayTotEngine.evaluateDay(year, month, day, eventType, null);
+                if (!evaluation) return;
+
+                const modal = document.getElementById('dayDetailModal');
+                const weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+                const date = new Date(year, month - 1, day);
+
+                // Update header
+                document.getElementById('detailDayNumber').textContent = day;
+                document.getElementById('detailSolarDate').textContent =
+                    `${weekdays[date.getDay()]}, ${day}/${month}/${year}`;
+                document.getElementById('detailLunarDate').textContent =
+                    `${evaluation.lunarDate.day}/${evaluation.lunarDate.month} Âm lịch`;
+                document.getElementById('detailCanChi').textContent =
+                    `Ngày ${evaluation.dayCanChi.full}`;
+                document.getElementById('detailScore').innerHTML = `
+                    <div class="score-value">${evaluation.score}</div>
+                    <div class="score-label">điểm</div>
+                `;
+                document.getElementById('detailScore').style.background = evaluation.rating.color;
+
+                // Update rating
+                document.getElementById('detailRating').innerHTML = `
+                    <span class="rating-badge ${evaluation.rating.level}">${evaluation.rating.text}</span>
+                    <span class="rating-text">cho ${evaluation.event.name.toLowerCase()}</span>
+                `;
+
+                // Update sao ngày
+                const saoType = evaluation.saoNgay.type === 'hoangDao' ? 'hoang-dao' : 'hac-dao';
+                document.getElementById('detailSaoNgay').innerHTML = `
+                    <span class="sao-badge ${saoType}">${evaluation.saoNgay.type === 'hoangDao' ? 'Hoàng Đạo' : 'Hắc Đạo'} - ${evaluation.saoNgay.sao.name}</span>
+                    <p>${evaluation.saoNgay.sao.description}</p>
+                `;
+
+                // Update trực
+                document.getElementById('detailTruc').innerHTML = `
+                    <span class="truc-badge ${evaluation.truc.tot ? 'tot' : 'xau'}">Trực ${evaluation.truc.name}</span>
+                    <p>Tốt cho: ${evaluation.truc.viec.join(', ')}</p>
+                `;
+
+                // Update giờ hoàng đạo
+                document.getElementById('detailGioHoangDao').innerHTML = evaluation.gioHoangDao.map(gio => `
+                    <div class="gio-item">
+                        <span class="gio-chi">${gio.chi}</span>
+                        <span class="gio-time">${gio.timeRange}</span>
+                    </div>
+                `).join('');
+
+                // Update factors
+                document.getElementById('detailFactors').innerHTML = evaluation.factors.map(f => `
+                    <div class="factor-item ${f.type}">
+                        <i class="fas ${f.type === 'positive' ? 'fa-check-circle' : f.type === 'negative' ? 'fa-times-circle' : 'fa-exclamation-circle'}"></i>
+                        <span>${f.text}</span>
+                    </div>
+                `).join('');
+
+                // Update warnings
+                if (evaluation.badDays.length > 0) {
+                    document.getElementById('detailWarnings').style.display = 'block';
+                    document.getElementById('detailWarningsList').innerHTML = evaluation.badDays.map(bd => `
+                        <div class="warning-item ${bd.severity}">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>${bd.type}: ${bd.desc}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    document.getElementById('detailWarnings').style.display = 'none';
+                }
+
+                modal.style.display = 'flex';
+            }
+
+            // Initial render
+            renderDayList();
+        });
+    </script>
+</body>
+
+</html>

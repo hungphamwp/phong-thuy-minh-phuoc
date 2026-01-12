@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minh Phước Feng Shui - Phong Thủy Chuyên Nghiệp</title>
+    <meta name="description"
+        content="Minh Phước Feng Shui - Dịch vụ phong thủy, tử vi, xem ngày tốt xấu uy tín. Lập lá tử vi, tư vấn phong thủy nhà ở, văn phòng.">
+
+    <!-- Using System Fonts - No External Fonts -->
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <img src="logo.jpg" alt="Minh Phước Feng Shui" class="logo-img">
+                <div class="logo-text">
+                    <span class="brand-name">Minh Phước</span>
+                    <span class="brand-tagline">Feng Shui</span>
+                </div>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">
+                            <i class="fas fa-yin-yang"></i>
+                            <span>Trang Chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gioi-thieu.html" class="nav-link">
+                            <img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon">
+                            <span>Giới Thiệu</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="lap-la-tu-vi.html" class="nav-link">
+                            <i class="fas fa-star-and-crescent"></i>
+                            <span>Lập Lá Tử Vi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="xem-ngay-tot-xau.html" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Xem Ngày Tốt Xấu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="tin-tuc.html" class="nav-link">
+                            <i class="fas fa-book-open"></i>
+                            <span>Quỹ Khuyến Học</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lien-he.html" class="nav-link">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <span>Liên Hệ</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <div id="userAuthButtons">
+                    <!-- Shown when not logged in -->
+                    <div id="guestButtons" style="display: flex; gap: 10px;">
+                        <button onclick="showLoginModal()" class="btn-contact" style="border: none; cursor: pointer;">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Đăng Nhập</span>
+                        </button>
+                    </div>
+                    <!-- Shown when logged in -->
+                    <div id="userButtons" style="display: none; align-items: center; gap: 10px;">
+                        <span id="userNameDisplay" style="color: var(--color-text); font-weight: 500;"></span>
+                        <button onclick="handleUserLogoutGlobal()" class="btn-contact"
+                            style="background: #dc3545; border: none; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-list">
+            <li><a href="index.html" class="active"><i class="fas fa-yin-yang"></i> Trang Chủ</a></li>
+            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới
+                    Thiệu</a></li>
+
+            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+            <li><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt Xấu</a></li>
+            <li><a href="tin-tuc.html"><i class="fas fa-book-open"></i> Quỹ Khuyến Học</a></li>
+            <li><a href="lien-he.html"><i class="fas fa-envelope-open-text"></i> Liên Hệ</a></li>
+            <li><a href="admin.html" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Lich Van Su Iframe Section -->
+        <section style="padding: 6rem 2rem 3rem 2rem; background: var(--color-bg);">
+            <div style="max-width: 1400px; margin: 0 auto;">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h2 style="font-size: 2rem; color: var(--color-red); margin-bottom: 0.5rem;">Lịch Vạn Sự</h2>
+                    <p style="color: var(--color-text-light); font-size: 1rem; margin-bottom: 1.5rem;">Xem lịch âm
+                        dương, ngày tốt xấu miễn phí</p>
+                    <a href="tim-ngay-tot-premium.html"
+                        style="padding: 12px 30px; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); color: #333; text-decoration: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); transition: transform 0.2s, box-shadow 0.2s; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-star" style="color: #ff6b35;"></i>
+                        Tìm Ngày Tốt - Tính Năng Premium
+                        <i class="fas fa-crown" style="color: #ff6b35;"></i>
+                    </a>
+                </div>
+                <iframe src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu_free/index.html" width="100%"
+                    height="2700px" frameborder="0" allowfullscreen title="Lịch Vạn Sự - Minh Phước"
+                    style="display: block; border: none; border-radius: 16px; box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);">
+                </iframe>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login/Register Modal will be injected by js/auth-ui.js -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="Minh Phước" class="footer-logo-img">
+                        <div>
+                            <span class="brand-name">Minh Phước</span>
+                            <span class="brand-tagline">Feng Shui</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Minh Phước Feng Shui - Dịch vụ tư vấn phong thủy, tử vi chuyên nghiệp, uy tín
+                        hàng đầu Việt Nam.</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Dịch Vụ</h4>
+                        <ul>
+                            <li><a href="lap-la-tu-vi.html">Lập Lá Tử Vi</a></li>
+                            <li><a href="xem-ngay-tot-xau.html">Xem Ngày Tốt Xấu</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Kết</h4>
+                        <ul>
+                            <li><a href="index.html">Trang Chủ</a></li>
+                            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
+                            <li><a href="tin-tuc.html">Quỹ Khuyến Học</a></li>
+                            <li><a href="lien-he.html">Liên Hệ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Hệ</h4>
+                        <ul>
+                            <li><a href="tel:0888081050"><i class="fas fa-phone"></i> 0888.08.1050</a></li>
+                            <li><a href="mailto:contact@minhphuoc.com"><i class="fas fa-envelope"></i>
+                                    contact@minhphuoc.com</a></li>
+                            <li><i class="fas fa-map-marker-alt"></i> 57 Đường 7A phường An Lạc, TP.HCM</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Chùa Quan Âm Cát, xã Phan Rí Cửa, Lâm Đồng</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Minh Phước Feng Shui. Bản quyền thuộc về Minh Phước.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- App Scripts -->
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/user-auth.js"></script>
+    <script src="js/auth-ui.js"></script>
+    <script src="js/admin-blog.js"></script>
+    <script src="js/settings-loader.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Initialize Supabase for homepage -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Đợi Supabase khởi tạo xong (từ config cứng hoặc localStorage)
+            if (window.supabaseInitPromise) {
+                await window.supabaseInitPromise;
+            }
+            await blogManager.checkSupabaseConnection();
+        });
+    </script>
+</body>
+
+</html>

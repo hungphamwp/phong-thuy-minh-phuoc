@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Bài Viết - Admin</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <img src="logo.jpg" alt="Minh Phước" class="admin-sidebar-logo">
+                <h2>Admin Panel</h2>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="admin-posts.html" class="admin-nav-item active">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Bài Viết</span>
+                </a>
+                <a href="admin-editor.html" class="admin-nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tạo Bài Viết Mới</span>
+                </a>
+                <a href="admin-media.html" class="admin-nav-item">
+                    <i class="fas fa-images"></i>
+                    <span>Thư Viện Media</span>
+                </a>
+                <a href="admin-settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Cài Đặt</span>
+                </a>
+                <a href="index.html" class="admin-nav-item" target="_blank">
+                    <i class="fas fa-globe"></i>
+                    <span>Xem Website</span>
+                </a>
+            </nav>
+
+            <div class="admin-user-section">
+                <div class="admin-user-info">
+                    <div class="admin-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="admin-user-details">
+                        <h4 id="userName">Admin</h4>
+                        <p id="userEmail">admin@minhphuoc.com</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btnLogout">
+                    <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>Quản Lý Bài Viết</h1>
+                    <div class="admin-breadcrumb">
+                        <a href="admin-posts.html">Dashboard</a> / Bài Viết
+                    </div>
+                </div>
+                <a href="admin-editor.html" class="btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Tạo Bài Viết Mới
+                </a>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Tổng Bài Viết</h3>
+                        <p id="statTotal">0</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Đã Xuất Bản</h3>
+                        <p id="statPublished">0</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Bản Nháp</h3>
+                        <p id="statDraft">0</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Tổng Lượt Xem</h3>
+                        <p id="statViews">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posts List -->
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h2>Danh Sách Bài Viết</h2>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm bài viết...">
+                        </div>
+                        <select id="categoryFilter"
+                            style="padding: 0.8rem; border: 2px solid #e9ecef; border-radius: 10px;">
+                            <option value="all">Tất Cả</option>
+                            <option value="Phong Thủy">Phong Thủy</option>
+                            <option value="Tử Vi">Tử Vi</option>
+                            <option value="Ngày Tốt">Ngày Tốt</option>
+                            <option value="Hướng Dẫn">Hướng Dẫn</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content-card-body" style="padding: 0; overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40%;">Tiêu Đề</th>
+                                <th>Danh Mục</th>
+                                <th>Tác Giả</th>
+                                <th>Ngày Đăng</th>
+                                <th>Lượt Xem</th>
+                                <th>Trạng Thái</th>
+                                <th style="text-align: center;">Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="postsTableBody">
+                            <!-- Posts will be loaded here -->
+                        </tbody>
+                    </table>
+                    <div id="emptyState" style="display: none; padding: 3rem; text-align: center; color: #6c757d;">
+                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>Chưa có bài viết nào</p>
+                        <a href="admin-editor.html" class="btn-primary" style="margin-top: 1rem;">
+                            <i class="fas fa-plus"></i> Tạo Bài Viết Đầu Tiên
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-dialog"
+            style="max-width: 500px; background: white; border-radius: 15px; padding: 2rem; position: relative; z-index: 1001;">
+            <h3 style="margin: 0 0 1rem; color: var(--admin-dark);">
+                <i class="fas fa-exclamation-triangle" style="color: var(--admin-danger);"></i>
+                Xác Nhận Xóa
+            </h3>
+            <p style="color: #6c757d; margin-bottom: 2rem;">Bạn có chắc chắn muốn xóa bài viết này? Hành động này không
+                thể hoàn tác.</p>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button class="btn-secondary" id="btnCancelDelete">Hủy</button>
+                <button class="btn-danger" id="btnConfirmDelete">
+                    <i class="fas fa-trash"></i> Xóa
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-dialog {
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- App Scripts -->
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/admin-blog.js"></script>
+
+    <!-- Initialize Data -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Đợi Supabase khởi tạo xong
+            if (window.supabaseInitPromise) {
+                await window.supabaseInitPromise;
+            }
+
+            await blogManager.checkSupabaseConnection();
+            await loadStatistics();
+            await loadPosts();
+        });
+    </script>
+    <script>
+        // Protect this page
+        auth.requireAuth('admin.html');
+
+        // Display user info
+        const session = auth.getSession();
+        if (session) {
+            document.getElementById('userName').textContent = session.name;
+            document.getElementById('userEmail').textContent = session.email;
+        }
+
+        // Logout handler
+        document.getElementById('btnLogout').addEventListener('click', function () {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                auth.logout();
+                window.location.href = 'admin.html';
+            }
+        });
+
+        // Load statistics
+        async function loadStatistics() {
+            const stats = await blogManager.getStatistics();
+            document.getElementById('statTotal').textContent = stats.total;
+            document.getElementById('statPublished').textContent = stats.published;
+            document.getElementById('statDraft').textContent = stats.draft;
+            document.getElementById('statViews').textContent = stats.totalViews.toLocaleString();
+        }
+
+        // Load posts into table
+        async function loadPosts(posts = null) {
+            const tbody = document.getElementById('postsTableBody');
+            const emptyState = document.getElementById('emptyState');
+
+            if (!posts) {
+                posts = await blogManager.getAllPosts();
+            }
+
+            // Sort by date (newest first)
+            posts.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
+
+            if (posts.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            tbody.innerHTML = posts.map(post => `
+                <tr>
+                    <td class="post-title-cell">
+                        ${post.featured ? '<i class="fas fa-star" style="color: var(--admin-secondary); margin-right: 0.5rem;"></i>' : ''}
+                        ${post.title}
+                    </td>
+                    <td><span class="post-category">${post.category}</span></td>
+                    <td>${post.author}</td>
+                    <td>${new Date(post.publishDate).toLocaleDateString('vi-VN')}</td>
+                    <td>${post.views || 0}</td>
+                    <td>
+                        <span class="post-status ${post.status}">
+                            ${post.status === 'published' ? 'Đã xuất bản' : 'Bản nháp'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons" style="justify-content: center;">
+                            <button class="btn-icon edit" onclick="editPost('${post.id}')" title="Chỉnh sửa">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-icon delete" onclick="deletePost('${post.id}')" title="Xóa">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Edit post
+        function editPost(id) {
+            window.location.href = `admin-editor.html?id=${id}`;
+        }
+
+        // Delete post
+        let postToDelete = null;
+        function deletePost(id) {
+            postToDelete = id;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        document.getElementById('btnCancelDelete').addEventListener('click', function () {
+            document.getElementById('deleteModal').style.display = 'none';
+            postToDelete = null;
+        });
+
+        document.getElementById('btnConfirmDelete').addEventListener('click', async function () {
+            if (postToDelete) {
+                const result = await blogManager.deletePost(postToDelete);
+                if (result.success) {
+                    await loadPosts();
+                    await loadStatistics();
+                }
+                document.getElementById('deleteModal').style.display = 'none';
+                postToDelete = null;
+            }
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', async function (e) {
+            const query = e.target.value.trim();
+            if (query) {
+                const results = await blogManager.searchPosts(query);
+                await loadPosts(results);
+            } else {
+                await loadPosts();
+            }
+        });
+
+        // Category filter
+        document.getElementById('categoryFilter').addEventListener('change', async function (e) {
+            const category = e.target.value;
+            if (category === 'all') {
+                await loadPosts();
+            } else {
+                const allPosts = await blogManager.getAllPosts();
+                const filtered = allPosts.filter(post => post.category === category);
+                await loadPosts(filtered);
+            }
+        });
+
+        // Initial load moved to DOMContentLoaded after Supabase init
+    </script>
+</body>
+
+</html>

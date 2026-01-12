@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo/Chỉnh Sửa Bài Viết - Admin</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Quill Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <img src="logo.jpg" alt="Minh Phước" class="admin-sidebar-logo">
+                <h2>Admin Panel</h2>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="admin-posts.html" class="admin-nav-item">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Bài Viết</span>
+                </a>
+                <a href="admin-editor.html" class="admin-nav-item active">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tạo Bài Viết Mới</span>
+                </a>
+                <a href="admin-media.html" class="admin-nav-item">
+                    <i class="fas fa-images"></i>
+                    <span>Thư Viện Media</span>
+                </a>
+                <a href="admin-settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Cài Đặt</span>
+                </a>
+                <a href="index.html" class="admin-nav-item" target="_blank">
+                    <i class="fas fa-globe"></i>
+                    <span>Xem Website</span>
+                </a>
+            </nav>
+
+            <div class="admin-user-section">
+                <div class="admin-user-info">
+                    <div class="admin-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="admin-user-details">
+                        <h4 id="userName">Admin</h4>
+                        <p id="userEmail">admin@minhphuoc.com</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btnLogout">
+                    <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1 id="pageTitle">Tạo Bài Viết Mới</h1>
+                    <div class="admin-breadcrumb">
+                        <a href="admin-posts.html">Dashboard</a> /
+                        <a href="admin-posts.html">Bài Viết</a> /
+                        <span id="breadcrumbAction">Tạo Mới</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn-secondary" onclick="window.location.href='admin-posts.html'">
+                        <i class="fas fa-times"></i> Hủy
+                    </button>
+                    <button class="btn-primary" id="btnSaveDraft">
+                        <i class="fas fa-save"></i> Lưu Nháp
+                    </button>
+                    <button class="btn-success" id="btnPublish">
+                        <i class="fas fa-paper-plane"></i> Xuất Bản
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="content-card-body">
+                    <form id="postForm">
+                        <!-- Message -->
+                        <div id="formMessage" class="form-message"></div>
+
+                        <!-- Title -->
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="postTitle"
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--admin-dark);">
+                                <i class="fas fa-heading"></i> Tiêu Đề Bài Viết *
+                            </label>
+                            <input type="text" id="postTitle" required
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1.1rem; font-weight: 600;"
+                                placeholder="Nhập tiêu đề bài viết...">
+                        </div>
+
+                        <!-- Slug -->
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="postSlug"
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--admin-dark);">
+                                <i class="fas fa-link"></i> Đường Dẫn (Slug)
+                            </label>
+                            <input type="text" id="postSlug"
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95rem;"
+                                placeholder="duong-dan-bai-viet (tự động tạo từ tiêu đề)">
+                            <small style="color: #6c757d; font-size: 0.85rem;">Để trống nếu muốn tự động tạo từ tiêu
+                                đề</small>
+                        </div>
+
+                        <!-- Row: Category, Author, Featured Image -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div class="form-group">
+                                <label for="postCategory"
+                                    style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--admin-dark);">
+                                    <i class="fas fa-folder"></i> Danh Mục *
+                                </label>
+                                <select id="postCategory" required
+                                    style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95rem;">
+                                    <option value="Phong Thủy">Phong Thủy</option>
+                                    <option value="Tử Vi">Tử Vi</option>
+                                    <option value="Ngày Tốt">Ngày Tốt</option>
+                                    <option value="Hướng Dẫn">Hướng Dẫn</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="postAuthor"
+                                    style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--admin-dark);">
+                                    <i class="fas fa-user-edit"></i> Tác Giả
+                                </label>
+                                <input type="text" id="postAuthor"
+                                    style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95rem;"
+                                    placeholder="Tên tác giả">
+                            </div>
+                        </div>
+
+                        <!-- Featured Image -->
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="postImage"
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--admin-dark);">
+                                <i class="fas fa-image"></i> Ảnh Đại Diện
+                            </label>
+                            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                                <input type="url" id="postImage"
+                                    style="flex: 1; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95rem;"
+                                    placeholder="https://example.com/image.jpg">
+                                <button type="button" class="btn-primary" id="openMediaPicker"
+                                    style="white-space: nowrap;">
+                                    <i class="fas fa-images"></i> Chọn từ Thư Viện
+                                </button>
+                            </div>
+                            <div id="imagePreview" style="margin-top: 1rem; display: none;">
+                                <img id="previewImg"
+                                    style="max-width: 300px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                                <button type="button" class="btn-danger" id="removeImage"
+                                    style="margin-top: 0.5rem; font-size: 0.85rem;">
+                                    <i class="fas fa-times"></i> Xóa Ảnh
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Excerpt -->
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="postExcerpt"
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--admin-dark);">
+                                <i class="fas fa-align-left"></i> Mô Tả Ngắn *
+                            </label>
+                            <textarea id="postExcerpt" rows="3" required
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95rem; font-family: inherit; resize: vertical;"
+                                placeholder="Nhập mô tả ngắn cho bài viết (hiển thị trong danh sách bài viết)..."></textarea>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="postTags"
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--admin-dark);">
+                                <i class="fas fa-tags"></i> Tags (từ khóa)
+                            </label>
+                            <input type="text" id="postTags"
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95rem;"
+                                placeholder="phong thủy, tử vi, năm 2025 (cách nhau bởi dấu phẩy)">
+                        </div>
+
+                        <!-- Featured checkbox -->
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label
+                                style="display: flex; align-items: center; cursor: pointer; font-weight: 600; color: var(--admin-dark);">
+                                <input type="checkbox" id="postFeatured"
+                                    style="margin-right: 0.5rem; width: 18px; height: 18px;">
+                                <i class="fas fa-star" style="margin-right: 0.5rem; color: var(--admin-secondary);"></i>
+                                Đánh dấu là bài viết nổi bật
+                            </label>
+                        </div>
+
+                        <!-- Content Editor -->
+                        <div class="form-group" style="margin-bottom: 2rem;">
+                            <label
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--admin-dark);">
+                                <i class="fas fa-file-alt"></i> Nội Dung Bài Viết *
+                            </label>
+                            <div id="editor"
+                                style="height: 400px; background: white; border: 2px solid #e0e0e0; border-radius: 10px;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Media Picker Modal -->
+    <div id="mediaPickerModal" class="media-picker-modal" style="display: none;">
+        <div class="media-picker-overlay"></div>
+        <div class="media-picker-dialog">
+            <div class="media-picker-header">
+                <h2><i class="fas fa-images"></i> Chọn Ảnh</h2>
+                <button class="media-picker-close" id="closeMediaPicker">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="media-picker-tabs">
+                <button class="media-tab active" data-tab="library">
+                    <i class="fas fa-images"></i> Thư Viện
+                </button>
+                <button class="media-tab" data-tab="upload">
+                    <i class="fas fa-upload"></i> Upload Mới
+                </button>
+            </div>
+
+            <!-- Library Tab -->
+            <div class="media-tab-content active" id="libraryTab">
+                <div class="media-picker-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="mediaSearch" placeholder="Tìm kiếm ảnh...">
+                </div>
+                <div class="media-picker-grid" id="mediaPickerGrid">
+                    <!-- Media items will be loaded here -->
+                </div>
+                <div id="noMediaMessage" style="text-align: center; padding: 3rem; color: #6c757d; display: none;">
+                    <i class="fas fa-images" style="font-size: 3rem; opacity: 0.5; margin-bottom: 1rem;"></i>
+                    <p>Chưa có ảnh nào trong thư viện</p>
+                    <p style="font-size: 0.9rem;">Chuyển sang tab "Upload Mới" để thêm ảnh</p>
+                </div>
+            </div>
+
+            <!-- Upload Tab -->
+            <div class="media-tab-content" id="uploadTab">
+                <div class="media-upload-area" id="mediaUploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Kéo thả ảnh vào đây hoặc click để chọn</h3>
+                    <p>Hỗ trợ: JPG, PNG, GIF, WebP - Tối đa 5MB/ảnh</p>
+                    <input type="file" id="mediaFileInput" multiple accept="image/*" style="display: none;">
+                </div>
+                <div id="uploadProgress" style="display: none; padding: 1rem;">
+                    <div style="background: #e9ecef; border-radius: 10px; height: 8px; overflow: hidden;">
+                        <div id="uploadProgressBar"
+                            style="background: var(--admin-primary); height: 100%; width: 0%; transition: width 0.3s;">
+                        </div>
+                    </div>
+                    <p id="uploadStatus" style="text-align: center; margin-top: 0.5rem; color: #6c757d;"></p>
+                </div>
+            </div>
+
+            <div class="media-picker-footer">
+                <button class="btn-secondary" id="cancelMediaPicker">Hủy</button>
+                <button class="btn-primary" id="selectMedia" disabled>
+                    <i class="fas fa-check"></i> Chọn Ảnh
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- App Scripts -->
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/admin-media.js"></script>
+    <script src="js/admin-blog.js"></script>
+    <script>
+        (async function () {
+            // Protect this page
+            auth.requireAuth('admin.html');
+
+            // Đợi Supabase khởi tạo xong
+            if (window.supabaseInitPromise) {
+                await window.supabaseInitPromise;
+            }
+
+            // Đảm bảo BlogManager sử dụng Supabase nếu đã kết nối
+            if (typeof blogManager !== 'undefined') {
+                await blogManager.checkSupabaseConnection();
+            }
+
+            // Display user info
+            const session = auth.getSession();
+            if (session) {
+                document.getElementById('userName').textContent = session.name;
+                document.getElementById('userEmail').textContent = session.email;
+                document.getElementById('postAuthor').value = session.name;
+            }
+
+            // Check if editing existing post
+            const urlParams = new URLSearchParams(window.location.search);
+            const editingPostIdInInit = urlParams.get('id');
+
+            if (editingPostIdInInit) {
+                currentPost = await blogManager.getPostById(editingPostIdInInit);
+                if (currentPost) {
+                    // Update page title
+                    document.getElementById('pageTitle').textContent = 'Chỉnh Sửa Bài Viết';
+                    document.getElementById('breadcrumbAction').textContent = 'Chỉnh Sửa';
+
+                    // Load post data
+                    document.getElementById('postTitle').value = currentPost.title;
+                    document.getElementById('postSlug').value = currentPost.slug;
+                    document.getElementById('postCategory').value = currentPost.category;
+                    document.getElementById('postAuthor').value = currentPost.author;
+                    document.getElementById('postImage').value = currentPost.featuredImage || '';
+                    document.getElementById('postExcerpt').value = currentPost.excerpt;
+                    document.getElementById('postTags').value = currentPost.tags?.join(', ') || '';
+                    document.getElementById('postFeatured').checked = currentPost.featured || false;
+
+                    // Load content into editor
+                    quill.root.innerHTML = currentPost.content;
+
+                    // Show image preview if exists
+                    if (currentPost.featuredImage) {
+                        document.getElementById('previewImg').src = currentPost.featuredImage;
+                        document.getElementById('imagePreview').style.display = 'block';
+                    }
+                }
+            }
+        })();
+
+        // Logout handler
+        document.getElementById('btnLogout').addEventListener('click', function () {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                auth.logout();
+                window.location.href = 'admin.html';
+            }
+        });
+
+        // Initialize Quill editor
+        const quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'align': [] }],
+                    ['link', 'image'],
+                    ['clean']
+                ]
+            },
+            placeholder: 'Nhập nội dung bài viết...'
+        });
+
+        // Auto-generate slug from title
+        document.getElementById('postTitle').addEventListener('input', function (e) {
+            if (!document.getElementById('postSlug').value) {
+                const slug = blogManager.generateSlug(e.target.value);
+                document.getElementById('postSlug').value = slug;
+            }
+        });
+
+        // Image preview
+        document.getElementById('postImage').addEventListener('input', function (e) {
+            const url = e.target.value;
+            const preview = document.getElementById('imagePreview');
+            const img = document.getElementById('previewImg');
+
+            if (url) {
+                img.src = url;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+
+        // Check if editing existing post (Initial vars kept for scoping)
+        const urlParams = new URLSearchParams(window.location.search);
+        const editingPostId = urlParams.get('id');
+        let currentPost = null;
+
+        // Show message
+        function showMessage(message, type = 'success') {
+            const messageDiv = document.getElementById('formMessage');
+            messageDiv.textContent = message;
+            messageDiv.className = 'form-message ' + type;
+            messageDiv.style.display = 'block';
+
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Get form data
+        function getFormData(status) {
+            const tags = document.getElementById('postTags').value
+                .split(',')
+                .map(tag => tag.trim())
+                .filter(tag => tag);
+
+            return {
+                title: document.getElementById('postTitle').value,
+                slug: document.getElementById('postSlug').value,
+                category: document.getElementById('postCategory').value,
+                author: document.getElementById('postAuthor').value,
+                featuredImage: document.getElementById('postImage').value,
+                excerpt: document.getElementById('postExcerpt').value,
+                content: quill.root.innerHTML,
+                tags: tags,
+                featured: document.getElementById('postFeatured').checked,
+                status: status
+            };
+        }
+
+        // Save as draft
+        document.getElementById('btnSaveDraft').addEventListener('click', async function (e) {
+            e.preventDefault();
+
+            const formData = getFormData('draft');
+
+            if (!formData.title || !formData.excerpt) {
+                showMessage('Vui lòng điền tiêu đề và mô tả ngắn', 'error');
+                return;
+            }
+
+            try {
+                if (editingPostId) {
+                    const result = await blogManager.updatePost(editingPostId, formData);
+                    if (result.success) {
+                        showMessage('Đã lưu bản nháp thành công!', 'success');
+                    }
+                } else {
+                    const newPost = await blogManager.createPost(formData);
+                    showMessage('Đã lưu bản nháp thành công!', 'success');
+                    // Update URL to edit mode
+                    window.history.replaceState({}, '', `admin-editor.html?id=${newPost.id}`);
+                    setTimeout(() => {
+                        window.location.href = 'admin-posts.html';
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error('Lỗi lưu bản nháp:', error);
+                showMessage('Lỗi: ' + error.message, 'error');
+            }
+        });
+
+        // Publish
+        document.getElementById('btnPublish').addEventListener('click', async function (e) {
+            e.preventDefault();
+
+            const formData = getFormData('published');
+
+            if (!formData.title || !formData.excerpt || !formData.content || formData.content === '<p><br></p>') {
+                showMessage('Vui lòng điền đầy đủ thông tin bài viết', 'error');
+                return;
+            }
+
+            try {
+                if (editingPostId) {
+                    const result = await blogManager.updatePost(editingPostId, formData);
+                    if (result.success) {
+                        showMessage('Đã xuất bản bài viết thành công!', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'admin-posts.html';
+                        }, 1500);
+                    }
+                } else {
+                    const newPost = await blogManager.createPost(formData);
+                    showMessage('Đã xuất bản bài viết thành công!', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'admin-posts.html';
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error('Lỗi xuất bản:', error);
+                showMessage('Lỗi: ' + error.message, 'error');
+            }
+        });
+
+        // ========== MEDIA PICKER FUNCTIONALITY ==========
+
+        let selectedMediaId = null;
+
+        // Open media picker
+        document.getElementById('openMediaPicker').addEventListener('click', async function () {
+            document.getElementById('mediaPickerModal').style.display = 'flex';
+            await loadMediaLibrary();
+        });
+
+        // Close media picker
+        function closeMediaPicker() {
+            document.getElementById('mediaPickerModal').style.display = 'none';
+            selectedMediaId = null;
+            document.getElementById('selectMedia').disabled = true;
+        }
+
+        document.getElementById('closeMediaPicker').addEventListener('click', closeMediaPicker);
+        document.getElementById('cancelMediaPicker').addEventListener('click', closeMediaPicker);
+
+        // Tab switching
+        document.querySelectorAll('.media-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.media-tab-content').forEach(c => c.classList.remove('active'));
+
+                this.classList.add('active');
+                const tabName = this.dataset.tab;
+                document.getElementById(tabName + 'Tab').classList.add('active');
+            });
+        });
+
+        // Load media library
+        async function loadMediaLibrary() {
+            const media = await mediaManager.getAllMedia();
+            const grid = document.getElementById('mediaPickerGrid');
+            const noMediaMsg = document.getElementById('noMediaMessage');
+
+            if (media.length === 0) {
+                grid.innerHTML = '';
+                noMediaMsg.style.display = 'block';
+                return;
+            }
+
+            noMediaMsg.style.display = 'none';
+            grid.innerHTML = media.map(m => `
+                <div class="media-picker-item" data-id="${m.id}" onclick="selectMediaItem('${m.id}')">
+                    <img src="${m.url}" alt="${m.filename}">
+                    <div class="media-picker-item-info">
+                        <div class="media-picker-filename">${m.filename}</div>
+                        <div class="media-picker-meta">${m.width || '?'}x${m.height || '?'}</div>
+                    </div>
+                    <div class="media-picker-check">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Select media item
+        window.selectMediaItem = function (id) {
+            document.querySelectorAll('.media-picker-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            selectedMediaId = id;
+            document.getElementById('selectMedia').disabled = false;
+        };
+
+        // Confirm selection
+        document.getElementById('selectMedia').addEventListener('click', async function () {
+            if (!selectedMediaId) return;
+
+            const media = await mediaManager.getMediaById(selectedMediaId);
+            if (media) {
+                document.getElementById('postImage').value = media.url;
+                document.getElementById('previewImg').src = media.url;
+                document.getElementById('imagePreview').style.display = 'block';
+
+                // Track usage (no-op for Supabase currently but kept for structure)
+                if (editingPostId) {
+                    await mediaManager.markAsUsed(selectedMediaId, editingPostId);
+                }
+            }
+
+            closeMediaPicker();
+        });
+
+        // Upload area interactions
+        const uploadArea = document.getElementById('mediaUploadArea');
+        const mediaFileInput = document.getElementById('mediaFileInput');
+
+        uploadArea.addEventListener('click', () => mediaFileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--admin-primary)';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#dee2e6';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#dee2e6';
+            handleMediaUpload(e.dataTransfer.files);
+        });
+
+        mediaFileInput.addEventListener('change', (e) => {
+            handleMediaUpload(e.target.files);
+            mediaFileInput.value = '';
+        });
+
+        // Handle media upload
+        async function handleMediaUpload(files) {
+            if (files.length === 0) return;
+
+            const progressDiv = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('uploadProgressBar');
+            const statusText = document.getElementById('uploadStatus');
+
+            progressDiv.style.display = 'block';
+
+            let successCount = 0;
+            for (let i = 0; i < files.length; i++) {
+                const progress = ((i + 1) / files.length) * 100;
+                progressBar.style.width = progress + '%';
+                statusText.textContent = `Đang upload... (${i + 1}/${files.length})`;
+
+                const result = await mediaManager.uploadMedia(files[i]);
+                if (result.success) {
+                    successCount++;
+                    // Auto-select last uploaded image
+                    if (i === files.length - 1) {
+                        selectedMediaId = result.media.id;
+                    }
+                }
+            }
+
+            statusText.textContent = `Hoàn thành! Đã upload ${successCount}/${files.length} ảnh`;
+
+            setTimeout(async () => {
+                progressDiv.style.display = 'none';
+                progressBar.style.width = '0%';
+                // Switch to library tab to show uploaded images
+                document.querySelector('.media-tab[data-tab="library"]').click();
+                await loadMediaLibrary();
+
+                // Auto-select the uploaded image
+                if (selectedMediaId) {
+                    setTimeout(() => {
+                        const item = document.querySelector(`.media-picker-item[data-id="${selectedMediaId}"]`);
+                        if (item) {
+                            item.click();
+                        }
+                    }, 100);
+                }
+            }, 1500);
+        }
+
+        // Media search
+        document.getElementById('mediaSearch').addEventListener('input', async function (e) {
+            const query = e.target.value.trim();
+            const media = query ? await mediaManager.searchMedia(query) : await mediaManager.getAllMedia();
+
+            const grid = document.getElementById('mediaPickerGrid');
+            if (media.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 2rem; color: #6c757d;">Không tìm thấy ảnh nào</div>';
+                return;
+            }
+
+            grid.innerHTML = media.map(m => `
+                <div class="media-picker-item" data-id="${m.id}" onclick="selectMediaItem('${m.id}')">
+                    <img src="${m.url}" alt="${m.filename}">
+                    <div class="media-picker-item-info">
+                        <div class="media-picker-filename">${m.filename}</div>
+                        <div class="media-picker-meta">${m.width || '?'}x${m.height || '?'}</div>
+                    </div>
+                    <div class="media-picker-check">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            `).join('');
+        });
+
+        // Remove image button
+        document.getElementById('removeImage').addEventListener('click', function () {
+            document.getElementById('postImage').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+        });
+    </script>
+
+    <style>
+        .ql-toolbar {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .ql-container {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .form-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .form-message.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-message.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Media Picker Modal */
+        .media-picker-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .media-picker-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .media-picker-dialog {
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .media-picker-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .media-picker-header h2 {
+            margin: 0;
+            color: var(--admin-dark);
+            font-size: 1.5rem;
+        }
+
+        .media-picker-close {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #f8f9fa;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .media-picker-close:hover {
+            background: var(--admin-danger);
+            color: white;
+        }
+
+        .media-picker-tabs {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 2rem 0;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .media-tab {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s;
+        }
+
+        .media-tab:hover {
+            color: var(--admin-primary);
+        }
+
+        .media-tab.active {
+            color: var(--admin-primary);
+            border-bottom-color: var(--admin-primary);
+        }
+
+        .media-tab-content {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem 2rem;
+        }
+
+        .media-tab-content.active {
+            display: block;
+        }
+
+        .media-picker-search {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .media-picker-search i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        .media-picker-search input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .media-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .media-picker-item {
+            position: relative;
+            background: white;
+            border: 3px solid #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .media-picker-item:hover {
+            border-color: var(--admin-primary);
+            transform: translateY(-3px);
+        }
+
+        .media-picker-item.selected {
+            border-color: var(--admin-primary);
+            background: rgba(139, 69, 19, 0.05);
+        }
+
+        .media-picker-item.selected .media-picker-check {
+            display: flex;
+        }
+
+        .media-picker-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .media-picker-item-info {
+            padding: 0.8rem;
+        }
+
+        .media-picker-filename {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--admin-dark);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .media-picker-meta {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-top: 0.2rem;
+        }
+
+        .media-picker-check {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 30px;
+            height: 30px;
+            background: var(--admin-primary);
+            color: white;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .media-upload-area {
+            border: 3px dashed #dee2e6;
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .media-upload-area:hover {
+            border-color: var(--admin-primary);
+            background: rgba(139, 69, 19, 0.05);
+        }
+
+        .media-upload-area i {
+            font-size: 3rem;
+            color: var(--admin-primary);
+            margin-bottom: 1rem;
+        }
+
+        .media-upload-area h3 {
+            margin: 0 0 0.5rem;
+            color: var(--admin-dark);
+        }
+
+        .media-upload-area p {
+            margin: 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .media-picker-footer {
+            padding: 1.5rem 2rem;
+            border-top: 2px solid #e9ecef;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+    </style>
+</body>
+
+</html>

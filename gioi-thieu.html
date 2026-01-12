@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu - Minh Phước Feng Shui</title>
+    <meta name="description"
+        content="Tìm hiểu về Minh Phước Feng Shui - Chuyên gia phong thủy, tử vi với hơn 20 năm kinh nghiệm. Sứ mệnh mang phong thủy đến mọi gia đình Việt.">
+
+    <!-- Using System Fonts - No External Fonts -->
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="logo.jpg" alt="Minh Phước Feng Shui" class="logo-img">
+                <div class="logo-text">
+                    <span class="brand-name">Minh Phước</span>
+                    <span class="brand-tagline">Feng Shui</span>
+                </div>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-yin-yang"></i>
+                            <span>Trang Chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gioi-thieu.html" class="nav-link active">
+                            <img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon">
+                            <span>Giới Thiệu</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="lap-la-tu-vi.html" class="nav-link">
+                            <i class="fas fa-star-and-crescent"></i>
+                            <span>Lập Lá Tử Vi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="xem-ngay-tot-xau.html" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Xem Ngày Tốt Xấu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="tin-tuc.html" class="nav-link">
+                            <i class="fas fa-book-open"></i>
+                            <span>Quỹ Khuyến Học</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lien-he.html" class="nav-link">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <span>Liên Hệ</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <div id="userAuthButtons">
+                    <!-- Shown when not logged in -->
+                    <div id="guestButtons" style="display: flex; gap: 10px;">
+                        <button onclick="showLoginModal()" class="btn-contact" style="border: none; cursor: pointer;">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Đăng Nhập</span>
+                        </button>
+                    </div>
+                    <!-- Shown when logged in -->
+                    <div id="userButtons" style="display: none; align-items: center; gap: 10px;">
+                        <span id="userNameDisplay" style="color: var(--color-text); font-weight: 500;"></span>
+                        <button onclick="handleUserLogoutGlobal()" class="btn-contact"
+                            style="background: #dc3545; border: none; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-list">
+            <li><a href="index.html"><i class="fas fa-yin-yang"></i> Trang Chủ</a></li>
+            <li><a href="gioi-thieu.html" class="active"><img src="images/icon-gioithieu.png" alt="Giới Thiệu"
+                        class="nav-icon"> Giới Thiệu</a></li>
+
+            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+            <li><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt Xấu</a></li>
+            <li><a href="tin-tuc.html"><i class="fas fa-book-open"></i> Quỹ Khuyến Học</a></li>
+            <li><a href="lien-he.html"><i class="fas fa-envelope-open-text"></i> Liên Hệ</a></li>
+            <li><a href="#" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Banner -->
+        <section class="page-banner">
+            <div class="banner-container">
+                <h1 class="page-title">Giới Thiệu</h1>
+                <nav class="breadcrumb">
+                    <a href="index.html">Trang chủ</a>
+                    <span>/</span>
+                    <span>Giới Thiệu</span>
+                </nav>
+            </div>
+        </section>
+
+        <!-- About Intro -->
+        <section class="about-intro">
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=500&fit=crop"
+                        alt="Minh Phước Feng Shui">
+                    <div class="experience-badge">
+                        <span class="number">20+</span>
+                        <span class="text">Năm Kinh Nghiệm</span>
+                    </div>
+                </div>
+                <div class="about-content">
+                    <span class="section-label">Về Chúng Tôi</span>
+                    <h2 class="section-title">Minh Phước Feng Shui</h2>
+                    <p class="about-lead">
+                        <strong>Minh Phước Feng Shui</strong> là thương hiệu tư vấn phong thủy, tử vi uy tín với sứ mệnh
+                        mang kiến thức phong thủy chuẩn mực đến với mọi gia đình Việt Nam.
+                    </p>
+                    <p>
+                        Được sáng lập bởi Thầy <strong>Minh Phước</strong> - người đã dành hơn 20 năm nghiên cứu và thực
+                        hành các môn học thuật phương Đông như Tử Vi Đẩu Số, Bát Tự Hà Lạc, Phong Thủy Lạc Việt, Kỳ Môn
+                        Độn Giáp.
+                    </p>
+                    <p>
+                        Chúng tôi tin rằng phong thủy không chỉ là mê tín, mà là một môn khoa học cổ đại về năng lượng
+                        và môi trường sống. Khi được áp dụng đúng cách, phong thủy có thể giúp cải thiện sức khỏe, tài
+                        lộc và hạnh phúc gia đình.
+                    </p>
+
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Tư vấn trực tiếp với chuyên gia</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Phương pháp chuẩn Đông phương</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Hỗ trợ online toàn quốc</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Bảo mật thông tin khách hàng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Vision -->
+        <section class="mission-vision">
+            <div class="mv-container">
+                <div class="mv-card">
+                    <div class="mv-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Sứ Mệnh</h3>
+                    <p>Mang kiến thức phong thủy, tử vi chính thống đến với mọi người, giúp họ hiểu rõ bản mệnh và tối
+                        ưu hóa môi trường sống để đạt được cuộc sống thịnh vượng, hài hòa.</p>
+                </div>
+                <div class="mv-card">
+                    <div class="mv-icon icon-blue">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Tầm Nhìn</h3>
+                    <p>Trở thành đơn vị tư vấn phong thủy số 1 Việt Nam, nơi mọi người có thể tiếp cận dịch vụ tử vi,
+                        phong thủy chất lượng cao với chi phí hợp lý.</p>
+                </div>
+                <div class="mv-card">
+                    <div class="mv-icon icon-gold">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Giá Trị Cốt Lõi</h3>
+                    <p>Chính xác - Tận tâm - Minh bạch. Chúng tôi cam kết mang đến những phân tích chính xác nhất, với
+                        sự tận tâm và minh bạch trong mọi dịch vụ.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us -->
+        <section class="why-choose">
+            <div class="why-container">
+                <div class="section-header">
+                    <span class="section-label">Tại Sao Chọn Chúng Tôi</span>
+                    <h2 class="section-title">Lý Do Khách Hàng Tin Tưởng</h2>
+                </div>
+
+                <div class="why-grid">
+                    <div class="why-card">
+                        <div class="why-number">01</div>
+                        <h4>Chuyên Gia Uy Tín</h4>
+                        <p>Thầy Minh Phước với hơn 20 năm kinh nghiệm, đã tư vấn thành công cho hàng nghìn khách hàng.
+                        </p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-number">02</div>
+                        <h4>Phương Pháp Khoa Học</h4>
+                        <p>Kết hợp kiến thức truyền thống với phân tích hiện đại, mang lại kết quả chính xác và ứng dụng
+                            thực tế.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-number">03</div>
+                        <h4>Dịch Vụ Toàn Diện</h4>
+                        <p>Từ tử vi cá nhân, phong thủy nhà ở đến tư vấn kinh doanh, văn phòng - đáp ứng mọi nhu cầu.
+                        </p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-number">04</div>
+                        <h4>Hỗ Trợ Tận Tình</h4>
+                        <p>Tư vấn online/offline linh hoạt, hỗ trợ sau dịch vụ để đảm bảo khách hàng hài lòng nhất.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="stats-section">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <span class="stat-number">5000+</span>
+                    <span class="stat-label">Khách Hàng</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-star"></i>
+                    <span class="stat-number">20+</span>
+                    <span class="stat-label">Năm Kinh Nghiệm</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-home"></i>
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">Công Trình Tư Vấn</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-thumbs-up"></i>
+                    <span class="stat-number">99%</span>
+                    <span class="stat-label">Hài Lòng</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="cta-container">
+                <h2>Sẵn Sàng Khám Phá Vận Mệnh Của Bạn?</h2>
+                <p>Liên hệ với chúng tôi ngay hôm nay để được tư vấn miễn phí</p>
+                <div class="cta-buttons">
+                    <a href="lien-he.html" class="btn-primary">
+                        <i class="fas fa-phone-alt"></i>
+                        Liên Hệ Ngay
+                    </a>
+                    <a href="lap-la-tu-vi.html" class="btn-secondary">
+                        <i class="fas fa-star-and-crescent"></i>
+                        Lập Lá Tử Vi
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="Minh Phước" class="footer-logo-img">
+                        <div>
+                            <span class="brand-name">Minh Phước</span>
+                            <span class="brand-tagline">Feng Shui</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Minh Phước Feng Shui - Dịch vụ tư vấn phong thủy, tử vi chuyên nghiệp, uy tín
+                        hàng đầu Việt Nam.</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Dịch Vụ</h4>
+                        <ul>
+                            <li><a href="lap-la-tu-vi.html">Lập Lá Tử Vi</a></li>
+                            <li><a href="xem-ngay-tot-xau.html">Xem Ngày Tốt Xấu</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Kết</h4>
+                        <ul>
+                            <li><a href="index.html">Trang Chủ</a></li>
+                            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
+                            <li><a href="tin-tuc.html">Quỹ Khuyến Học</a></li>
+                            <li><a href="lien-he.html">Liên Hệ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Hệ</h4>
+                        <ul>
+                            <li><a href="tel:0888081050"><i class="fas fa-phone"></i> 0888.08.1050</a></li>
+                            <li><a href="mailto:contact@minhphuoc.com"><i class="fas fa-envelope"></i>
+                                    contact@minhphuoc.com</a></li>
+                            <li><i class="fas fa-map-marker-alt"></i> 57 Đường 7A phường An Lạc, TP.HCM</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Chùa Quan Âm Cát, xã Phan Rí Cửa, Lâm Đồng</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Minh Phước Feng Shui. Bản quyền thuộc về Minh Phước.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/user-auth.js"></script>
+    <script src="js/auth-ui.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

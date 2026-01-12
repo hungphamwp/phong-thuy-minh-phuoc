@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Tasks - Supabase</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .config-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .config-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .connection-status.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .connection-status.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .task-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .task-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            border-left: 4px solid #667eea;
+        }
+
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .task-card.priority-high {
+            border-left-color: #f56565;
+        }
+
+        .task-card.priority-medium {
+            border-left-color: #ed8936;
+        }
+
+        .task-card.priority-low {
+            border-left-color: #48bb78;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+
+        .task-title {
+            font-size: 1.2rem;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            color: #718096;
+            transition: color 0.3s;
+        }
+
+        .btn-icon:hover {
+            color: #667eea;
+        }
+
+        .btn-icon.delete-task:hover {
+            color: #f56565;
+        }
+
+        .task-description {
+            color: #4a5568;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .task-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+
+        .task-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            background: #f7fafc;
+            border-radius: 6px;
+            color: #4a5568;
+        }
+
+        .task-footer {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .status-select {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .loading i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-success {
+            border-left: 4px solid #48bb78;
+            color: #22543d;
+        }
+
+        .notification-error {
+            border-left: 4px solid #f56565;
+            color: #742a2a;
+        }
+
+        @media (max-width: 768px) {
+            .task-list {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-tasks"></i> Quản Lý Tasks</h1>
+            <p>Kết nối với Supabase thông qua MCP</p>
+        </div>
+
+        <!-- Cấu hình Supabase -->
+        <div class="config-section">
+            <h2><i class="fas fa-cog"></i> Cấu hình Supabase</h2>
+            <form id="configForm">
+                <div class="form-group">
+                    <label for="supabaseUrl">Supabase URL:</label>
+                    <input type="url" id="supabaseUrl" placeholder="https://your-project.supabase.co" required>
+                </div>
+                <div class="form-group">
+                    <label for="supabaseKey">Supabase Anon Key:</label>
+                    <input type="text" id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-plug"></i> Kết nối
+                </button>
+            </form>
+            <div id="connectionStatus"></div>
+        </div>
+
+        <!-- Form thêm task -->
+        <div class="config-section" id="taskFormSection" style="display: none;">
+            <h2><i class="fas fa-plus-circle"></i> Thêm Task Mới</h2>
+            <form id="addTaskForm">
+                <div class="form-group">
+                    <label for="taskTitle">Tiêu đề: *</label>
+                    <input type="text" id="taskTitle" name="title" placeholder="Nhập tiêu đề task..." required>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Mô tả:</label>
+                    <textarea id="taskDescription" name="description" placeholder="Nhập mô tả chi tiết..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskStatus">Trạng thái:</label>
+                    <select id="taskStatus" name="status">
+                        <option value="pending">Chờ xử lý</option>
+                        <option value="in_progress">Đang làm</option>
+                        <option value="completed">Hoàn thành</option>
+                        <option value="cancelled">Đã hủy</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskPriority">Độ ưu tiên:</label>
+                    <select id="taskPriority" name="priority">
+                        <option value="low">Thấp</option>
+                        <option value="medium" selected>Trung bình</option>
+                        <option value="high">Cao</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskDueDate">Hạn hoàn thành:</label>
+                    <input type="date" id="taskDueDate" name="due_date">
+                </div>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Thêm Task
+                </button>
+            </form>
+        </div>
+
+        <!-- Filters và danh sách tasks -->
+        <div id="tasksSection" style="display: none;">
+            <div class="config-section">
+                <h2><i class="fas fa-filter"></i> Lọc Tasks</h2>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Tất cả</button>
+                    <button class="filter-btn" data-filter="pending">Chờ xử lý</button>
+                    <button class="filter-btn" data-filter="in_progress">Đang làm</button>
+                    <button class="filter-btn" data-filter="completed">Hoàn thành</button>
+                    <button class="filter-btn" data-filter="cancelled">Đã hủy</button>
+                </div>
+            </div>
+
+            <div class="task-list" id="taskList">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Đang tải...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/supabase-client.js"></script>
+    <script src="js/task-manager.js"></script>
+    <script src="js/task-ui.js"></script>
+
+    <script>
+        // Khởi tạo ứng dụng
+        document.addEventListener('DOMContentLoaded', () => {
+            const configForm = document.getElementById('configForm');
+            const connectionStatus = document.getElementById('connectionStatus');
+            const taskFormSection = document.getElementById('taskFormSection');
+            const tasksSection = document.getElementById('tasksSection');
+
+            // Xử lý form cấu hình
+            configForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const url = document.getElementById('supabaseUrl').value;
+                const key = document.getElementById('supabaseKey').value;
+
+                // Hiển thị loading
+                connectionStatus.innerHTML = `
+                    <div class="connection-status">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Đang kết nối...
+                    </div>
+                `;
+
+                try {
+                    // Khởi tạo Supabase client
+                    const initialized = await supabaseClient.initialize(url, key);
+
+                    if (!initialized) {
+                        throw new Error('Không thể khởi tạo Supabase client');
+                    }
+
+                    // Test connection
+                    const result = await supabaseClient.testConnection();
+
+                    if (result.success) {
+                        connectionStatus.innerHTML = `
+                            <div class="connection-status success">
+                                <i class="fas fa-check-circle"></i>
+                                ${result.message}
+                            </div>
+                        `;
+
+                        // Hiện phần task form và task list
+                        taskFormSection.style.display = 'block';
+                        tasksSection.style.display = 'block';
+
+                        // Khởi tạo UI
+                        taskUI.init();
+                    } else {
+                        throw new Error(result.message);
+                    }
+                } catch (error) {
+                    connectionStatus.innerHTML = `
+                        <div class="connection-status error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Lỗi: ${error.message}
+                        </div>
+                    `;
+                }
+            });
+
+            // Tự động điền thông tin nếu có trong localStorage
+            const savedUrl = localStorage.getItem('supabaseUrl');
+            const savedKey = localStorage.getItem('supabaseKey');
+
+            if (savedUrl) document.getElementById('supabaseUrl').value = savedUrl;
+            if (savedKey) document.getElementById('supabaseKey').value = savedKey;
+
+            // Lưu thông tin khi kết nối thành công
+            configForm.addEventListener('submit', () => {
+                localStorage.setItem('supabaseUrl', document.getElementById('supabaseUrl').value);
+                localStorage.setItem('supabaseKey', document.getElementById('supabaseKey').value);
+            });
+        });
+    </script>
+</body>
+</html>

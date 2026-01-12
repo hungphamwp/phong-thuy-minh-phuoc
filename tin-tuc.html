@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quỹ Khuyến Học Phong Thủy - Minh Phước Feng Shui</title>
+    <meta name="description"
+        content="Cập nhật kiến thức phong thủy, tử vi, mẹo hay cho cuộc sống. Bài viết hữu ích từ chuyên gia Minh Phước Feng Shui.">
+
+    <!-- Using System Fonts - No External Fonts -->
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="logo.jpg" alt="Minh Phước Feng Shui" class="logo-img">
+                <div class="logo-text">
+                    <span class="brand-name">Minh Phước</span>
+                    <span class="brand-tagline">Feng Shui</span>
+                </div>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-yin-yang"></i>
+                            <span>Trang Chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gioi-thieu.html" class="nav-link">
+                            <img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon">
+                            <span>Giới Thiệu</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="lap-la-tu-vi.html" class="nav-link">
+                            <i class="fas fa-star-and-crescent"></i>
+                            <span>Lập Lá Tử Vi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="xem-ngay-tot-xau.html" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Xem Ngày Tốt Xấu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="tin-tuc.html" class="nav-link active">
+                            <i class="fas fa-book-open"></i>
+                            <span>Quỹ Khuyến Học</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lien-he.html" class="nav-link">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <span>Liên Hệ</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <div id="userAuthButtons">
+                    <!-- Shown when not logged in -->
+                    <div id="guestButtons" style="display: flex; gap: 10px;">
+                        <button onclick="showLoginModal()" class="btn-contact" style="border: none; cursor: pointer;">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Đăng Nhập</span>
+                        </button>
+                    </div>
+                    <!-- Shown when logged in -->
+                    <div id="userButtons" style="display: none; align-items: center; gap: 10px;">
+                        <span id="userNameDisplay" style="color: var(--color-text); font-weight: 500;"></span>
+                        <button onclick="handleUserLogoutGlobal()" class="btn-contact"
+                            style="background: #dc3545; border: none; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-list">
+            <li><a href="index.html"><i class="fas fa-yin-yang"></i> Trang Chủ</a></li>
+            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới
+                    Thiệu</a></li>
+
+            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+            <li><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Xem Ngày Tốt Xấu</a></li>
+            <li><a href="tin-tuc.html" class="active"><i class="fas fa-book-open"></i> Quỹ Khuyến Học</a></li>
+            <li><a href="lien-he.html"><i class="fas fa-envelope-open-text"></i> Liên Hệ</a></li>
+            <li><a href="admin.html" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Banner -->
+        <section class="page-banner">
+            <div class="banner-container">
+                <h1 class="page-title">Quỹ Khuyến Học & Kiến Thức</h1>
+                <nav class="breadcrumb">
+                    <a href="index.html">Trang chủ</a>
+                    <span>/</span>
+                    <span>Quỹ Khuyến Học</span>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Category Filter -->
+        <section class="category-filter">
+            <div class="filter-container">
+                <button class="filter-btn active">Tất Cả</button>
+                <button class="filter-btn">Phong Thủy</button>
+                <button class="filter-btn">Tử Vi</button>
+                <button class="filter-btn">Ngày Tốt</button>
+                <button class="filter-btn">Hướng Dẫn</button>
+            </div>
+        </section>
+
+        <!-- Blog Posts -->
+        <section class="blog-page-section">
+            <div class="blog-page-container">
+                <div class="blog-grid-page">
+                    <!-- Featured Post -->
+                    <article class="blog-card featured-post">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=400&fit=crop"
+                                alt="Phong thủy nhà ở 2025">
+                            <span class="blog-category">Phong Thủy</span>
+                            <span class="featured-badge">Nổi Bật</span>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar"></i> 19/12/2024</span>
+                                <span><i class="fas fa-user"></i> Thầy Minh Phước</span>
+                                <span><i class="fas fa-eye"></i> 2,345 lượt xem</span>
+                            </div>
+                            <h2 class="blog-title">Tổng Quan Phong Thủy Nhà Ở Năm 2025 - Những Điều Cần Biết</h2>
+                            <p class="blog-excerpt">Năm 2025 Ất Tỵ đang đến gần, đây là thời điểm tốt để nhìn lại và
+                                điều chỉnh phong thủy nhà ở. Bài viết này sẽ tổng hợp những xu hướng phong thủy mới, các
+                                hướng nhà tốt xấu và những lưu ý quan trọng giúp bạn chuẩn bị cho năm mới...</p>
+                            <a href="#" class="blog-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Regular Posts -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop"
+                                alt="Tử vi 2025">
+                            <span class="blog-category">Tử Vi</span>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar"></i> 18/12/2024</span>
+                                <span><i class="fas fa-user"></i> Admin</span>
+                            </div>
+                            <h3 class="blog-title">Dự Đoán Tử Vi 12 Con Giáp Năm Ất Tỵ 2025</h3>
+                            <p class="blog-excerpt">Năm Ất Tỵ 2025 sẽ mang đến những thay đổi lớn cho từng con giáp.
+                                Cùng xem vận trình của bạn trong năm mới...</p>
+                            <a href="#" class="blog-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop"
+                                alt="Chọn ngày cưới">
+                            <span class="blog-category">Ngày Tốt</span>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar"></i> 17/12/2024</span>
+                                <span><i class="fas fa-user"></i> Admin</span>
+                            </div>
+                            <h3 class="blog-title">Cách Chọn Ngày Cưới Hợp Tuổi Vợ Chồng</h3>
+                            <p class="blog-excerpt">Hướng dẫn chi tiết cách chọn ngày cưới đẹp, hợp tuổi để hôn nhân
+                                hạnh phúc viên mãn. Những nguyên tắc cần nhớ...</p>
+                            <a href="#" class="blog-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=250&fit=crop"
+                                alt="Phong thủy văn phòng">
+                            <span class="blog-category">Phong Thủy</span>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar"></i> 15/12/2024</span>
+                                <span><i class="fas fa-user"></i> Admin</span>
+                            </div>
+                            <h3 class="blog-title">5 Nguyên Tắc Phong Thủy Văn Phòng Thu Hút Tài Lộc</h3>
+                            <p class="blog-excerpt">Bố trí văn phòng đúng phong thủy giúp công việc thuận lợi, thu hút
+                                khách hàng và tăng doanh thu...</p>
+                            <a href="#" class="blog-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=250&fit=crop"
+                                alt="Bàn thờ phong thủy">
+                            <span class="blog-category">Hướng Dẫn</span>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar"></i> 12/12/2024</span>
+                                <span><i class="fas fa-user"></i> Admin</span>
+                            </div>
+                            <h3 class="blog-title">Cách Bố Trí Bàn Thờ Đúng Phong Thủy</h3>
+                            <p class="blog-excerpt">Bàn thờ là nơi linh thiêng trong mỗi gia đình. Hướng dẫn chi tiết
+                                cách đặt bàn thờ, lau dọn và những kiêng kỵ...</p>
+                            <a href="#" class="blog-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1518281420975-50db6e5d0a97?w=400&h=250&fit=crop"
+                                alt="Cây phong thủy">
+                            <span class="blog-category">Phong Thủy</span>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar"></i> 10/12/2024</span>
+                                <span><i class="fas fa-user"></i> Admin</span>
+                            </div>
+                            <h3 class="blog-title">Top 10 Cây Phong Thủy Hút Tài Lộc Cho Gia Đình</h3>
+                            <p class="blog-excerpt">Những loại cây vừa đẹp vừa mang ý nghĩa phong thủy tốt, giúp thu hút
+                                tài lộc và may mắn cho gia đình...</p>
+                            <a href="#" class="blog-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=250&fit=crop"
+                                alt="Phòng ngủ phong thủy">
+                            <span class="blog-category">Hướng Dẫn</span>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar"></i> 08/12/2024</span>
+                                <span><i class="fas fa-user"></i> Admin</span>
+                            </div>
+                            <h3 class="blog-title">Phong Thủy Phòng Ngủ - Bí Quyết Giấc Ngủ Ngon</h3>
+                            <p class="blog-excerpt">Bố trí phòng ngủ đúng cách không chỉ giúp bạn ngủ ngon hơn mà còn
+                                cải thiện sức khỏe và vận may...</p>
+                            <a href="#" class="blog-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1449247709967-d4461a6a6103?w=400&h=250&fit=crop"
+                                alt="Tuổi Mão 2025">
+                            <span class="blog-category">Tử Vi</span>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar"></i> 05/12/2024</span>
+                                <span><i class="fas fa-user"></i> Admin</span>
+                            </div>
+                            <h3 class="blog-title">Tuổi Mão Năm 2025 - Vận Mệnh Và Hướng Đi</h3>
+                            <p class="blog-excerpt">Phân tích chi tiết vận trình của tuổi Mão trong năm Ất Tỵ 2025: sự
+                                nghiệp, tài lộc, tình duyên...</p>
+                            <a href="#" class="blog-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1519974719765-e6559eac2575?w=400&h=250&fit=crop"
+                                alt="Ngày nhập trạch">
+                            <span class="blog-category">Ngày Tốt</span>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar"></i> 03/12/2024</span>
+                                <span><i class="fas fa-user"></i> Admin</span>
+                            </div>
+                            <h3 class="blog-title">Hướng Dẫn Lễ Nhập Trạch Nhà Mới Chi Tiết</h3>
+                            <p class="blog-excerpt">Từ A-Z về lễ nhập trạch: chuẩn bị lễ vật, quy trình, những điều nên
+                                làm và kiêng kỵ khi vào nhà mới...</p>
+                            <a href="#" class="blog-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#" class="page-link active">1</a>
+                    <a href="#" class="page-link">2</a>
+                    <a href="#" class="page-link">3</a>
+                    <span class="page-dots">...</span>
+                    <a href="#" class="page-link">10</a>
+                    <a href="#" class="page-link next"><i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter-section">
+            <div class="newsletter-container">
+                <div class="newsletter-content">
+                    <h2><i class="fas fa-envelope"></i> Đăng Ký Nhận Tin</h2>
+                    <p>Nhận bài viết mới, kiến thức phong thủy và ưu đãi đặc biệt qua email</p>
+                </div>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Nhập email của bạn" required>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Đăng Ký
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="Minh Phước" class="footer-logo-img">
+                        <div>
+                            <span class="brand-name">Minh Phước</span>
+                            <span class="brand-tagline">Feng Shui</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Minh Phước Feng Shui - Dịch vụ tư vấn phong thủy, tử vi chuyên nghiệp, uy tín
+                        hàng đầu Việt Nam.</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Dịch Vụ</h4>
+                        <ul>
+                            <li><a href="lap-la-tu-vi.html">Lập Lá Tử Vi</a></li>
+                            <li><a href="xem-ngay-tot-xau.html">Xem Ngày Tốt Xấu</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Kết</h4>
+                        <ul>
+                            <li><a href="index.html">Trang Chủ</a></li>
+                            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
+                            <li><a href="tin-tuc.html">Quỹ Khuyến Học</a></li>
+                            <li><a href="lien-he.html">Liên Hệ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Hệ</h4>
+                        <ul>
+                            <li><a href="tel:0888081050"><i class="fas fa-phone"></i> 0888.08.1050</a></li>
+                            <li><a href="mailto:contact@minhphuoc.com"><i class="fas fa-envelope"></i>
+                                    contact@minhphuoc.com</a></li>
+                            <li><i class="fas fa-map-marker-alt"></i> 57 Đường 7A phường An Lạc, TP.HCM</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Chùa Quan Âm Cát, xã Phan Rí Cửa, Lâm Đồng</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Minh Phước Feng Shui. Bản quyền thuộc về Minh Phước.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- App Scripts -->
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/user-auth.js"></script>
+    <script src="js/auth-ui.js"></script>
+    <script src="js/admin-blog.js"></script>
+    <script src="js/blog-renderer.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Initialize Supabase Connection -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Đợi Supabase khởi tạo xong
+            if (window.supabaseInitPromise) {
+                await window.supabaseInitPromise;
+            }
+
+            await blogManager.checkSupabaseConnection();
+
+            if (typeof blogRenderer !== 'undefined') {
+                await blogRenderer.init();
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cài Đặt - Admin</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <img src="logo.jpg" alt="Minh Phước" class="admin-sidebar-logo">
+                <h2>Admin Panel</h2>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="admin-posts.html" class="admin-nav-item">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Bài Viết</span>
+                </a>
+                <a href="admin-editor.html" class="admin-nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tạo Bài Viết Mới</span>
+                </a>
+                <a href="admin-media.html" class="admin-nav-item">
+                    <i class="fas fa-images"></i>
+                    <span>Thư Viện Media</span>
+                </a>
+                <a href="admin-settings.html" class="admin-nav-item active">
+                    <i class="fas fa-cog"></i>
+                    <span>Cài Đặt</span>
+                </a>
+                <a href="index.html" class="admin-nav-item" target="_blank">
+                    <i class="fas fa-globe"></i>
+                    <span>Xem Website</span>
+                </a>
+            </nav>
+
+            <div class="admin-user-section">
+                <div class="admin-user-info">
+                    <div class="admin-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="admin-user-details">
+                        <h4 id="userName">Admin</h4>
+                        <p id="userEmail">admin@minhphuoc.com</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btnLogout">
+                    <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>Cài Đặt Website</h1>
+                    <div class="admin-breadcrumb">
+                        <a href="admin-posts.html">Dashboard</a> / Cài Đặt
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tabs -->
+            <div style="margin-bottom: 2rem; display: flex; gap: 1rem; border-bottom: 2px solid #e9ecef;">
+                <button class="settings-tab active" data-tab="general">
+                    <i class="fas fa-cog"></i> Chung
+                </button>
+                <button class="settings-tab" data-tab="admin">
+                    <i class="fas fa-user-shield"></i> Tài Khoản Admin
+                </button>
+                <button class="settings-tab" data-tab="data">
+                    <i class="fas fa-database"></i> Dữ Liệu
+                </button>
+                <button class="settings-tab" data-tab="supabase">
+                    <i class="fas fa-bolt"></i> Kết Nối Supabase
+                </button>
+            </div>
+
+            <!-- General Settings -->
+            <div class="content-card tab-content active" id="generalTab">
+                <div class="content-card-header">
+                    <h2>Cài Đặt Chung</h2>
+                </div>
+                <div class="content-card-body">
+                    <div class="form-message" id="generalMessage"></div>
+
+                    <form id="generalForm">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                                <i class="fas fa-globe"></i> Tên Website
+                            </label>
+                            <input type="text" id="siteName" value="Minh Phước Feng Shui"
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px;">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                                <i class="fas fa-tag"></i> Slogan
+                            </label>
+                            <input type="text" id="siteTagline" value="Phong Thủy Chuyên Nghiệp"
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px;">
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div class="form-group">
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                                    <i class="fas fa-envelope"></i> Email Liên Hệ
+                                </label>
+                                <input type="email" id="contactEmail" value="contact@minhphuoc.com"
+                                    style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px;">
+                            </div>
+
+                            <div class="form-group">
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                                    <i class="fas fa-phone"></i> Số Điện Thoại
+                                </label>
+                                <input type="tel" id="contactPhone" value="0888.08.1050"
+                                    style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px;">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Lưu Cài Đặt
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Admin Account Settings -->
+            <div class="content-card tab-content" id="adminTab" style="display: none;">
+                <div class="content-card-header">
+                    <h2>Tài Khoản Admin</h2>
+                </div>
+                <div class="content-card-body">
+                    <div class="form-message" id="adminMessage"></div>
+
+                    <form id="passwordForm">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                                <i class="fas fa-lock"></i> Mật Khẩu Hiện Tại
+                            </label>
+                            <input type="password" id="currentPassword" required
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px;">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                                <i class="fas fa-key"></i> Mật Khẩu Mới
+                            </label>
+                            <input type="password" id="newPassword" required minlength="6"
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px;">
+                            <small style="color: #6c757d;">Tối thiểu 6 ký tự</small>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                                <i class="fas fa-check-circle"></i> Xác Nhận Mật Khẩu Mới
+                            </label>
+                            <input type="password" id="confirmPassword" required
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px;">
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Đổi Mật Khẩu
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Data Management -->
+            <div class="content-card tab-content" id="dataTab" style="display: none;">
+                <div class="content-card-header">
+                    <h2>Quản Lý Dữ Liệu</h2>
+                </div>
+                <div class="content-card-body">
+                    <div style="margin-bottom: 2rem;">
+                        <h3><i class="fas fa-download"></i> Sao Lưu Dữ Liệu</h3>
+                        <p style="color: #6c757d; margin: 0.5rem 0 1rem;">Export tất cả dữ liệu (bài viết, media) thành
+                            file JSON</p>
+                        <button class="btn-primary" id="exportBtn">
+                            <i class="fas fa-file-export"></i> Export Dữ Liệu
+                        </button>
+                    </div>
+
+                    <div style="margin-bottom: 2rem; padding-top: 2rem; border-top: 2px solid #e9ecef;">
+                        <h3><i class="fas fa-upload"></i> Khôi Phục Dữ Liệu</h3>
+                        <p style="color: #6c757d; margin: 0.5rem 0 1rem;">Import dữ liệu đã sao lưu từ file JSON</p>
+                        <input type="file" id="importFile" accept=".json" style="display: none;">
+                        <button class="btn-secondary" onclick="document.getElementById('importFile').click()">
+                            <i class="fas fa-file-import"></i> Chọn File JSON
+                        </button>
+                    </div>
+
+                    <div style="padding-top: 2rem; border-top: 2px solid #e9ecef;">
+                        <h3 style="color: #e74c3c;"><i class="fas fa-exclamation-triangle"></i> Xóa Tất Cả Dữ Liệu</h3>
+                        <p style="color: #6c757d; margin: 0.5rem 0 1rem;">
+                            <strong>Cảnh báo:</strong> Thao tác này sẽ xóa TẤT CẢ bài viết, media và cài đặt. Không thể
+                            hoàn tác!
+                        </p>
+                        <button class="btn-danger" id="resetBtn">
+                            <i class="fas fa-trash-alt"></i> Xóa Toàn Bộ Dữ Liệu
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supabase Settings -->
+            <div class="content-card tab-content" id="supabaseTab" style="display: none;">
+                <div class="content-card-header">
+                    <h2>Kết Nối Supabase</h2>
+                </div>
+                <div class="content-card-body">
+                    <div class="form-message" id="supabaseMessage"></div>
+
+                    <div
+                        style="background: #e8f0fe; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; color: #1a73e8;">
+                        <i class="fas fa-info-circle"></i>
+                        Supabase là nền tảng backend giúp lưu trữ dữ liệu tập trung.
+                        Bạn cần tạo project tại <a href="https://supabase.com" target="_blank">supabase.com</a> và lấy
+                        thông tin bên dưới.
+                    </div>
+
+                    <form id="supabaseForm">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                                <i class="fas fa-link"></i> Supabase URL
+                            </label>
+                            <input type="url" id="supabaseUrl" required placeholder="https://your-project.supabase.co"
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px;">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                                <i class="fas fa-key"></i> Supabase Anon Key
+                            </label>
+                            <input type="text" id="supabaseKey" required placeholder="your-anon-key"
+                                style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px;">
+                        </div>
+
+                        <div id="connectionStatus" style="margin-bottom: 1rem;"></div>
+                        <div id="supabaseMessage" class="form-message"></div>
+
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Lưu & Kết Nối
+                        </button>
+
+                        <button type="button" id="testConnectionBtn" class="btn-secondary"
+                            style="margin-left: 10px; background: #6c757d; color: white; border: none; padding: 0.9rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                            <i class="fas fa-plug"></i> Kiểm Tra Kết Nối
+                        </button>
+                    </form>
+
+                    <div class="setting-card" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+                        <h3 style="margin-bottom: 10px; color: var(--color-blue);"><i class="fas fa-sync"></i> Đồng bộ
+                            dữ liệu</h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+                            Nếu bạn thấy bài viết trên website chưa trùng khớp với trong database Supabase, hãy nhấn nút
+                            bên dưới để đẩy toàn bộ dữ liệu từ trình duyệt này lên database.
+                        </p>
+                        <button id="syncToSupabaseBtn" type="button" class="btn-primary"
+                            style="background: var(--color-blue); border: none; padding: 0.9rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; color: white;">
+                            <i class="fas fa-upload"></i> Đồng bộ ngay Local lên Supabase
+                        </button>
+                        <div id="syncMessage" class="form-message" style="margin-top: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .settings-tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s;
+        }
+
+        .settings-tab:hover {
+            color: var(--admin-primary);
+        }
+
+        .settings-tab.active {
+            color: var(--admin-primary);
+            border-bottom-color: var(--admin-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .form-message.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-message.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/admin-blog.js"></script>
+    <script src="js/admin-media.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Protect page
+        auth.requireAuth('admin.html');
+
+        // Display user info
+        const session = auth.getSession();
+        if (session) {
+            document.getElementById('userName').textContent = session.name;
+            document.getElementById('userEmail').textContent = session.email;
+        }
+
+        // Logout
+        document.getElementById('btnLogout').addEventListener('click', function () {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                auth.logout();
+                window.location.href = 'admin.html';
+            }
+        });
+
+        // Tab switching
+        document.querySelectorAll('.settings-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                // Remove active from all tabs
+                document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+
+                // Activate clicked tab
+                this.classList.add('active');
+                const tabName = this.dataset.tab;
+                document.getElementById(tabName + 'Tab').style.display = 'block';
+            });
+        });
+
+        // General settings form
+        document.getElementById('generalForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const settings = {
+                siteName: document.getElementById('siteName').value,
+                siteTagline: document.getElementById('siteTagline').value,
+                contactEmail: document.getElementById('contactEmail').value,
+                contactPhone: document.getElementById('contactPhone').value
+            };
+
+            localStorage.setItem('minhphuoc_settings', JSON.stringify(settings));
+
+            showMessage('generalMessage', 'Đã lưu cài đặt thành công!', 'success');
+        });
+
+        // Password change form
+        document.getElementById('passwordForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const currentPwd = document.getElementById('currentPassword').value;
+            const newPwd = document.getElementById('newPassword').value;
+            const confirmPwd = document.getElementById('confirmPassword').value;
+
+            if (newPwd !== confirmPwd) {
+                showMessage('adminMessage', 'Mật khẩu mới không khớp!', 'error');
+                return;
+            }
+
+            const result = auth.changePassword(currentPwd, newPwd);
+
+            if (result.success) {
+                showMessage('adminMessage', result.message, 'success');
+                document.getElementById('passwordForm').reset();
+            } else {
+                showMessage('adminMessage', result.message, 'error');
+            }
+        });
+
+        // Export data
+        document.getElementById('exportBtn').addEventListener('click', function () {
+            const data = {
+                posts: blogManager.getAllPosts(),
+                media: mediaManager.getAllMedia(),
+                settings: JSON.parse(localStorage.getItem('minhphuoc_settings') || '{}'),
+                exportDate: new Date().toISOString()
+            };
+
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `minhphuoc-backup-${Date.now()}.json`;
+            link.click();
+
+            alert('Đã export dữ liệu thành công!');
+        });
+
+        // Import data
+        document.getElementById('importFile').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                try {
+                    const data = JSON.parse(event.target.result);
+
+                    if (confirm('Import dữ liệu sẽ ghi đè lên dữ liệu hiện tại. Bạn có chắc không?')) {
+                        if (data.posts) {
+                            localStorage.setItem('minhphuoc_blog_posts', JSON.stringify({ posts: data.posts }));
+                        }
+                        if (data.media) {
+                            localStorage.setItem('minhphuoc_media_library', JSON.stringify({ media: data.media }));
+                        }
+                        if (data.settings) {
+                            localStorage.setItem('minhphuoc_settings', JSON.stringify(data.settings));
+                        }
+
+                        alert('Import thành công! Trang sẽ tự động tải lại.');
+                        location.reload();
+                    }
+                } catch (error) {
+                    alert('Lỗi: File JSON không hợp lệ - ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        });
+
+        // Reset all data
+        document.getElementById('resetBtn').addEventListener('click', function () {
+            if (confirm('BẠN CHẮC CHẮN MUỐN XÓA TẤT CẢ DỮ LIỆU?\nHành động này KHÔNG THỂ HOÀN TÁC!')) {
+                if (confirm('Xác nhận lần cuối: XÓA TẤT CẢ?')) {
+                    localStorage.removeItem('minhphuoc_blog_posts');
+                    localStorage.removeItem('minhphuoc_media_library');
+                    localStorage.removeItem('minhphuoc_settings');
+                    // Keep admin session
+                    alert('Đã xóa toàn bộ dữ liệu. Trang sẽ tự động tải lại.');
+                    location.reload();
+                }
+            }
+        });
+
+        // Show message helper
+        function showMessage(elementId, message, type) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.className = 'form-message ' + type;
+            el.style.display = 'block';
+
+            setTimeout(() => {
+                el.style.display = 'none';
+            }, 5000);
+        }
+
+        // Load settings
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('minhphuoc_settings') || '{}');
+            if (settings.siteName) document.getElementById('siteName').value = settings.siteName;
+            if (settings.siteTagline) document.getElementById('siteTagline').value = settings.siteTagline;
+            if (settings.contactEmail) document.getElementById('contactEmail').value = settings.contactEmail;
+            if (settings.contactPhone) document.getElementById('contactPhone').value = settings.contactPhone;
+        }
+
+        loadSettings();
+
+        // Supabase Settings Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedUrl = localStorage.getItem('supabaseUrl');
+            const savedKey = localStorage.getItem('supabaseKey');
+
+            if (savedUrl) document.getElementById('supabaseUrl').value = savedUrl;
+            if (savedKey) document.getElementById('supabaseKey').value = savedKey;
+        });
+
+        document.getElementById('supabaseForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const url = document.getElementById('supabaseUrl').value;
+            const key = document.getElementById('supabaseKey').value;
+
+            localStorage.setItem('supabaseUrl', url);
+            localStorage.setItem('supabaseKey', key);
+
+            showMessage('supabaseMessage', 'Đang kết nối...', 'success');
+
+            try {
+                const success = await supabaseClient.initialize(url, key);
+                if (success) {
+                    const test = await supabaseClient.testConnection();
+                    if (test.success) {
+                        showMessage('supabaseMessage', 'Kết nối thành công! Đã lưu cấu hình.', 'success');
+                    } else {
+                        showMessage('supabaseMessage', 'Khởi tạo thành công nhưng test thất bại: ' + test.message, 'error');
+                    }
+                } else {
+                    showMessage('supabaseMessage', 'Không thể khởi tạo Supabase client. Kiểm tra URL/Key.', 'error');
+                }
+            } catch (err) {
+                showMessage('supabaseMessage', 'Lỗi: ' + err.message, 'error');
+            }
+        });
+
+        document.getElementById('testConnectionBtn').addEventListener('click', async function () {
+            const url = document.getElementById('supabaseUrl').value;
+            const key = document.getElementById('supabaseKey').value;
+
+            if (!url || !key) {
+                showMessage('supabaseMessage', 'Vui lòng nhập URL và Key', 'error');
+                return;
+            }
+
+            try {
+                await supabaseClient.initialize(url, key);
+                const result = await supabaseClient.testConnection();
+                if (result.success) {
+                    showMessage('supabaseMessage', 'Kết nối OK!', 'success');
+                } else {
+                    showMessage('supabaseMessage', 'Kết nối thất bại: ' + result.message, 'error');
+                }
+            } catch (err) {
+                showMessage('supabaseMessage', 'Lỗi: ' + err.message, 'error');
+            }
+        });
+
+        // Sync Local to Supabase Logic
+        document.getElementById('syncToSupabaseBtn').addEventListener('click', async function () {
+            if (!supabaseClient.isInitialized()) {
+                showMessage('syncMessage', 'Vui lòng kết nối Supabase trước khi đồng bộ.', 'error');
+                return;
+            }
+
+            if (!confirm('Bạn có chắc chắn muốn đẩy toàn bộ bài viết và dữ liệu từ LocalStorage lên Supabase?')) {
+                return;
+            }
+
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đồng bộ...';
+
+            try {
+                // Đảm bảo blogManager đã sẵn sàng
+                if (typeof blogManager === 'undefined') {
+                    throw new Error('Hệ thống Blog chưa sẵn sàng.');
+                }
+
+                await blogManager.checkSupabaseConnection();
+                const result = await blogManager.migrateToSupabase(true);
+
+                if (result.success) {
+                    showMessage('syncMessage', result.message, 'success');
+                } else {
+                    showMessage('syncMessage', 'Đồng bộ thất bại: ' + result.message, 'error');
+                }
+            } catch (err) {
+                showMessage('syncMessage', 'Lỗi đồng bộ: ' + err.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Viện Media - Admin</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+
+    <style>
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .media-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .media-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .media-item.selected {
+            border: 3px solid var(--admin-primary);
+            transform: scale(0.98);
+        }
+
+        .media-thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f8f9fa;
+        }
+
+        .media-info {
+            padding: 1rem;
+        }
+
+        .media-filename {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--admin-dark);
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .media-meta {
+            font-size: 0.75rem;
+            color: #6c757d;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .media-actions {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.3rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .media-item:hover .media-actions {
+            opacity: 1;
+        }
+
+        .media-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .media-action-btn.view {
+            background: rgba(52, 152, 219, 0.9);
+            color: white;
+        }
+
+        .media-action-btn.delete {
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+        }
+
+        .upload-area {
+            border: 3px dashed #dee2e6;
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-area:hover,
+        .upload-area.drag-over {
+            border-color: var(--admin-primary);
+            background: rgba(139, 69, 19, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--admin-primary);
+            margin-bottom: 1rem;
+        }
+
+        .storage-info {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .storage-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .storage-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--admin-primary), var(--admin-secondary));
+            transition: width 0.3s;
+        }
+
+        .media-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .media-modal.active {
+            display: flex;
+        }
+
+        .media-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .media-modal-image {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+        }
+
+        .media-modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .media-modal-info {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .filter-toolbar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-toggle button {
+            padding: 0.6rem 1rem;
+            border: 2px solid #dee2e6;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-toggle button.active {
+            background: var(--admin-primary);
+            color: white;
+            border-color: var(--admin-primary);
+        }
+
+        .media-list {
+            display: none;
+        }
+
+        .media-list.active {
+            display: block;
+        }
+
+        .media-list-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .media-list-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .media-list-info {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <img src="logo.jpg" alt="Minh Phước" class="admin-sidebar-logo">
+                <h2>Admin Panel</h2>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="admin-posts.html" class="admin-nav-item">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Bài Viết</span>
+                </a>
+                <a href="admin-media.html" class="admin-nav-item active">
+                    <i class="fas fa-images"></i>
+                    <span>Thư Viện Media</span>
+                </a>
+                <a href="admin-settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Cài Đặt</span>
+                </a>
+                <a href="index.html" class="admin-nav-item" target="_blank">
+                    <i class="fas fa-globe"></i>
+                    <span>Xem Website</span>
+                </a>
+            </nav>
+
+            <div class="admin-user-section">
+                <div class="admin-user-info">
+                    <div class="admin-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="admin-user-details">
+                        <h4 id="userName">Admin</h4>
+                        <p id="userEmail">admin@minhphuoc.com</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btnLogout">
+                    <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>Thư Viện Media</h1>
+                    <div class="admin-breadcrumb">
+                        <a href="admin-posts.html">Dashboard</a> / Media
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storage Info -->
+            <div class="storage-info">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <strong>Dung lượng lưu trữ</strong>
+                    <span id="storageText">0 / 5 MB</span>
+                </div>
+                <div class="storage-bar">
+                    <div class="storage-bar-fill" id="storageBarFill" style="width: 0%"></div>
+                </div>
+                <div
+                    style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.85rem; color: #6c757d;">
+                    <span id="mediaCount">0 ảnh</span>
+                    <span id="storagePercent">0%</span>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Kéo thả ảnh vào đây hoặc click để chọn</h3>
+                <p>Hỗ trợ: JPG, PNG, GIF, WebP - Tối đa 5MB/ảnh</p>
+                <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+            </div>
+
+            <!-- Filter Toolbar -->
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h2>Thư Viện Ảnh</h2>
+                    <div class="filter-toolbar">
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchMedia" placeholder="Tìm kiếm ảnh...">
+                        </div>
+                        <div class="view-toggle">
+                            <button class="active" id="gridViewBtn" title="Grid View">
+                                <i class="fas fa-th"></i>
+                            </button>
+                            <button id="listViewBtn" title="List View">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                        <button class="btn-danger" id="cleanupBtn" style="margin-left: auto;">
+                            <i class="fas fa-trash-alt"></i> Xóa Ảnh Không Dùng
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grid View -->
+                <div class="media-grid" id="mediaGrid">
+                    <!-- Media items will be loaded here -->
+                </div>
+
+                <!-- List View -->
+                <div class="media-list" id="mediaList">
+                    <!-- Media items in list format -->
+                </div>
+
+                <div id="emptyState" style="display: none; padding: 3rem; text-align: center; color: #6c757d;">
+                    <i class="fas fa-images" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                    <p>Chưa có ảnh nào trong thư viện</p>
+                    <p style="font-size: 0.9rem;">Upload ảnh để bắt đầu sử dụng</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Media Modal -->
+    <div class="media-modal" id="mediaModal">
+        <div class="media-modal-content">
+            <button class="media-modal-close" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="modalImage" class="media-modal-image" src="" alt="">
+            <div class="media-modal-info">
+                <h3 id="modalFilename"></h3>
+                <p><strong>Kích thước:</strong> <span id="modalDimensions"></span></p>
+                <p><strong>Dung lượng:</strong> <span id="modalSize"></span></p>
+                <p><strong>Ngày upload:</strong> <span id="modalDate"></span></p>
+                <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                    <button class="btn-primary" id="copyUrlBtn">
+                        <i class="fas fa-copy"></i> Copy URL
+                    </button>
+                    <button class="btn-danger" id="deleteFromModalBtn">
+                        <i class="fas fa-trash"></i> Xóa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/admin-media.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Protect page
+        auth.requireAuth('admin.html');
+
+        // Display user info
+        const session = auth.getSession();
+        if (session) {
+            document.getElementById('userName').textContent = session.name;
+            document.getElementById('userEmail').textContent = session.email;
+        }
+
+        // Logout
+        document.getElementById('btnLogout').addEventListener('click', function () {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                auth.logout();
+                window.location.href = 'admin.html';
+            }
+        });
+
+        let currentMediaId = null;
+        let currentView = 'grid';
+
+        // Load media library
+        async function loadMedia() {
+            const media = await mediaManager.getAllMedia();
+            const gridContainer = document.getElementById('mediaGrid');
+            const listContainer = document.getElementById('mediaList');
+            const emptyState = document.getElementById('emptyState');
+
+            if (media.length === 0) {
+                gridContainer.innerHTML = '';
+                listContainer.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            // Grid view
+            gridContainer.innerHTML = media.map(m => `
+                <div class="media-item" data-id="${m.id}" onclick="selectMedia('${m.id}')">
+                    <img src="${m.url}" alt="${m.alt || m.filename}" class="media-thumbnail">
+                    <div class="media-actions">
+                        <button class="media-action-btn view" onclick="event.stopPropagation(); viewMedia('${m.id}')" title="Xem">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="media-action-btn delete" onclick="event.stopPropagation(); deleteMedia('${m.id}')" title="Xóa">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="media-info">
+                        <div class="media-filename" title="${m.filename}">${m.filename}</div>
+                        <div class="media-meta">
+                            <span>${m.width || '?'}x${m.height || '?'}</span>
+                            <span>${mediaManager.formatFileSize(m.size)}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // List view
+            listContainer.innerHTML = media.map(m => `
+                <div class="media-list-item">
+                    <img src="${m.url}" alt="${m.alt || m.filename}" class="media-list-thumbnail">
+                    <div class="media-list-info">
+                        <strong>${m.filename}</strong>
+                        <p style="font-size: 0.85rem; color: #6c757d; margin: 0.5rem 0 0;">
+                            ${m.width || '?'}x${m.height || '?'} • ${mediaManager.formatFileSize(m.size)} • 
+                            ${new Date(m.uploadDate).toLocaleDateString('vi-VN')}
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn-icon edit" onclick="viewMedia('${m.id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn-icon delete" onclick="deleteMedia('${m.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            await updateStorageInfo();
+        }
+
+        // Update storage info
+        async function updateStorageInfo() {
+            const info = await mediaManager.getStorageInfo();
+            document.getElementById('storageText').textContent =
+                `${mediaManager.formatFileSize(info.storageUsed)} / ${mediaManager.formatFileSize(info.storageLimit)}`;
+            document.getElementById('storageBarFill').style.width = Math.min(info.percentUsed, 100) + '%';
+            document.getElementById('mediaCount').textContent = `${info.totalCount} ảnh`;
+            document.getElementById('storagePercent').textContent = Math.round(info.percentUsed) + '%';
+
+            // Warning if near limit
+            if (info.percentUsed > 80) {
+                document.getElementById('storageText').style.color = '#e74c3c';
+            }
+        }
+
+        // Upload area interactions
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('drag-over');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+            fileInput.value = ''; // Reset
+        });
+
+        // Handle file upload
+        async function handleFiles(files) {
+            if (files.length === 0) return;
+
+            const btn = document.querySelector('.upload-area h3');
+            const originalText = btn.textContent;
+            btn.textContent = 'Đang upload...';
+
+            let successCount = 0;
+            for (let i = 0; i < files.length; i++) {
+                const result = await mediaManager.uploadMedia(files[i]);
+                if (result.success) {
+                    successCount++;
+                } else {
+                    alert(result.error);
+                }
+                btn.textContent = `Đang upload... (${i + 1}/${files.length})`;
+            }
+
+            btn.textContent = originalText;
+            loadMedia();
+
+            if (successCount > 0) {
+                alert(`Đã upload thành công ${successCount}/${files.length} ảnh`);
+            }
+        }
+
+        // Select media
+        function selectMedia(id) {
+            document.querySelectorAll('.media-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            currentMediaId = id;
+        }
+
+        // View media in modal
+        async function viewMedia(id) {
+            const media = await mediaManager.getMediaById(id);
+            if (!media) return;
+
+            document.getElementById('modalImage').src = media.url;
+            document.getElementById('modalFilename').textContent = media.filename;
+            document.getElementById('modalDimensions').textContent = `${media.width || '?'}x${media.height || '?'}px`;
+            document.getElementById('modalSize').textContent = mediaManager.formatFileSize(media.size);
+            document.getElementById('modalDate').textContent = new Date(media.uploadDate).toLocaleString('vi-VN');
+
+            currentMediaId = id;
+            document.getElementById('mediaModal').classList.add('active');
+        }
+
+        // Close modal
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('mediaModal').classList.remove('active');
+        });
+
+        document.getElementById('mediaModal').addEventListener('click', (e) => {
+            if (e.target.id === 'mediaModal') {
+                document.getElementById('mediaModal').classList.remove('active');
+            }
+        });
+
+        // Copy URL
+        document.getElementById('copyUrlBtn').addEventListener('click', async () => {
+            if (!currentMediaId) return;
+            const media = await mediaManager.getMediaById(currentMediaId);
+            navigator.clipboard.writeText(media.url).then(() => {
+                alert('Đã copy URL vào clipboard!');
+            });
+        });
+
+        // Delete media
+        async function deleteMedia(id) {
+            if (!confirm('Bạn có chắc muốn xóa ảnh này?')) return;
+
+            const result = await mediaManager.deleteMedia(id);
+            if (result.success) {
+                await loadMedia();
+                document.getElementById('mediaModal').classList.remove('active');
+            } else {
+                if (result.warning) {
+                    if (confirm(result.error + '\nBạn có muốn xóa bắt buộc không?')) {
+                        await mediaManager.forceDeleteMedia(id);
+                        await loadMedia();
+                        document.getElementById('mediaModal').classList.remove('active');
+                    }
+                } else {
+                    alert(result.error);
+                }
+            }
+        }
+
+        document.getElementById('deleteFromModalBtn').addEventListener('click', () => {
+            if (currentMediaId) deleteMedia(currentMediaId);
+        });
+
+        // Cleanup unused
+        document.getElementById('cleanupBtn').addEventListener('click', async () => {
+            const unused = await mediaManager.getUnusedMedia();
+            if (unused.length === 0) {
+                alert('Không có ảnh nào chưa được sử dụng');
+                return;
+            }
+            if (confirm(`Tìm thấy ${unused.length} ảnh chưa dùng. Xóa tất cả?`)) {
+                const result = await mediaManager.cleanupUnused();
+                alert(`Đã xóa ${result.count} ảnh`);
+                await loadMedia();
+            }
+        });
+
+        // Search
+        document.getElementById('searchMedia').addEventListener('input', async (e) => {
+            const query = e.target.value.trim();
+            const media = query ? await mediaManager.searchMedia(query) : await mediaManager.getAllMedia();
+            // Actually loadMedia re-fetches everything. We should probably pass media to loadMedia or separate fetching from rendering.
+            // For simplicity with current structure, if there's a query, we'll need a way for loadMedia to handle it.
+            // Let's just re-fetch for now to stay consistent with Supabase if query happens there.
+            await loadMedia();
+        });
+
+        // View toggle
+        document.getElementById('gridViewBtn').addEventListener('click', () => {
+            currentView = 'grid';
+            document.getElementById('gridViewBtn').classList.add('active');
+            document.getElementById('listViewBtn').classList.remove('active');
+            document.getElementById('mediaGrid').style.display = 'grid';
+            document.getElementById('mediaList').classList.remove('active');
+        });
+
+        document.getElementById('listViewBtn').addEventListener('click', () => {
+            currentView = 'list';
+            document.getElementById('listViewBtn').classList.add('active');
+            document.getElementById('gridViewBtn').classList.remove('active');
+            document.getElementById('mediaGrid').style.display = 'none';
+            document.getElementById('mediaList').classList.add('active');
+        });
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (window.supabaseInitPromise) {
+                await window.supabaseInitPromise;
+            }
+            loadMedia();
+        });
+    </script>
+</body>
+
+</html>

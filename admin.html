@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Minh Phước Feng Shui</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+
+<body class="admin-body">
+    <div class="admin-login-container">
+        <div class="admin-login-box">
+            <div class="admin-login-header">
+                <img src="logo.jpg" alt="Minh Phước" class="admin-logo">
+                <h1>Quản Trị Website</h1>
+                <p>Minh Phước Feng Shui</p>
+            </div>
+
+            <form id="adminLoginForm" class="admin-login-form">
+                <div class="form-message" id="loginMessage"></div>
+
+                <div class="form-group">
+                    <label for="adminEmail">
+                        <i class="fas fa-user"></i>
+                        Tên đăng nhập
+                    </label>
+                    <input type="text" id="adminEmail" name="email" required placeholder="Nhập tên đăng nhập"
+                        autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPassword">
+                        <i class="fas fa-lock"></i>
+                        Mật khẩu
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="adminPassword" name="password" required placeholder="Nhập mật khẩu"
+                            autocomplete="current-password">
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-checkbox">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Ghi nhớ đăng nhập</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-admin-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Đăng Nhập
+                </button>
+
+                <div class="login-footer">
+                    <a href="index.html" class="back-to-site">
+                        <i class="fas fa-arrow-left"></i>
+                        Quay lại trang chủ
+                    </a>
+                </div>
+            </form>
+
+            <div class="admin-login-info">
+                <p><i class="fas fa-info-circle"></i> Chỉ dành cho quản trị viên</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script>
+        // Redirect if already logged in
+        auth.redirectIfLoggedIn('admin-posts.html');
+
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('adminPassword');
+            const icon = this.querySelector('i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // Handle login form submission
+        document.getElementById('adminLoginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const messageDiv = document.getElementById('loginMessage');
+
+            // Clear previous message
+            messageDiv.textContent = '';
+            messageDiv.className = 'form-message';
+
+            // Attempt login
+            const result = await auth.login(email, password);
+
+            if (result.success) {
+                messageDiv.textContent = 'Đăng nhập thành công! Đang chuyển hướng...';
+                messageDiv.classList.add('success');
+
+                // Redirect to admin dashboard
+                setTimeout(() => {
+                    window.location.href = 'admin-posts.html';
+                }, 1000);
+            } else {
+                messageDiv.textContent = result.message;
+                messageDiv.classList.add('error');
+            }
+        });
+
+        // Add animation on load
+        window.addEventListener('load', function () {
+            document.querySelector('.admin-login-box').classList.add('fade-in');
+        });
+    </script>
+</body>
+
+</html>
