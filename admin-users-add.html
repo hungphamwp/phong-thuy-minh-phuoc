@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Người Dùng Mới - Admin Panel</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+
+    <style>
+        .wp-add-user-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+        }
+
+        .wp-add-user-form h2 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.3rem;
+        }
+
+        .wp-add-user-form .description {
+            color: #646970;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .wp-form-field {
+            display: flex;
+            margin-bottom: 1.25rem;
+            align-items: flex-start;
+        }
+
+        .wp-form-field label {
+            width: 200px;
+            font-weight: 400;
+            padding-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #1d2327;
+        }
+
+        .wp-form-field .field-input {
+            flex: 1;
+        }
+
+        .wp-form-field input[type="text"],
+        .wp-form-field input[type="email"],
+        .wp-form-field input[type="url"],
+        .wp-form-field input[type="password"],
+        .wp-form-field select {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #8c8f94;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .wp-form-field input:focus,
+        .wp-form-field select:focus {
+            border-color: #2271b1;
+            outline: none;
+            box-shadow: 0 0 0 1px #2271b1;
+        }
+
+        .wp-password-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .wp-password-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .btn-generate-password {
+            background: white;
+            border: 1px solid #2271b1;
+            color: #2271b1;
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .btn-generate-password:hover {
+            background: #f0f7fc;
+        }
+
+        .btn-toggle-password {
+            background: none;
+            border: none;
+            color: #2271b1;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .wp-password-strength {
+            height: 4px;
+            border-radius: 2px;
+            max-width: 400px;
+        }
+
+        .wp-password-strength.weak {
+            background: #dc3232;
+        }
+
+        .wp-password-strength.medium {
+            background: #ffb900;
+        }
+
+        .wp-password-strength.strong {
+            background: #46b450;
+        }
+
+        .strength-label {
+            font-size: 0.8rem;
+            color: #646970;
+        }
+
+        .wp-checkbox-field {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        .wp-checkbox-field input {
+            margin-top: 0.25rem;
+        }
+
+        .wp-checkbox-field label {
+            font-size: 0.9rem;
+            color: #1d2327;
+            width: auto;
+        }
+
+        .btn-submit-user {
+            background: #2271b1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn-submit-user:hover {
+            background: #135e96;
+        }
+
+        /* Submenu styles */
+        .admin-nav-submenu {
+            padding-left: 2.5rem;
+            display: none;
+        }
+
+        .admin-nav-item.has-submenu.open+.admin-nav-submenu {
+            display: block;
+        }
+
+        .admin-nav-submenu a {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .admin-nav-submenu a:hover,
+        .admin-nav-submenu a.active {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <img src="logo.jpg" alt="Minh Phước" class="admin-sidebar-logo">
+                <h2>Admin Panel</h2>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="admin-dashboard.html" class="admin-nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin-posts.html" class="admin-nav-item">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Bài Viết</span>
+                </a>
+                <a href="admin-editor.html" class="admin-nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tạo Bài Viết Mới</span>
+                </a>
+                <a href="admin-categories.html" class="admin-nav-item">
+                    <i class="fas fa-folder"></i>
+                    <span>Danh Mục</span>
+                </a>
+                <a href="admin-tags.html" class="admin-nav-item">
+                    <i class="fas fa-tags"></i>
+                    <span>Tags</span>
+                </a>
+                <a href="admin-media.html" class="admin-nav-item">
+                    <i class="fas fa-images"></i>
+                    <span>Thư Viện Media</span>
+                </a>
+                <a href="#" class="admin-nav-item has-submenu open">
+                    <i class="fas fa-users"></i>
+                    <span>Thành Viên</span>
+                </a>
+                <div class="admin-nav-submenu" style="display: block;">
+                    <a href="admin-users.html">Tất cả người dùng</a>
+                    <a href="admin-users-add.html" class="active">Thêm người dùng</a>
+                </div>
+                <a href="admin-settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Cài Đặt</span>
+                </a>
+                <a href="index.html" class="admin-nav-item" target="_blank">
+                    <i class="fas fa-globe"></i>
+                    <span>Xem Website</span>
+                </a>
+            </nav>
+
+            <div class="admin-user-section">
+                <div class="admin-user-info">
+                    <div class="admin-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="admin-user-details">
+                        <h4 id="currentUserName">Admin</h4>
+                        <p id="currentUserEmail">admin@minhphuoc.com</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btnLogout">
+                    <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>Thêm Người Dùng Mới</h1>
+                    <div class="admin-breadcrumb">
+                        <a href="admin-dashboard.html">Dashboard</a> /
+                        <a href="admin-users.html">Thành Viên</a> / Thêm mới
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add User Form -->
+            <div class="wp-add-user-form">
+                <p class="description">Tạo một người sử dụng mới và thêm vào trang mạng này.</p>
+
+                <form id="addUserForm">
+                    <div class="wp-form-field">
+                        <label for="newUsername">Tên người dùng (bắt buộc)</label>
+                        <div class="field-input">
+                            <input type="text" id="newUsername" required>
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
+                        <label for="newEmail">Email (bắt buộc)</label>
+                        <div class="field-input">
+                            <input type="email" id="newEmail" required>
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
+                        <label for="newFirstName">Tên</label>
+                        <div class="field-input">
+                            <input type="text" id="newFirstName">
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
+                        <label for="newLastName">Họ</label>
+                        <div class="field-input">
+                            <input type="text" id="newLastName">
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
+                        <label for="newWebsite">Trang web</label>
+                        <div class="field-input">
+                            <input type="url" id="newWebsite" placeholder="https://">
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
+                        <label for="newPassword">Mật khẩu</label>
+                        <div class="field-input">
+                            <div class="wp-password-wrap">
+                                <div class="wp-password-actions">
+                                    <button type="button" class="btn-generate-password" id="btnGenPassword">Tạo mật
+                                        khẩu</button>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                    <input type="password" id="newPassword" style="max-width: 320px;">
+                                    <button type="button" class="btn-toggle-password" id="btnTogglePassword">
+                                        <i class="fas fa-eye-slash"></i> Ẩn đi
+                                    </button>
+                                </div>
+                                <div class="wp-password-strength" id="passwordStrength"></div>
+                                <span class="strength-label" id="strengthLabel"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
+                        <label>Gửi thông báo đến thành viên</label>
+                        <div class="field-input">
+                            <div class="wp-checkbox-field">
+                                <input type="checkbox" id="sendNotification" checked>
+                                <label for="sendNotification">Gửi cho người dùng mới một email về tài khoản của
+                                    họ</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
+                        <label for="newRole">Vai trò</label>
+                        <div class="field-input">
+                            <select id="newRole">
+                                <option value="user">Thành viên đăng ký</option>
+                                <option value="admin">Quản lý</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit-user">Thêm người dùng</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/admin-users.js"></script>
+
+    <script>
+        // Protect page
+        auth.requireAuth('admin.html');
+
+        const session = auth.getSession();
+        if (session) {
+            document.getElementById('currentUserName').textContent = session.name;
+            document.getElementById('currentUserEmail').textContent = session.email;
+        }
+
+        document.getElementById('btnLogout').addEventListener('click', function () {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                auth.logout();
+                window.location.href = 'admin.html';
+            }
+        });
+
+        // Initialize userManager
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (window.supabaseInitPromise) {
+                await window.supabaseInitPromise;
+            }
+            await userManager.checkSupabaseConnection();
+        });
+
+        // Generate password
+        document.getElementById('btnGenPassword').addEventListener('click', function () {
+            const password = generatePassword(16);
+            const input = document.getElementById('newPassword');
+            input.type = 'text';
+            input.value = password;
+            updatePasswordStrength(password);
+            document.getElementById('btnTogglePassword').innerHTML = '<i class="fas fa-eye-slash"></i> Ẩn đi';
+        });
+
+        function generatePassword(length) {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return password;
+        }
+
+        // Toggle password visibility
+        document.getElementById('btnTogglePassword').addEventListener('click', function () {
+            const input = document.getElementById('newPassword');
+            if (input.type === 'password') {
+                input.type = 'text';
+                this.innerHTML = '<i class="fas fa-eye-slash"></i> Ẩn đi';
+            } else {
+                input.type = 'password';
+                this.innerHTML = '<i class="fas fa-eye"></i> Hiện';
+            }
+        });
+
+        // Password strength
+        document.getElementById('newPassword').addEventListener('input', function () {
+            updatePasswordStrength(this.value);
+        });
+
+        function updatePasswordStrength(password) {
+            const strengthBar = document.getElementById('passwordStrength');
+            const label = document.getElementById('strengthLabel');
+
+            if (!password) {
+                strengthBar.className = 'wp-password-strength';
+                label.textContent = '';
+                return;
+            }
+
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            if (strength <= 2) {
+                strengthBar.className = 'wp-password-strength weak';
+                label.textContent = 'Yếu';
+            } else if (strength <= 3) {
+                strengthBar.className = 'wp-password-strength medium';
+                label.textContent = 'Trung bình';
+            } else {
+                strengthBar.className = 'wp-password-strength strong';
+                label.textContent = 'Mạnh';
+            }
+        }
+
+        // Form submit
+        document.getElementById('addUserForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('newUsername').value.trim();
+            const email = document.getElementById('newEmail').value.trim();
+            const firstName = document.getElementById('newFirstName').value.trim();
+            const lastName = document.getElementById('newLastName').value.trim();
+            const fullName = [lastName, firstName].filter(n => n).join(' ') || username;
+            const role = document.getElementById('newRole').value;
+
+            if (!username || !email) {
+                alert('Vui lòng điền tên người dùng và email!');
+                return;
+            }
+
+            const result = await userManager.createUser({
+                username: username,
+                email: email,
+                full_name: fullName,
+                first_name: firstName,
+                last_name: lastName,
+                role: role,
+                is_active: true
+            });
+
+            if (result.success) {
+                alert('Đã thêm người dùng mới thành công!');
+                window.location.href = 'admin-users.html';
+            } else {
+                alert('Lỗi: ' + result.message);
+            }
+        });
+    </script>
+</body>
+
+</html>
