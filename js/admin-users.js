@@ -15,22 +15,34 @@ class UserManager {
             const defaultUsers = [
                 {
                     id: '1',
+                    username: 'minhphuoc',
                     full_name: 'Thầy Minh Phước',
+                    first_name: 'Phước',
+                    last_name: 'Minh',
                     email: 'admin@minhphuoc.com',
                     role: 'admin',
                     avatar_url: '',
                     phone: '0888081050',
+                    website: '',
                     is_active: true,
+                    post_count: 0,
+                    last_login: null,
                     created_at: new Date().toISOString()
                 },
                 {
                     id: '2',
+                    username: 'admin',
                     full_name: 'Admin',
+                    first_name: '',
+                    last_name: '',
                     email: 'admin2@minhphuoc.com',
                     role: 'admin',
                     avatar_url: '',
                     phone: '',
+                    website: '',
                     is_active: true,
+                    post_count: 0,
+                    last_login: null,
                     created_at: new Date().toISOString()
                 }
             ];
@@ -145,12 +157,18 @@ class UserManager {
         const users = this.getLocalUsers();
         const newUser = {
             id: Date.now().toString(),
+            username: userData.username || userData.email?.split('@')[0] || '',
             full_name: userData.full_name,
+            first_name: userData.first_name || '',
+            last_name: userData.last_name || '',
             email: userData.email,
             phone: userData.phone || '',
+            website: userData.website || '',
             role: userData.role || 'user',
             avatar_url: userData.avatar_url || '',
             is_active: userData.is_active !== false,
+            post_count: 0,
+            last_login: null,
             created_at: new Date().toISOString()
         };
         users.push(newUser);

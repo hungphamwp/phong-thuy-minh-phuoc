@@ -4,139 +4,468 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý Users - Admin Panel</title>
+    <title>Thành Viên - Admin Panel</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="admin-styles.css">
 
     <style>
-        .user-avatar {
-            width: 40px;
-            height: 40px;
+        /* WordPress-like styles */
+        .wp-users-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .wp-users-header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .btn-add-new {
+            background: var(--admin-primary);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-add-new:hover {
+            background: #5a3f2e;
+        }
+
+        /* Filter tabs like WordPress */
+        .wp-filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .wp-filter-tabs a {
+            color: #2271b1;
+            text-decoration: none;
+        }
+
+        .wp-filter-tabs a:hover {
+            color: #135e96;
+        }
+
+        .wp-filter-tabs .current {
+            font-weight: 600;
+            color: #1d2327;
+        }
+
+        .wp-filter-tabs .count {
+            color: #50575e;
+        }
+
+        .wp-filter-tabs .separator {
+            color: #c3c4c7;
+        }
+
+        /* Bulk actions bar */
+        .wp-tablenav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .wp-tablenav .actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .wp-tablenav select {
+            padding: 0.4rem 0.5rem;
+            border: 1px solid #8c8f94;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+
+        .wp-tablenav .btn-apply {
+            background: #f0f0f1;
+            border: 1px solid #8c8f94;
+            padding: 0.4rem 0.8rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .wp-tablenav .btn-apply:hover {
+            background: #e5e5e5;
+        }
+
+        .wp-tablenav-pages {
+            color: #50575e;
+            font-size: 0.85rem;
+        }
+
+        /* Search box */
+        .wp-search-box {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .wp-search-box input {
+            padding: 0.4rem 0.6rem;
+            border: 1px solid #8c8f94;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        .wp-search-box .btn-search {
+            background: #f0f0f1;
+            border: 1px solid #8c8f94;
+            padding: 0.4rem 0.8rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* WordPress-like table */
+        .wp-list-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border: 1px solid #c3c4c7;
+        }
+
+        .wp-list-table th,
+        .wp-list-table td {
+            padding: 0.6rem 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #c3c4c7;
+        }
+
+        .wp-list-table th {
+            background: #f6f7f7;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1d2327;
+        }
+
+        .wp-list-table th a {
+            color: #1d2327;
+            text-decoration: none;
+        }
+
+        .wp-list-table .check-column {
+            width: 35px;
+            padding: 0.5rem;
+        }
+
+        .wp-list-table tbody tr:hover {
+            background: #f6f7f7;
+        }
+
+        .wp-list-table .column-username {
+            min-width: 200px;
+        }
+
+        /* Username cell with avatar and actions */
+        .wp-user-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .wp-user-avatar {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #736357, #a0522d);
+            background: #ddd;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.85rem;
+            color: #555;
         }
 
-        .user-avatar img {
+        .wp-user-avatar img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
             border-radius: 50%;
+            object-fit: cover;
         }
 
-        .role-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
+        .wp-user-info .username {
+            color: #2271b1;
             font-weight: 600;
-            text-transform: uppercase;
+            text-decoration: none;
         }
 
-        .role-badge.admin {
-            background: #ffebee;
-            color: #c62828;
+        .wp-user-info .username:hover {
+            color: #135e96;
         }
 
-        .role-badge.user {
-            background: #e3f2fd;
-            color: #1565c0;
+        .wp-row-actions {
+            display: none;
+            font-size: 0.8rem;
+            color: #50575e;
+            margin-top: 0.25rem;
         }
 
-        .status-badge {
-            padding: 0.25rem 0.5rem;
+        .wp-list-table tbody tr:hover .wp-row-actions {
+            display: block;
+        }
+
+        .wp-row-actions a {
+            color: #2271b1;
+            text-decoration: none;
+        }
+
+        .wp-row-actions a:hover {
+            color: #135e96;
+        }
+
+        .wp-row-actions .delete:hover {
+            color: #b32d2e;
+        }
+
+        .wp-row-actions .separator {
+            color: #c3c4c7;
+        }
+
+        /* Role badge */
+        .wp-role {
+            font-size: 0.85rem;
+        }
+
+        /* Posts count link */
+        .wp-posts-count {
+            color: #2271b1;
+            text-decoration: none;
+        }
+
+        /* Add User Form - WordPress style */
+        .wp-add-user-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        .wp-add-user-form h2 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.3rem;
+        }
+
+        .wp-add-user-form .description {
+            color: #646970;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .wp-form-field {
+            display: flex;
+            margin-bottom: 1.25rem;
+            align-items: flex-start;
+        }
+
+        .wp-form-field label {
+            width: 180px;
+            font-weight: 400;
+            padding-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #1d2327;
+        }
+
+        .wp-form-field .field-input {
+            flex: 1;
+        }
+
+        .wp-form-field input[type="text"],
+        .wp-form-field input[type="email"],
+        .wp-form-field input[type="url"],
+        .wp-form-field input[type="password"],
+        .wp-form-field select {
+            width: 100%;
+            max-width: 350px;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #8c8f94;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.95rem;
         }
 
-        .status-badge.active {
-            background: #e8f5e9;
-            color: #2e7d32;
+        .wp-form-field input:focus,
+        .wp-form-field select:focus {
+            border-color: #2271b1;
+            outline: none;
+            box-shadow: 0 0 0 1px #2271b1;
         }
 
-        .status-badge.inactive {
-            background: #fafafa;
-            color: #757575;
+        /* Password field with generator */
+        .wp-password-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .user-modal {
+        .wp-password-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .btn-generate-password {
+            background: white;
+            border: 1px solid #2271b1;
+            color: #2271b1;
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .btn-generate-password:hover {
+            background: #f0f7fc;
+        }
+
+        .btn-toggle-password {
+            background: none;
+            border: none;
+            color: #2271b1;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .wp-password-strength {
+            height: 4px;
+            border-radius: 2px;
+            max-width: 350px;
+        }
+
+        .wp-password-strength.weak {
+            background: #dc3232;
+        }
+
+        .wp-password-strength.medium {
+            background: #ffb900;
+        }
+
+        .wp-password-strength.strong {
+            background: #46b450;
+        }
+
+        .strength-label {
+            font-size: 0.8rem;
+            color: #646970;
+        }
+
+        /* Checkbox field */
+        .wp-checkbox-field {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        .wp-checkbox-field input {
+            margin-top: 0.25rem;
+        }
+
+        .wp-checkbox-field label {
+            font-size: 0.9rem;
+            color: #1d2327;
+        }
+
+        /* Submit button */
+        .btn-submit-user {
+            background: #2271b1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn-submit-user:hover {
+            background: #135e96;
+        }
+
+        /* Content layout */
+        .wp-users-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .wp-users-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Modal for editing */
+        .wp-modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 10000;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
         }
 
-        .user-modal-content {
+        .wp-modal-content {
             background: white;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 100%;
+            border-radius: 8px;
+            max-width: 550px;
+            width: 90%;
             max-height: 90vh;
             overflow-y: auto;
         }
 
-        .user-modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #e9ecef;
+        .wp-modal-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #dcdcde;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .user-modal-header h2 {
+        .wp-modal-header h3 {
             margin: 0;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
         }
 
-        .user-modal-body {
+        .wp-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: #646970;
+        }
+
+        .wp-modal-close:hover {
+            color: #1d2327;
+        }
+
+        .wp-modal-body {
             padding: 1.5rem;
         }
 
-        .user-modal-footer {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid #e9ecef;
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-        }
-
-        .filter-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .filter-tab {
-            padding: 0.5rem 1rem;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .filter-tab:hover {
-            border-color: var(--admin-primary);
-        }
-
-        .filter-tab.active {
-            background: var(--admin-primary);
-            border-color: var(--admin-primary);
-            color: white;
+        .wp-modal-body .wp-form-field label {
+            width: 120px;
         }
     </style>
 </head>
@@ -177,7 +506,7 @@
                 </a>
                 <a href="admin-users.html" class="admin-nav-item active">
                     <i class="fas fa-users"></i>
-                    <span>Quản Lý Users</span>
+                    <span>Thành Viên</span>
                 </a>
                 <a href="admin-settings.html" class="admin-nav-item">
                     <i class="fas fa-cog"></i>
@@ -195,8 +524,8 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="admin-user-details">
-                        <h4 id="userName">Admin</h4>
-                        <p id="userEmail">admin@minhphuoc.com</p>
+                        <h4 id="currentUserName">Admin</h4>
+                        <p id="currentUserEmail">admin@minhphuoc.com</p>
                     </div>
                 </div>
                 <button class="btn-logout" id="btnLogout">
@@ -207,122 +536,242 @@
 
         <!-- Main Content -->
         <main class="admin-main">
-            <div class="admin-header">
-                <div>
-                    <h1>Quản Lý Users</h1>
-                    <div class="admin-breadcrumb">
-                        <a href="admin-dashboard.html">Dashboard</a> / Quản Lý Users
-                    </div>
-                </div>
-                <button class="btn-primary" id="btnAddUser">
-                    <i class="fas fa-user-plus"></i> Thêm User Mới
-                </button>
+            <!-- Header -->
+            <div class="wp-users-header">
+                <h1>Thành Viên</h1>
+                <a href="#add-new-user" class="btn-add-new">Thêm mới</a>
             </div>
 
             <!-- Filter Tabs -->
-            <div class="filter-tabs">
-                <button class="filter-tab active" data-filter="all">
-                    <i class="fas fa-users"></i> Tất Cả
-                </button>
-                <button class="filter-tab" data-filter="admin">
-                    <i class="fas fa-user-shield"></i> Admin
-                </button>
-                <button class="filter-tab" data-filter="user">
-                    <i class="fas fa-user"></i> User
-                </button>
+            <div class="wp-filter-tabs">
+                <a href="#" class="current" data-filter="all">Tất cả <span class="count" id="countAll">(0)</span></a>
+                <span class="separator">|</span>
+                <a href="#" data-filter="admin">Quản lý <span class="count" id="countAdmin">(0)</span></a>
+                <span class="separator">|</span>
+                <a href="#" data-filter="user">Thành viên <span class="count" id="countUser">(0)</span></a>
             </div>
 
-            <!-- Users Table -->
-            <div class="content-card">
-                <div class="content-card-header">
-                    <h2><i class="fas fa-users"></i> Danh Sách Users</h2>
-                    <div style="display: flex; gap: 1rem; align-items: center;">
-                        <span id="userCount">0 users</span>
+            <div class="wp-users-content">
+                <!-- Left: Users Table -->
+                <div class="wp-users-table-section">
+                    <!-- Top Tablenav -->
+                    <div class="wp-tablenav">
+                        <div class="actions">
+                            <select id="bulkAction">
+                                <option value="">Hành động hàng loạt</option>
+                                <option value="delete">Xóa</option>
+                            </select>
+                            <button class="btn-apply" id="btnApplyBulk">Áp dụng</button>
+
+                            <select id="changeRole">
+                                <option value="">Đổi thành...</option>
+                                <option value="admin">Quản lý</option>
+                                <option value="user">Thành viên</option>
+                            </select>
+                            <button class="btn-apply" id="btnChangeRole">Thay đổi</button>
+                        </div>
+
+                        <div class="wp-search-box">
+                            <input type="text" id="searchUser" placeholder="Tìm kiếm người dùng">
+                            <button class="btn-search" id="btnSearch">Tìm kiếm</button>
+                        </div>
                     </div>
-                </div>
-                <div class="content-card-body" style="padding: 0;">
-                    <table class="admin-table">
+
+                    <!-- Users Table -->
+                    <table class="wp-list-table">
                         <thead>
                             <tr>
-                                <th style="width: 50px;"></th>
+                                <th class="check-column">
+                                    <input type="checkbox" id="selectAll">
+                                </th>
+                                <th class="column-username">Tên người dùng</th>
                                 <th>Tên</th>
                                 <th>Email</th>
-                                <th>Điện Thoại</th>
-                                <th>Vai Trò</th>
-                                <th>Trạng Thái</th>
-                                <th>Ngày Tạo</th>
-                                <th style="width: 120px;">Thao Tác</th>
+                                <th>Vai trò</th>
+                                <th>Bài viết</th>
+                                <th>Đăng nhập gần nhất</th>
                             </tr>
                         </thead>
                         <tbody id="usersTableBody">
                             <tr>
-                                <td colspan="8" style="text-align: center; padding: 3rem;">
-                                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #6c757d;"></i>
-                                    <p>Đang tải...</p>
+                                <td colspan="7" style="text-align: center; padding: 2rem; color: #646970;">
+                                    <i class="fas fa-spinner fa-spin"></i> Đang tải...
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+
+                    <!-- Bottom Tablenav -->
+                    <div class="wp-tablenav" style="margin-top: 0.5rem;">
+                        <div class="actions">
+                            <select id="bulkAction2">
+                                <option value="">Hành động hàng loạt</option>
+                                <option value="delete">Xóa</option>
+                            </select>
+                            <button class="btn-apply" id="btnApplyBulk2">Áp dụng</button>
+                        </div>
+                        <div class="wp-tablenav-pages" id="paginationInfo">
+                            0 mục
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Add New User Form -->
+                <div class="wp-add-user-form" id="add-new-user">
+                    <h2>Thêm người dùng mới</h2>
+                    <p class="description">Tạo một người sử dụng mới và thêm vào trang này.</p>
+
+                    <form id="addUserForm">
+                        <div class="wp-form-field">
+                            <label for="newUsername">Tên người dùng (bắt buộc)</label>
+                            <div class="field-input">
+                                <input type="text" id="newUsername" required>
+                            </div>
+                        </div>
+
+                        <div class="wp-form-field">
+                            <label for="newEmail">Email (bắt buộc)</label>
+                            <div class="field-input">
+                                <input type="email" id="newEmail" required>
+                            </div>
+                        </div>
+
+                        <div class="wp-form-field">
+                            <label for="newFirstName">Tên</label>
+                            <div class="field-input">
+                                <input type="text" id="newFirstName">
+                            </div>
+                        </div>
+
+                        <div class="wp-form-field">
+                            <label for="newLastName">Họ</label>
+                            <div class="field-input">
+                                <input type="text" id="newLastName">
+                            </div>
+                        </div>
+
+                        <div class="wp-form-field">
+                            <label for="newWebsite">Trang web</label>
+                            <div class="field-input">
+                                <input type="url" id="newWebsite" placeholder="https://">
+                            </div>
+                        </div>
+
+                        <div class="wp-form-field">
+                            <label for="newPassword">Mật khẩu</label>
+                            <div class="field-input">
+                                <div class="wp-password-wrap">
+                                    <div class="wp-password-actions">
+                                        <button type="button" class="btn-generate-password" id="btnGenPassword">Tạo mật
+                                            khẩu</button>
+                                    </div>
+                                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                        <input type="password" id="newPassword" style="max-width: 280px;">
+                                        <button type="button" class="btn-toggle-password" id="btnTogglePassword">
+                                            <i class="fas fa-eye-slash"></i> Ẩn đi
+                                        </button>
+                                    </div>
+                                    <div class="wp-password-strength" id="passwordStrength"></div>
+                                    <span class="strength-label" id="strengthLabel"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wp-form-field">
+                            <label>Gửi thông báo</label>
+                            <div class="field-input">
+                                <div class="wp-checkbox-field">
+                                    <input type="checkbox" id="sendNotification" checked>
+                                    <label for="sendNotification">Gửi cho người dùng mới email về tài khoản</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wp-form-field">
+                            <label for="newRole">Vai trò</label>
+                            <div class="field-input">
+                                <select id="newRole">
+                                    <option value="user">Thành viên đăng ký</option>
+                                    <option value="admin">Quản lý</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-submit-user">Thêm người dùng</button>
+                    </form>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- User Modal -->
-    <div class="user-modal" id="userModal">
-        <div class="user-modal-content">
-            <div class="user-modal-header">
-                <h2 id="modalTitle"><i class="fas fa-user-plus"></i> Thêm User Mới</h2>
-                <button class="btn-icon" id="closeModal">
-                    <i class="fas fa-times"></i>
-                </button>
+    <!-- Edit User Modal -->
+    <div class="wp-modal" id="editUserModal">
+        <div class="wp-modal-content">
+            <div class="wp-modal-header">
+                <h3><i class="fas fa-user-edit"></i> Chỉnh sửa người dùng</h3>
+                <button class="wp-modal-close" id="closeEditModal">&times;</button>
             </div>
-            <div class="user-modal-body">
-                <form id="userForm">
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
-                            <i class="fas fa-user"></i> Họ Tên *
-                        </label>
-                        <input type="text" id="userFullName" required
-                            style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+            <div class="wp-modal-body">
+                <form id="editUserForm">
+                    <input type="hidden" id="editUserId">
+
+                    <div class="wp-form-field">
+                        <label for="editUsername">Tên người dùng</label>
+                        <div class="field-input">
+                            <input type="text" id="editUsername" required>
+                        </div>
                     </div>
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
-                            <i class="fas fa-envelope"></i> Email *
-                        </label>
-                        <input type="email" id="userEmail2" required
-                            style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+
+                    <div class="wp-form-field">
+                        <label for="editEmail">Email</label>
+                        <div class="field-input">
+                            <input type="email" id="editEmail" required>
+                        </div>
                     </div>
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
-                            <i class="fas fa-phone"></i> Điện Thoại
-                        </label>
-                        <input type="tel" id="userPhone"
-                            style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+
+                    <div class="wp-form-field">
+                        <label for="editFirstName">Tên</label>
+                        <div class="field-input">
+                            <input type="text" id="editFirstName">
+                        </div>
                     </div>
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
-                            <i class="fas fa-user-tag"></i> Vai Trò *
-                        </label>
-                        <select id="userRole" required
-                            style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
-                        </select>
+
+                    <div class="wp-form-field">
+                        <label for="editLastName">Họ</label>
+                        <div class="field-input">
+                            <input type="text" id="editLastName">
+                        </div>
                     </div>
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                            <input type="checkbox" id="userActive" checked>
-                            <span>Đang hoạt động</span>
-                        </label>
+
+                    <div class="wp-form-field">
+                        <label for="editPhone">Điện thoại</label>
+                        <div class="field-input">
+                            <input type="tel" id="editPhone">
+                        </div>
                     </div>
+
+                    <div class="wp-form-field">
+                        <label for="editRole">Vai trò</label>
+                        <div class="field-input">
+                            <select id="editRole">
+                                <option value="user">Thành viên</option>
+                                <option value="admin">Quản lý</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
+                        <label>Trạng thái</label>
+                        <div class="field-input">
+                            <div class="wp-checkbox-field">
+                                <input type="checkbox" id="editActive" checked>
+                                <label for="editActive">Đang hoạt động</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit-user">Cập nhật người dùng</button>
                 </form>
-            </div>
-            <div class="user-modal-footer">
-                <button type="button" class="btn-secondary" id="cancelModal">Hủy</button>
-                <button type="button" class="btn-primary" id="saveUser">
-                    <i class="fas fa-save"></i> Lưu
-                </button>
             </div>
         </div>
     </div>
@@ -339,8 +788,8 @@
 
         const session = auth.getSession();
         if (session) {
-            document.getElementById('userName').textContent = session.name;
-            document.getElementById('userEmail').textContent = session.email;
+            document.getElementById('currentUserName').textContent = session.name;
+            document.getElementById('currentUserEmail').textContent = session.email;
         }
 
         document.getElementById('btnLogout').addEventListener('click', function () {
@@ -350,10 +799,11 @@
             }
         });
 
-        let editingUserId = null;
+        let allUsers = [];
         let currentFilter = 'all';
+        let selectedUsers = [];
 
-        // Load users on page load
+        // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             if (window.supabaseInitPromise) {
                 await window.supabaseInitPromise;
@@ -364,25 +814,50 @@
 
         // Load users
         async function loadUsers() {
-            const allUsers = await userManager.getAllUsers();
-            let users = allUsers;
+            allUsers = await userManager.getAllUsers();
+            updateCounts();
+            renderUsers();
+        }
+
+        // Update filter counts
+        function updateCounts() {
+            const admins = allUsers.filter(u => u.role === 'admin').length;
+            const users = allUsers.filter(u => u.role === 'user' || u.role !== 'admin').length;
+
+            document.getElementById('countAll').textContent = `(${allUsers.length})`;
+            document.getElementById('countAdmin').textContent = `(${admins})`;
+            document.getElementById('countUser').textContent = `(${users})`;
+        }
+
+        // Render users table
+        function renderUsers() {
+            let users = [...allUsers];
 
             // Apply filter
             if (currentFilter === 'admin') {
-                users = allUsers.filter(u => u.role === 'admin');
+                users = users.filter(u => u.role === 'admin');
             } else if (currentFilter === 'user') {
-                users = allUsers.filter(u => u.role === 'user');
+                users = users.filter(u => u.role !== 'admin');
+            }
+
+            // Apply search
+            const searchTerm = document.getElementById('searchUser').value.toLowerCase();
+            if (searchTerm) {
+                users = users.filter(u =>
+                    (u.full_name || '').toLowerCase().includes(searchTerm) ||
+                    (u.email || '').toLowerCase().includes(searchTerm) ||
+                    (u.username || '').toLowerCase().includes(searchTerm)
+                );
             }
 
             const tbody = document.getElementById('usersTableBody');
-            document.getElementById('userCount').textContent = `${users.length} users`;
+            document.getElementById('paginationInfo').textContent = `${users.length} mục`;
 
             if (users.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="8" style="text-align: center; padding: 3rem; color: #6c757d;">
-                            <i class="fas fa-users" style="font-size: 3rem; opacity: 0.5; margin-bottom: 1rem;"></i>
-                            <p>Chưa có user nào</p>
+                        <td colspan="7" style="text-align: center; padding: 2rem; color: #646970;">
+                            Không tìm thấy người dùng nào.
                         </td>
                     </tr>
                 `;
@@ -390,110 +865,272 @@
             }
 
             tbody.innerHTML = users.map(user => {
-                const initials = (user.full_name || 'U').charAt(0).toUpperCase();
-                const createdDate = new Date(user.created_at).toLocaleDateString('vi-VN');
+                const username = user.username || user.email?.split('@')[0] || 'user';
+                const displayName = user.full_name || username;
+                const firstName = user.first_name || displayName.split(' ').slice(-1)[0] || '';
+                const role = user.role === 'admin' ? 'Quản lý' : 'Thành viên';
+                const lastLogin = user.last_login ? new Date(user.last_login).toLocaleString('vi-VN') : '-';
+                const postCount = user.post_count || 0;
+                const initials = (displayName || 'U').charAt(0).toUpperCase();
 
                 return `
-                    <tr>
-                        <td>
-                            <div class="user-avatar">
-                                ${user.avatar_url ? `<img src="${user.avatar_url}" alt="${user.full_name}">` : initials}
+                    <tr data-id="${user.id}">
+                        <td class="check-column">
+                            <input type="checkbox" class="user-checkbox" value="${user.id}">
+                        </td>
+                        <td class="column-username">
+                            <div class="wp-user-cell">
+                                <div class="wp-user-avatar">
+                                    ${user.avatar_url ? `<img src="${user.avatar_url}" alt="">` : initials}
+                                </div>
+                                <div class="wp-user-info">
+                                    <a href="#" class="username" onclick="editUser('${user.id}'); return false;">${username}</a>
+                                    <div class="wp-row-actions">
+                                        <a href="#" onclick="editUser('${user.id}'); return false;">Chỉnh sửa</a>
+                                        <span class="separator">|</span>
+                                        <a href="#" class="delete" onclick="deleteUser('${user.id}'); return false;">Xóa</a>
+                                    </div>
+                                </div>
                             </div>
                         </td>
-                        <td><strong>${user.full_name || 'N/A'}</strong></td>
-                        <td>${user.email}</td>
-                        <td>${user.phone || '-'}</td>
-                        <td>
-                            <span class="role-badge ${user.role}">${user.role}</span>
-                        </td>
-                        <td>
-                            <span class="status-badge ${user.is_active ? 'active' : 'inactive'}">
-                                ${user.is_active ? 'Hoạt động' : 'Ngưng'}
-                            </span>
-                        </td>
-                        <td>${createdDate}</td>
-                        <td>
-                            <button class="btn-icon" onclick="editUser('${user.id}')" title="Sửa">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-icon text-danger" onclick="deleteUser('${user.id}')" title="Xóa">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
+                        <td>${firstName}</td>
+                        <td><a href="mailto:${user.email}">${user.email}</a></td>
+                        <td class="wp-role">${role}</td>
+                        <td><a href="#" class="wp-posts-count">${postCount}</a></td>
+                        <td>${lastLogin}</td>
                     </tr>
                 `;
             }).join('');
+
+            // Update checkbox handlers
+            document.querySelectorAll('.user-checkbox').forEach(cb => {
+                cb.addEventListener('change', updateSelectedUsers);
+            });
         }
 
         // Filter tabs
-        document.querySelectorAll('.filter-tab').forEach(tab => {
-            tab.addEventListener('click', async function () {
-                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
+        document.querySelectorAll('.wp-filter-tabs a').forEach(tab => {
+            tab.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelectorAll('.wp-filter-tabs a').forEach(t => t.classList.remove('current'));
+                this.classList.add('current');
                 currentFilter = this.dataset.filter;
-                await loadUsers();
+                renderUsers();
             });
         });
 
-        // Open modal for new user
-        document.getElementById('btnAddUser').addEventListener('click', function () {
-            editingUserId = null;
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-plus"></i> Thêm User Mới';
-            document.getElementById('userForm').reset();
-            document.getElementById('userActive').checked = true;
-            document.getElementById('userModal').style.display = 'flex';
+        // Select all checkbox
+        document.getElementById('selectAll').addEventListener('change', function () {
+            const checked = this.checked;
+            document.querySelectorAll('.user-checkbox').forEach(cb => {
+                cb.checked = checked;
+            });
+            updateSelectedUsers();
         });
 
-        // Close modal
-        function closeModal() {
-            document.getElementById('userModal').style.display = 'none';
-            editingUserId = null;
+        // Update selected users
+        function updateSelectedUsers() {
+            selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
         }
 
-        document.getElementById('closeModal').addEventListener('click', closeModal);
-        document.getElementById('cancelModal').addEventListener('click', closeModal);
-
-        // Edit user
-        window.editUser = async function (id) {
-            editingUserId = id;
-            const user = await userManager.getUserById(id);
-            if (user) {
-                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-edit"></i> Chỉnh Sửa User';
-                document.getElementById('userFullName').value = user.full_name || '';
-                document.getElementById('userEmail2').value = user.email || '';
-                document.getElementById('userPhone').value = user.phone || '';
-                document.getElementById('userRole').value = user.role || 'user';
-                document.getElementById('userActive').checked = user.is_active !== false;
-                document.getElementById('userModal').style.display = 'flex';
+        // Search
+        document.getElementById('btnSearch').addEventListener('click', renderUsers);
+        document.getElementById('searchUser').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                renderUsers();
             }
-        };
+        });
 
-        // Save user
-        document.getElementById('saveUser').addEventListener('click', async function () {
-            const userData = {
-                full_name: document.getElementById('userFullName').value.trim(),
-                email: document.getElementById('userEmail2').value.trim(),
-                phone: document.getElementById('userPhone').value.trim(),
-                role: document.getElementById('userRole').value,
-                is_active: document.getElementById('userActive').checked
-            };
+        // Bulk delete
+        document.getElementById('btnApplyBulk').addEventListener('click', applyBulkAction);
+        document.getElementById('btnApplyBulk2').addEventListener('click', applyBulkAction);
 
-            if (!userData.full_name || !userData.email) {
-                alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+        async function applyBulkAction() {
+            const action = document.getElementById('bulkAction').value || document.getElementById('bulkAction2').value;
+            if (!action) return;
+
+            if (selectedUsers.length === 0) {
+                alert('Vui lòng chọn ít nhất một người dùng!');
                 return;
             }
 
-            let result;
-            if (editingUserId) {
-                result = await userManager.updateUser(editingUserId, userData);
-            } else {
-                result = await userManager.createUser(userData);
+            if (action === 'delete') {
+                if (!confirm(`Bạn có chắc muốn xóa ${selectedUsers.length} người dùng?`)) return;
+
+                for (const id of selectedUsers) {
+                    await userManager.deleteUser(id);
+                }
+                alert('Đã xóa thành công!');
+                await loadUsers();
+            }
+        }
+
+        // Change role
+        document.getElementById('btnChangeRole').addEventListener('click', async function () {
+            const newRole = document.getElementById('changeRole').value;
+            if (!newRole) return;
+
+            if (selectedUsers.length === 0) {
+                alert('Vui lòng chọn ít nhất một người dùng!');
+                return;
             }
 
+            for (const id of selectedUsers) {
+                await userManager.updateUser(id, { role: newRole });
+            }
+            alert('Đã thay đổi vai trò!');
+            await loadUsers();
+        });
+
+        // Generate password
+        document.getElementById('btnGenPassword').addEventListener('click', function () {
+            const password = generatePassword(16);
+            const input = document.getElementById('newPassword');
+            input.type = 'text';
+            input.value = password;
+            updatePasswordStrength(password);
+            document.getElementById('btnTogglePassword').innerHTML = '<i class="fas fa-eye-slash"></i> Ẩn đi';
+        });
+
+        function generatePassword(length) {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return password;
+        }
+
+        // Toggle password visibility
+        document.getElementById('btnTogglePassword').addEventListener('click', function () {
+            const input = document.getElementById('newPassword');
+            if (input.type === 'password') {
+                input.type = 'text';
+                this.innerHTML = '<i class="fas fa-eye-slash"></i> Ẩn đi';
+            } else {
+                input.type = 'password';
+                this.innerHTML = '<i class="fas fa-eye"></i> Hiện';
+            }
+        });
+
+        // Password strength
+        document.getElementById('newPassword').addEventListener('input', function () {
+            updatePasswordStrength(this.value);
+        });
+
+        function updatePasswordStrength(password) {
+            const strengthBar = document.getElementById('passwordStrength');
+            const label = document.getElementById('strengthLabel');
+
+            if (!password) {
+                strengthBar.className = 'wp-password-strength';
+                label.textContent = '';
+                return;
+            }
+
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            if (strength <= 2) {
+                strengthBar.className = 'wp-password-strength weak';
+                label.textContent = 'Yếu';
+            } else if (strength <= 3) {
+                strengthBar.className = 'wp-password-strength medium';
+                label.textContent = 'Trung bình';
+            } else {
+                strengthBar.className = 'wp-password-strength strong';
+                label.textContent = 'Mạnh';
+            }
+        }
+
+        // Add new user form
+        document.getElementById('addUserForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('newUsername').value.trim();
+            const email = document.getElementById('newEmail').value.trim();
+            const firstName = document.getElementById('newFirstName').value.trim();
+            const lastName = document.getElementById('newLastName').value.trim();
+            const fullName = [lastName, firstName].filter(n => n).join(' ') || username;
+            const role = document.getElementById('newRole').value;
+            const password = document.getElementById('newPassword').value;
+
+            if (!username || !email) {
+                alert('Vui lòng điền tên người dùng và email!');
+                return;
+            }
+
+            const result = await userManager.createUser({
+                username: username,
+                email: email,
+                full_name: fullName,
+                first_name: firstName,
+                last_name: lastName,
+                role: role,
+                is_active: true
+            });
+
             if (result.success) {
-                closeModal();
+                alert('Đã thêm người dùng mới!');
+                this.reset();
+                updatePasswordStrength('');
                 await loadUsers();
-                alert(editingUserId ? 'Đã cập nhật user!' : 'Đã thêm user mới!');
+            } else {
+                alert('Lỗi: ' + result.message);
+            }
+        });
+
+        // Edit user
+        window.editUser = async function (id) {
+            const user = await userManager.getUserById(id);
+            if (!user) return;
+
+            document.getElementById('editUserId').value = id;
+            document.getElementById('editUsername').value = user.username || user.email?.split('@')[0] || '';
+            document.getElementById('editEmail').value = user.email || '';
+            document.getElementById('editFirstName').value = user.first_name || '';
+            document.getElementById('editLastName').value = user.last_name || '';
+            document.getElementById('editPhone').value = user.phone || '';
+            document.getElementById('editRole').value = user.role || 'user';
+            document.getElementById('editActive').checked = user.is_active !== false;
+
+            document.getElementById('editUserModal').style.display = 'flex';
+        };
+
+        // Close edit modal
+        document.getElementById('closeEditModal').addEventListener('click', function () {
+            document.getElementById('editUserModal').style.display = 'none';
+        });
+
+        // Edit user form submit
+        document.getElementById('editUserForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const id = document.getElementById('editUserId').value;
+            const firstName = document.getElementById('editFirstName').value.trim();
+            const lastName = document.getElementById('editLastName').value.trim();
+            const fullName = [lastName, firstName].filter(n => n).join(' ') || document.getElementById('editUsername').value;
+
+            const result = await userManager.updateUser(id, {
+                username: document.getElementById('editUsername').value.trim(),
+                email: document.getElementById('editEmail').value.trim(),
+                full_name: fullName,
+                first_name: firstName,
+                last_name: lastName,
+                phone: document.getElementById('editPhone').value.trim(),
+                role: document.getElementById('editRole').value,
+                is_active: document.getElementById('editActive').checked
+            });
+
+            if (result.success) {
+                alert('Đã cập nhật người dùng!');
+                document.getElementById('editUserModal').style.display = 'none';
+                await loadUsers();
             } else {
                 alert('Lỗi: ' + result.message);
             }
@@ -501,12 +1138,12 @@
 
         // Delete user
         window.deleteUser = async function (id) {
-            if (!confirm('Bạn có chắc muốn xóa user này?')) return;
+            if (!confirm('Bạn có chắc muốn xóa người dùng này?')) return;
 
             const result = await userManager.deleteUser(id);
             if (result.success) {
+                alert('Đã xóa người dùng!');
                 await loadUsers();
-                alert('Đã xóa user!');
             } else {
                 alert('Lỗi: ' + result.message);
             }
