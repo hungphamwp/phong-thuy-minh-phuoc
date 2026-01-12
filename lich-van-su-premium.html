@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Vạn Sự Premium - Minh Phước Feng Shui</title>
+    <meta name="description" content="Lịch vạn sự premium với đầy đủ tính năng. Nhập mã truy cập để xem.">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .access-code-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .access-code-container {
+            max-width: 500px;
+            background: white;
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .access-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .access-icon i {
+            font-size: 2.5rem;
+            color: #ff6b35;
+        }
+
+        .access-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .access-description {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .code-input-wrapper {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+        }
+
+        .btn-verify {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-verify:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .btn-verify:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            color: #dc3545;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .premium-calendar-section {
+            display: none;
+            padding: 2rem;
+            background: var(--color-bg);
+        }
+
+        .premium-calendar-section.active {
+            display: block;
+        }
+
+        .premium-header {
+            max-width: 1400px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+
+        .premium-header h2 {
+            font-size: 2rem;
+            color: var(--color-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .premium-header p {
+            color: var(--color-text-light);
+        }
+
+        .calendar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .contact-info a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="logo.jpg" alt="Minh Phước Feng Shui" class="logo-img">
+                <div class="logo-text">
+                    <span class="brand-name">Minh Phước</span>
+                    <span class="brand-tagline">Feng Shui</span>
+                </div>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-yin-yang"></i>
+                            <span>Trang Chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gioi-thieu.html" class="nav-link">
+                            <img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon">
+                            <span>Giới Thiệu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lap-la-tu-vi.html" class="nav-link">
+                            <i class="fas fa-star-and-crescent"></i>
+                            <span>Lập Lá Tử Vi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="xem-ngay-tot-xau.html" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Lịch Dụng Sự</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="tin-tuc.html" class="nav-link">
+                            <i class="fas fa-book-open"></i>
+                            <span>Quỹ Khuyến Học</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lien-he.html" class="nav-link">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <span>Liên Hệ</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <div id="userAuthButtons">
+                    <!-- Shown when not logged in -->
+                    <div id="guestButtons" style="display: flex; gap: 10px;">
+                        <button onclick="showLoginModal()" class="btn-contact" style="border: none; cursor: pointer;">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Đăng Nhập</span>
+                        </button>
+                    </div>
+                    <!-- Shown when logged in -->
+                    <div id="userButtons" style="display: none; align-items: center; position: relative;">
+                        <button id="userDropdownBtn"
+                            style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-size: 0.95rem; color: #333; border-radius: 8px; transition: background 0.3s;">
+                            <i class="fas fa-user"></i>
+                            <span>Xin chào, <strong id="userNameDisplay">Người dùng</strong></span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.25rem;"></i>
+                        </button>
+                        <div id="userDropdownMenu"
+                            style="display: none; position: absolute; right: 0; top: 100%; margin-top: 0.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 200px; overflow: hidden; z-index: 1000; border: 1px solid #e0e0e0;">
+                            <a href="profile.html"
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.25rem; color: #333; text-decoration: none; transition: background 0.3s; border-bottom: 1px solid #f0f0f0;">
+                                <i class="fas fa-user" style="color: #666;"></i> Thông tin cá nhân
+                            </a>
+                            <a href="#" onclick="handleUserLogoutGlobal(); return false;"
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.25rem; color: #e74c3c; text-decoration: none; transition: background 0.3s;">
+                                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-list">
+            <li><a href="index.html"><i class="fas fa-yin-yang"></i> Trang Chủ</a></li>
+            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới
+                    Thiệu</a></li>
+            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+            <li><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Lịch Dụng Sự</a></li>
+            <li><a href="tin-tuc.html"><i class="fas fa-book-open"></i> Quỹ Khuyến Học</a></li>
+            <li><a href="lien-he.html"><i class="fas fa-envelope-open-text"></i> Liên Hệ</a></li>
+            <li><a href="admin.html" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Access Code Section -->
+        <section class="access-code-section" id="accessCodeSection">
+            <div class="access-code-container">
+                <div class="access-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h1 class="access-title">Lịch Vạn Sự Premium</h1>
+                <p class="access-description">
+                    Nhập mã truy cập để xem lịch vạn sự đầy đủ với tất cả tính năng premium.
+                    Liên hệ qua Zalo/Messenger để nhận mã.
+                </p>
+                <div class="code-input-wrapper">
+                    <input type="text" id="accessCode" class="code-input" placeholder="Nhập mã truy cập" maxlength="20">
+                </div>
+                <button class="btn-verify" onclick="verifyCode()">
+                    <i class="fas fa-unlock"></i> Xác Nhận
+                </button>
+                <div class="error-message" id="errorMessage">
+                    <i class="fas fa-exclamation-circle"></i> Mã truy cập không hợp lệ!
+                </div>
+                <div class="contact-info">
+                    Chưa có mã? Liên hệ
+                    <a href="https://zalo.me/0888081050" target="_blank">Zalo</a> hoặc
+                    <a href="https://m.me/YOUR_FB" target="_blank">Messenger</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Premium Calendar Section (hidden by default) -->
+        <section class="premium-calendar-section" id="premiumCalendarSection">
+            <div class="premium-header">
+                <h2>Lịch Vạn Sự Premium</h2>
+                <p>Xem lịch âm dương đầy đủ với tất cả tính năng</p>
+            </div>
+            <div class="calendar-container">
+                <iframe src="https://huyenhoc.phongthuylamphong.com/minhphuoc/lichvansu/index.html" width="100%"
+                    height="2700px" frameborder="0" allowfullscreen title="Lịch Vạn Sự Premium"
+                    style="border: none; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                </iframe>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="Minh Phước" class="footer-logo-img">
+                        <div>
+                            <span class="brand-name">Minh Phước</span>
+                            <span class="brand-tagline">Feng Shui</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Minh Phước Feng Shui - Dịch vụ tư vấn phong thủy, tử vi chuyên nghiệp, uy tín
+                        hàng đầu Việt Nam.</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Dịch Vụ</h4>
+                        <ul>
+                            <li><a href="lap-la-tu-vi.html">Lập Lá Tử Vi</a></li>
+                            <li><a href="xem-ngay-tot-xau.html">Lịch Dụng Sự</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Kết</h4>
+                        <ul>
+                            <li><a href="index.html">Trang Chủ</a></li>
+                            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
+                            <li><a href="tin-tuc.html">Quỹ Khuyến Học</a></li>
+                            <li><a href="lien-he.html">Liên Hệ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Hệ</h4>
+                        <ul>
+                            <li><a href="tel:0888081050"><i class="fas fa-phone"></i> 0888.08.1050</a></li>
+                            <li><a href="mailto:contact@minhphuoc.com"><i class="fas fa-envelope"></i>
+                                    contact@minhphuoc.com</a></li>
+                            <li><i class="fas fa-map-marker-alt"></i> 57 Đường 7A phường An Lạc, TP.HCM</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Chùa Quan Âm Cát, xã Phan Rí Cửa, Lâm Đồng</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Minh Phước Feng Shui. Bản quyền thuộc về Minh Phước.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- App Scripts -->
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/user-auth.js"></script>
+    <script src="js/auth-ui.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Access Code Validation -->
+    <script>
+        // Valid access codes (can be managed by admin)
+        const VALID_CODES = ['PREMIUM2024', 'LICHVANSU', 'MINHPHUOC'];
+        const ACCESS_KEY = 'minhphuoc_premium_access';
+
+        // Check if user already has access
+        document.addEventListener('DOMContentLoaded', function () {
+            const savedCode = localStorage.getItem(ACCESS_KEY);
+            if (savedCode && VALID_CODES.includes(savedCode.toUpperCase())) {
+                showPremiumContent();
+            }
+        });
+
+        // Verify access code
+        function verifyCode() {
+            const input = document.getElementById('accessCode');
+            const code = input.value.trim().toUpperCase();
+            const errorMsg = document.getElementById('errorMessage');
+
+            if (VALID_CODES.includes(code)) {
+                // Save code to localStorage
+                localStorage.setItem(ACCESS_KEY, code);
+
+                // Hide error if shown
+                errorMsg.classList.remove('show');
+
+                // Show premium content
+                showPremiumContent();
+            } else {
+                // Show error message
+                errorMsg.classList.add('show');
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Show premium content
+        function showPremiumContent() {
+            document.getElementById('accessCodeSection').style.display = 'none';
+            document.getElementById('premiumCalendarSection').classList.add('active');
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('accessCode').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verifyCode();
+            }
+        });
+    </script>
+</body>
+
+</html>
