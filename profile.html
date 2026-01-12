@@ -628,7 +628,7 @@
             }
 
             // Load user data
-            const user = userAuth.getCurrentUser();
+            const user = userAuth.getSession();
             if (user) {
                 document.getElementById('headerUserName').textContent = user.full_name || user.name || 'Người dùng';
                 document.getElementById('profileName').value = user.full_name || user.name || '';
@@ -689,7 +689,7 @@
             // Try to update name in Supabase if connected
             try {
                 if (typeof userAuth !== 'undefined' && userAuth.useSupabase) {
-                    const user = userAuth.getCurrentUser();
+                    const user = userAuth.getSession();
                     if (user && user.id) {
                         const client = supabaseClient.getClient();
                         await client.from('users').update({ full_name: name }).eq('id', user.id);
