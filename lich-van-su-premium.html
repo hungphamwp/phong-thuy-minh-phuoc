@@ -86,26 +86,30 @@
         }
 
         .btn-verify {
+            display: block;
             width: 100%;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #333;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--color-red) 0%, #9a1a1a 100%);
+            color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(183, 28, 28, 0.2);
         }
 
         .btn-verify:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 6px 20px rgba(183, 28, 28, 0.3);
         }
 
-        .btn-verify:active {
-            transform: translateY(0);
+        .btn-verify:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .error-message {
@@ -150,18 +154,31 @@
             margin: 0 auto;
         }
 
-        .contact-info {
+        .contact-admin {
             margin-top: 2rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #e0e0e0;
-            font-size: 0.9rem;
-            color: #666;
+            border-top: 1px solid #eee;
+            text-align: center;
         }
 
-        .contact-info a {
-            color: #ffd700;
+        .admin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1.2rem;
+            background: #f8f9fa;
+            color: #333;
             text-decoration: none;
+            border-radius: 8px;
             font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border: 1px solid #ddd;
+        }
+
+        .admin-link:hover {
+            background: #ffd700;
+            border-color: #ffd700;
         }
     </style>
 </head>
@@ -280,23 +297,37 @@
                     <i class="fas fa-key"></i>
                 </div>
                 <h1 class="access-title">Lịch Vạn Sự Premium</h1>
-                <p class="access-description">
-                    Nhập mã truy cập để xem lịch vạn sự đầy đủ với tất cả tính năng premium.
-                    Liên hệ qua Zalo/Messenger để nhận mã.
-                </p>
-                <div class="code-input-wrapper">
-                    <input type="text" id="accessCode" class="code-input" placeholder="Nhập mã truy cập" maxlength="20">
+                <div class="access-form">
+                    <p style="text-align: center; margin-bottom: 25px; color: #555;">
+                        Nhập mã code bạn đã nhận được từ admin để mở khóa bản Premium đầy đủ.
+                    </p>
+                    <div class="code-input-wrapper">
+                        <input type="text" id="accessCode" class="code-input" placeholder="Nhập mã code của bạn..."
+                            maxlength="20">
+                    </div>
+                    <button class="btn-verify" onclick="verifyCode()">
+                        Kích Hoạt Ngay <i class="fas fa-bolt" style="margin-left: 8px;"></i>
+                    </button>
+                    <p id="errorMessage" class="error-message">
+                        <i class="fas fa-exclamation-circle"></i> Mã code không đúng hoặc đã hết hạn. Vui lòng thử lại!
+                    </p>
                 </div>
-                <button class="btn-verify" onclick="verifyCode()">
-                    <i class="fas fa-unlock"></i> Xác Nhận
-                </button>
-                <div class="error-message" id="errorMessage">
-                    <i class="fas fa-exclamation-circle"></i> Mã truy cập không hợp lệ!
-                </div>
-                <div class="contact-info">
-                    Chưa có mã? Liên hệ
-                    <a href="https://zalo.me/0888081050" target="_blank">Zalo</a> hoặc
-                    <a href="https://m.me/YOUR_FB" target="_blank">Messenger</a>
+
+                <div class="contact-admin">
+                    <p style="margin-bottom: 15px; color: #666;">Chưa có mã? Liên hệ admin để nhận mã:</p>
+                    <div
+                        style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
+                        <a href="https://zalo.me/0888081050" target="_blank" class="admin-link">
+                            <i class="fab fa-weixin" style="color: #0068ff;"></i> Zalo Admin
+                        </a>
+                        <a href="https://m.me/YOUR_FB" target="_blank" class="admin-link">
+                            <i class="fab fa-facebook-messenger" style="color: #0084ff;"></i> Messenger
+                        </a>
+                    </div>
+                    <a href="huong-dan-premium.html"
+                        style="color: var(--color-red); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--color-red); padding-bottom: 2px; font-size: 0.95rem;">
+                        <i class="fas fa-info-circle"></i> Xem hướng dẫn nâng cấp Premium tại đây
+                    </a>
                 </div>
             </div>
         </section>
@@ -385,31 +416,63 @@
 
     <!-- Access Code Validation -->
     <script>
-        // Valid access codes (can be managed by admin)
-        const VALID_CODES = ['PREMIUM2024', 'LICHVANSU', 'MINHPHUOC'];
         const ACCESS_KEY = 'minhphuoc_premium_access';
 
         // Check if user already has access
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', async function () {
             const savedCode = localStorage.getItem(ACCESS_KEY);
-            if (savedCode && VALID_CODES.includes(savedCode.toUpperCase())) {
-                showPremiumContent();
+            if (savedCode) {
+                const isValid = await checkCodeInSupabase(savedCode);
+                if (isValid) {
+                    showPremiumContent();
+                } else {
+                    localStorage.removeItem(ACCESS_KEY);
+                }
             }
         });
 
+        async function checkCodeInSupabase(code) {
+            try {
+                if (window.supabaseInitPromise) await window.supabaseInitPromise;
+                const client = supabaseClient.getClient();
+                const { data, error } = await client
+                    .from('access_codes')
+                    .select('id')
+                    .eq('code', code.trim().toUpperCase())
+                    .eq('is_active', true)
+                    .single();
+
+                if (error || !data) return false;
+                return true;
+            } catch (e) {
+                console.error('Error validating code:', e);
+                return false;
+            }
+        }
+
         // Verify access code
-        function verifyCode() {
+        async function verifyCode() {
             const input = document.getElementById('accessCode');
             const code = input.value.trim().toUpperCase();
             const errorMsg = document.getElementById('errorMessage');
+            const btn = document.querySelector('.btn-verify');
 
-            if (VALID_CODES.includes(code)) {
+            if (!code) return;
+
+            const originalBtnText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xác thực...';
+
+            const isValid = await checkCodeInSupabase(code);
+
+            btn.disabled = false;
+            btn.innerHTML = originalBtnText;
+
+            if (isValid) {
                 // Save code to localStorage
                 localStorage.setItem(ACCESS_KEY, code);
-
                 // Hide error if shown
                 errorMsg.classList.remove('show');
-
                 // Show premium content
                 showPremiumContent();
             } else {
