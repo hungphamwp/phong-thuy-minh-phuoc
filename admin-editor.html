@@ -51,6 +51,10 @@
                     <i class="fas fa-images"></i>
                     <span>Thư Viện Media</span>
                 </a>
+                <a href="admin-users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Quản Lý Users</span>
+                </a>
                 <a href="admin-settings.html" class="admin-nav-item">
                     <i class="fas fa-cog"></i>
                     <span>Cài Đặt</span>
@@ -147,11 +151,12 @@
                             <div class="form-group">
                                 <label for="postAuthor"
                                     style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--admin-dark);">
-                                    <i class="fas fa-user-edit"></i> Tác Giả
+                                    <i class="fas fa-user-edit"></i> Tác Giả *
                                 </label>
-                                <input type="text" id="postAuthor"
-                                    style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95rem;"
-                                    placeholder="Tên tác giả">
+                                <select id="postAuthor" required
+                                    style="width: 100%; padding: 0.9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95rem;">
+                                    <option value="">Đang tải tác giả...</option>
+                                </select>
                             </div>
                         </div>
 
@@ -304,6 +309,7 @@
     <script src="js/admin-media.js"></script>
     <script src="js/admin-blog.js"></script>
     <script src="js/admin-categories.js"></script>
+    <script src="js/admin-users.js"></script>
     <script>
         (async function () {
             // Protect this page
@@ -324,12 +330,16 @@
                 await categoryManager.checkSupabaseConnection();
             }
 
+            // Load userManager
+            if (typeof userManager !== 'undefined') {
+                await userManager.checkSupabaseConnection();
+            }
+
             // Display user info
             const session = auth.getSession();
             if (session) {
                 document.getElementById('userName').textContent = session.name;
                 document.getElementById('userEmail').textContent = session.email;
-                document.getElementById('postAuthor').value = session.name;
             }
 
             // Check if editing existing post
@@ -346,7 +356,6 @@
                     // Load post data
                     document.getElementById('postTitle').value = currentPost.title;
                     document.getElementById('postSlug').value = currentPost.slug;
-                    document.getElementById('postAuthor').value = currentPost.author;
                     document.getElementById('postImage').value = currentPost.featuredImage || '';
                     document.getElementById('postExcerpt').value = currentPost.excerpt;
                     document.getElementById('postTags').value = currentPost.tags?.join(', ') || '';
@@ -363,8 +372,9 @@
                 }
             }
 
-            // Load categories after post data (so we can set the correct selected value)
+            // Load categories and authors after post data (so we can set the correct selected value)
             await loadCategoryOptions();
+            await loadAuthorOptions();
         })();
 
         // Logout handler
@@ -453,6 +463,53 @@
                     <option value="Tử Vi">Tử Vi</option>
                     <option value="Ngày Tốt Xấu">Ngày Tốt Xấu</option>
                     <option value="Hướng Dẫn">Hướng Dẫn</option>
+                `;
+            }
+        }
+
+        // Load author options from admin users
+        async function loadAuthorOptions() {
+            const select = document.getElementById('postAuthor');
+            const session = auth.getSession();
+
+            try {
+                const adminUsers = await userManager.getAdminUsers();
+
+                if (adminUsers.length === 0) {
+                    // Fallback to current user
+                    select.innerHTML = `
+                        <option value="${session?.name || 'Admin'}">${session?.name || 'Admin'}</option>
+                    `;
+                } else {
+                    select.innerHTML = adminUsers.map(user =>
+                        `<option value="${user.full_name}">${user.full_name}</option>`
+                    ).join('');
+                }
+
+                // If editing, set the current author
+                if (currentPost && currentPost.author) {
+                    // Check if author exists in options
+                    const options = Array.from(select.options);
+                    const hasAuthor = options.some(opt => opt.value === currentPost.author);
+                    if (hasAuthor) {
+                        select.value = currentPost.author;
+                    } else {
+                        // Add author if not in list
+                        const opt = document.createElement('option');
+                        opt.value = currentPost.author;
+                        opt.textContent = currentPost.author;
+                        select.appendChild(opt);
+                        select.value = currentPost.author;
+                    }
+                } else if (session?.name) {
+                    // Default to current logged in user
+                    select.value = session.name;
+                }
+            } catch (error) {
+                console.error('Error loading authors:', error);
+                // Fallback
+                select.innerHTML = `
+                    <option value="${session?.name || 'Admin'}">${session?.name || 'Admin'}</option>
                 `;
             }
         }
