@@ -775,10 +775,21 @@
             }
 
             // Load user data
-            const user = userAuth.getSession();
+            let user = userAuth.getSession();
             if (user) {
-                document.getElementById('profileName').value = user.full_name || user.name || '';
+                // Auto-refresh session from Supabase if possible
+                if (user.type === 'supabase') {
+                    const refreshResult = await userAuth.refreshSession();
+                    if (refreshResult.success) {
+                        user = refreshResult.user;
+                    }
+                }
+
+                document.getElementById('profileName').value = user.fullName || user.full_name || user.name || '';
                 document.getElementById('profileEmail').value = user.email || '';
+                if (document.getElementById('headerUserName')) {
+                    document.getElementById('headerUserName').textContent = user.fullName || user.full_name || 'Người dùng';
+                }
 
                 // Load additional profile data from localStorage
                 const profileData = JSON.parse(localStorage.getItem('minhphuoc_user_profile') || '{}');

@@ -494,6 +494,9 @@
                                 // Refresh session to reflect changes
                                 await userAuth.refreshSession();
                                 console.log('User upgraded to premium in DB');
+                            } else {
+                                console.error('Upgrade Error:', upgradeError);
+                                alert('Không thể cập nhật hạng Premium vào Database: ' + upgradeError.message + '\n\nLưu ý: Bạn cần chạy file SQL migration trong Supabase SQL Editor để thêm cột package_level.');
                             }
                         } catch (e) {
                             console.error('Error upgrading user level:', e);

@@ -178,6 +178,7 @@ class UserAuth {
                     id: data.user.id,
                     email: data.user.email,
                     fullName: profile?.full_name || data.user.user_metadata?.full_name || 'User',
+                    full_name: profile?.full_name || data.user.user_metadata?.full_name || 'User', // Keep both for compatibility
                     role: profile?.role || 'user',
                     packageLevel: profile?.package_level || 'free',
                     isPremium: (profile?.role === 'admin' || profile?.package_level === 'premium' || profile?.package_level === 'admin'),
