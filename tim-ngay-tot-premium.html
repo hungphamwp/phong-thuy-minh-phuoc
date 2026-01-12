@@ -14,9 +14,9 @@
 
     <style>
         .premium-page {
-            min-height: 100vh;
+            min-height: calc(100vh - 200px);
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 100px 20px 50px;
+            padding: 2rem;
         }
 
         .premium-container {
@@ -234,79 +234,253 @@
 </head>
 
 <body>
-    <div class="premium-page">
-        <div class="premium-container">
-            <!-- Icon -->
-            <div class="premium-icon">
-                <i class="fas fa-lock" style="font-size: 3rem; color: #ff6b35;"></i>
-            </div>
-
-            <!-- Title -->
-            <h1 class="premium-title">Tính Năng Bị Hạn Chế</h1>
-            <p class="premium-subtitle">
-                Tính năng <strong>Tìm ngày tốt</strong> chỉ dành cho thành viên có gói tài trợ.
-            </p>
-
-            <!-- Price Box -->
-            <div class="premium-price-box">
-                <div
-                    style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
-                    <i class="fas fa-gift" style="font-size: 2rem; color: #28a745;"></i>
-                    <div class="premium-price-label">Gói tài trợ ưu đãi với mức phí:</div>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="logo.jpg" alt="Minh Phước Feng Shui" class="logo-img">
+                <div class="logo-text">
+                    <span class="brand-name">Minh Phước</span>
+                    <span class="brand-tagline">Feng Shui</span>
                 </div>
-                <div class="premium-price">199.000 VNĐ/Năm</div>
-            </div>
+            </a>
 
-            <!-- Benefits -->
-            <div class="premium-benefits">
-                <h3>
-                    <i class="fas fa-sparkles"></i>
-                    Lợi ích khi nâng cấp:
-                </h3>
-                <ul>
-                    <li>
-                        <i class="fas fa-check"></i>
-                        <span>Truy cập đầy đủ các tính năng ứng dụng</span>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-yin-yang"></i>
+                            <span>Trang Chủ</span>
+                        </a>
                     </li>
-                    <li>
-                        <i class="fas fa-check"></i>
-                        <span>Truy cập đầy đủ các tính năng Kỷ Môn Độn Giáp</span>
+                    <li class="nav-item">
+                        <a href="gioi-thieu.html" class="nav-link">
+                            <img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon">
+                            <span>Giới Thiệu</span>
+                        </a>
                     </li>
-                    <li>
-                        <i class="fas fa-check"></i>
-                        <span>Phân tích Ngũ Phú, Phong Thủy, Mệnh, Chiêu Lực</span>
+                    <li class="nav-item">
+                        <a href="lap-la-tu-vi.html" class="nav-link">
+                            <i class="fas fa-star-and-crescent"></i>
+                            <span>Lập Lá Tử Vi</span>
+                        </a>
                     </li>
-                    <li>
-                        <i class="fas fa-check"></i>
-                        <span>Hỗ trợ ưu tiên và cập nhật tính năng mới</span>
+                    <li class="nav-item">
+                        <a href="xem-ngay-tot-xau.html" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Lịch Dụng Sự</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="tin-tuc.html" class="nav-link">
+                            <i class="fas fa-book-open"></i>
+                            <span>Quỹ Khuyến Học</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lien-he.html" class="nav-link">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <span>Liên Hệ</span>
+                        </a>
                     </li>
                 </ul>
-            </div>
+            </nav>
 
-            <!-- Contact -->
-            <div class="premium-contact">
-                <p><strong>Liên hệ hỗ trợ để nâng cấp:</strong></p>
-                <div class="contact-buttons">
-                    <a href="https://zalo.me/0888081050" target="_blank" class="btn-zalo">
-                        <i class="fab fa-z" style="font-size: 1.3rem;"></i>
-                        Zalo
-                    </a>
-                    <a href="https://m.me/YOUR_FB" target="_blank" class="btn-messenger">
-                        <i class="fab fa-facebook-messenger" style="font-size: 1.3rem;"></i>
-                        Messenger
-                    </a>
+            <div class="header-actions">
+                <div id="userAuthButtons">
+                    <!-- Shown when not logged in -->
+                    <div id="guestButtons" style="display: flex; gap: 10px;">
+                        <button onclick="showLoginModal()" class="btn-contact" style="border: none; cursor: pointer;">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Đăng Nhập</span>
+                        </button>
+                    </div>
+                    <!-- Shown when logged in -->
+                    <div id="userButtons" style="display: none; align-items: center; position: relative;">
+                        <button id="userDropdownBtn"
+                            style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-size: 0.95rem; color: #333; border-radius: 8px; transition: background 0.3s;">
+                            <i class="fas fa-user"></i>
+                            <span>Xin chào, <strong id="userNameDisplay">Người dùng</strong></span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.25rem;"></i>
+                        </button>
+                        <div id="userDropdownMenu"
+                            style="display: none; position: absolute; right: 0; top: 100%; margin-top: 0.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 200px; overflow: hidden; z-index: 1000; border: 1px solid #e0e0e0;">
+                            <a href="profile.html"
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.25rem; color: #333; text-decoration: none; transition: background 0.3s; border-bottom: 1px solid #f0f0f0;">
+                                <i class="fas fa-user" style="color: #666;"></i> Thông tin cá nhân
+                            </a>
+                            <a href="#" onclick="handleUserLogoutGlobal(); return false;"
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.25rem; color: #e74c3c; text-decoration: none; transition: background 0.3s;">
+                                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Back Link -->
-            <div class="premium-back">
-                <a href="index.html">
-                    <i class="fas fa-arrow-left"></i>
-                    Quay lại trang trước
-                </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-list">
+            <li><a href="index.html"><i class="fas fa-yin-yang"></i> Trang Chủ</a></li>
+            <li><a href="gioi-thieu.html"><img src="images/icon-gioithieu.png" alt="Giới Thiệu" class="nav-icon"> Giới
+                    Thiệu</a></li>
+            <li><a href="lap-la-tu-vi.html"><i class="fas fa-star-and-crescent"></i> Lập Lá Tử Vi</a></li>
+            <li><a href="xem-ngay-tot-xau.html"><i class="fas fa-calendar-alt"></i> Lịch Dụng Sự</a></li>
+            <li><a href="tin-tuc.html"><i class="fas fa-book-open"></i> Quỹ Khuyến Học</a></li>
+            <li><a href="lien-he.html"><i class="fas fa-envelope-open-text"></i> Liên Hệ</a></li>
+            <li><a href="admin.html" class="btn-contact-mobile"><i class="fas fa-user-circle"></i> Đăng Nhập</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="premium-page">
+            <div class="premium-container">
+                <!-- Icon -->
+                <div class="premium-icon">
+                    <i class="fas fa-lock" style="font-size: 3rem; color: #ff6b35;"></i>
+                </div>
+
+                <!-- Title -->
+                <h1 class="premium-title">Tính Năng Bị Hạn Chế</h1>
+                <p class="premium-subtitle">
+                    Tính năng <strong>Tìm ngày tốt</strong> chỉ dành cho thành viên có gói tài trợ.
+                </p>
+
+                <!-- Price Box -->
+                <div class="premium-price-box">
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
+                        <i class="fas fa-gift" style="font-size: 2rem; color: #28a745;"></i>
+                        <div class="premium-price-label">Gói tài trợ ưu đãi với mức phí:</div>
+                    </div>
+                    <div class="premium-price">199.000 VNĐ/Năm</div>
+                </div>
+
+                <!-- Benefits -->
+                <div class="premium-benefits">
+                    <h3>
+                        <i class="fas fa-sparkles"></i>
+                        Lợi ích khi nâng cấp:
+                    </h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Truy cập đầy đủ các tính năng ứng dụng</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Truy cập đầy đủ các tính năng Kỷ Môn Độn Giáp</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Phân tích Ngũ Phú, Phong Thủy, Mệnh, Chiêu Lực</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Hỗ trợ ưu tiên và cập nhật tính năng mới</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="premium-contact">
+                    <p><strong>Liên hệ hỗ trợ để nâng cấp:</strong></p>
+                    <div class="contact-buttons">
+                        <a href="https://zalo.me/0888081050" target="_blank" class="btn-zalo">
+                            <i class="fab fa-z" style="font-size: 1.3rem;"></i>
+                            Zalo
+                        </a>
+                        <a href="https://m.me/YOUR_FB" target="_blank" class="btn-messenger">
+                            <i class="fab fa-facebook-messenger" style="font-size: 1.3rem;"></i>
+                            Messenger
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Back Link -->
+                <div class="premium-back">
+                    <a href="index.html">
+                        <i class="fas fa-arrow-left"></i>
+                        Quay lại trang trước
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="Minh Phước" class="footer-logo-img">
+                        <div>
+                            <span class="brand-name">Minh Phước</span>
+                            <span class="brand-tagline">Feng Shui</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Minh Phước Feng Shui - Dịch vụ tư vấn phong thủy, tử vi chuyên nghiệp, uy tín
+                        hàng đầu Việt Nam.</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Dịch Vụ</h4>
+                        <ul>
+                            <li><a href="lap-la-tu-vi.html">Lập Lá Tử Vi</a></li>
+                            <li><a href="xem-ngay-tot-xau.html">Lịch Dụng Sự</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Kết</h4>
+                        <ul>
+                            <li><a href="index.html">Trang Chủ</a></li>
+                            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
+                            <li><a href="tin-tuc.html">Quỹ Khuyến Học</a></li>
+                            <li><a href="lien-he.html">Liên Hệ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Liên Hệ</h4>
+                        <ul>
+                            <li><a href="tel:0888081050"><i class="fas fa-phone"></i> 0888.08.1050</a></li>
+                            <li><a href="mailto:contact@minhphuoc.com"><i class="fas fa-envelope"></i>
+                                    contact@minhphuoc.com</a></li>
+                            <li><i class="fas fa-map-marker-alt"></i> 57 Đường 7A phường An Lạc, TP.HCM</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Chùa Quan Âm Cát, xã Phan Rí Cửa, Lâm Đồng</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Minh Phước Feng Shui. Bản quyền thuộc về Minh Phước.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- App Scripts -->
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/user-auth.js"></script>
+    <script src="js/auth-ui.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
