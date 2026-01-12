@@ -1454,6 +1454,12 @@ h6 {
         min-height: auto;
         padding-bottom: var(--spacing-3xl);
     }
+
+    .footer::before {
+        width: 300px;
+        /* Thu nhỏ còn một nửa trên mobile */
+        height: 300px;
+    }
 }
 
 .footer::before {
