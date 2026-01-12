@@ -10,9 +10,13 @@
 -- ==========================================
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username TEXT UNIQUE,
     email TEXT UNIQUE NOT NULL,
     full_name TEXT NOT NULL,
+    first_name TEXT,
+    last_name TEXT,
     phone TEXT,
+    website TEXT,
     date_of_birth DATE,
     birth_time TIME,
     birth_place TEXT,
@@ -24,6 +28,11 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     last_login TIMESTAMP WITH TIME ZONE
 );
+
+-- Index cho username để tìm kiếm nhanh
+CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
+CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
+
 
 -- ==========================================
 -- 2. BẢNG BLOG_POSTS (Bài viết Quỹ Khuyến Học)
