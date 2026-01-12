@@ -195,6 +195,54 @@ CREATE TABLE IF NOT EXISTS activity_logs (
 );
 
 -- ==========================================
+-- 11. BẢNG CATEGORIES (Danh mục bài viết)
+-- ==========================================
+CREATE TABLE IF NOT EXISTS categories (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
+    description TEXT,
+    parent_id UUID REFERENCES categories(id) ON DELETE SET NULL,
+    post_count INTEGER DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ==========================================
+-- 12. BẢNG TAGS (Tags bài viết)
+-- ==========================================
+CREATE TABLE IF NOT EXISTS tags (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
+    post_count INTEGER DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ==========================================
+-- 13. BẢNG POST_TAGS (Liên kết bài viết - tags)
+-- ==========================================
+CREATE TABLE IF NOT EXISTS post_tags (
+    post_id UUID REFERENCES blog_posts(id) ON DELETE CASCADE,
+    tag_id UUID REFERENCES tags(id) ON DELETE CASCADE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    PRIMARY KEY (post_id, tag_id)
+);
+
+-- ==========================================
+-- 14. BẢNG MEDIA_FOLDERS (Thư mục media)
+-- ==========================================
+CREATE TABLE IF NOT EXISTS media_folders (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    parent_id UUID REFERENCES media_folders(id) ON DELETE CASCADE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Thêm folder_id vào media_library
+ALTER TABLE media_library ADD COLUMN IF NOT EXISTS folder_id UUID REFERENCES media_folders(id) ON DELETE SET NULL;
+
+-- ==========================================
 -- INDEXES ĐỂ TĂNG TỐC ĐỘ QUERY
 -- ==========================================
 
@@ -226,6 +274,20 @@ CREATE INDEX IF NOT EXISTS idx_comments_user ON comments(user_id);
 -- Activity Logs
 CREATE INDEX IF NOT EXISTS idx_logs_user ON activity_logs(user_id);
 CREATE INDEX IF NOT EXISTS idx_logs_created ON activity_logs(created_at DESC);
+
+-- Categories
+CREATE INDEX IF NOT EXISTS idx_categories_slug ON categories(slug);
+CREATE INDEX IF NOT EXISTS idx_categories_parent ON categories(parent_id);
+
+-- Tags
+CREATE INDEX IF NOT EXISTS idx_tags_slug ON tags(slug);
+
+-- Post Tags
+CREATE INDEX IF NOT EXISTS idx_post_tags_post ON post_tags(post_id);
+CREATE INDEX IF NOT EXISTS idx_post_tags_tag ON post_tags(tag_id);
+
+-- Media Folders
+CREATE INDEX IF NOT EXISTS idx_media_folder ON media_library(folder_id);
 
 -- ==========================================
 -- FUNCTIONS & TRIGGERS
@@ -298,6 +360,10 @@ ALTER TABLE comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE appointments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE activity_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tags ENABLE ROW LEVEL SECURITY;
+ALTER TABLE post_tags ENABLE ROW LEVEL SECURITY;
+ALTER TABLE media_folders ENABLE ROW LEVEL SECURITY;
 
 -- ==========================================
 -- POLICIES CHO PUBLIC ACCESS (Demo)
@@ -393,6 +459,34 @@ CREATE POLICY "Admin can read logs" ON activity_logs
 CREATE POLICY "System can write logs" ON activity_logs
     FOR INSERT WITH CHECK (true);
 
+-- Categories: Public đọc, admin quản lý
+CREATE POLICY "Public can read categories" ON categories
+    FOR SELECT USING (true);
+
+CREATE POLICY "Admin can manage categories" ON categories
+    FOR ALL USING (true) WITH CHECK (true);
+
+-- Tags: Public đọc, admin quản lý
+CREATE POLICY "Public can read tags" ON tags
+    FOR SELECT USING (true);
+
+CREATE POLICY "Admin can manage tags" ON tags
+    FOR ALL USING (true) WITH CHECK (true);
+
+-- Post Tags: Public đọc
+CREATE POLICY "Public can read post_tags" ON post_tags
+    FOR SELECT USING (true);
+
+CREATE POLICY "Admin can manage post_tags" ON post_tags
+    FOR ALL USING (true) WITH CHECK (true);
+
+-- Media Folders: Admin quản lý
+CREATE POLICY "Public can read media_folders" ON media_folders
+    FOR SELECT USING (true);
+
+CREATE POLICY "Admin can manage media_folders" ON media_folders
+    FOR ALL USING (true) WITH CHECK (true);
+
 -- ==========================================
 -- DỮ LIỆU MẪU
 -- ==========================================
@@ -413,6 +507,29 @@ INSERT INTO settings (setting_key, setting_value, setting_type, description) VAL
     ('enable_consultations', 'true', 'boolean', 'Bật/tắt tính năng tư vấn'),
     ('enable_appointments', 'true', 'boolean', 'Bật/tắt tính năng đặt lịch')
 ON CONFLICT (setting_key) DO NOTHING;
+
+-- Insert categories mẫu
+INSERT INTO categories (name, slug, description) VALUES
+    ('Quỹ Khuyến Học', 'quy-khuyen-hoc', 'Tin tức và hoạt động quỹ khuyến học'),
+    ('Phong Thủy', 'phong-thuy', 'Kiến thức và tư vấn phong thủy'),
+    ('Tử Vi', 'tu-vi', 'Lập lá tử vi và giải mã vận mệnh'),
+    ('Ngày Tốt Xấu', 'ngay-tot-xau', 'Xem ngày tốt xấu cho các sự kiện'),
+    ('Hướng Dẫn', 'huong-dan', 'Hướng dẫn sử dụng và thủ thuật')
+ON CONFLICT (slug) DO NOTHING;
+
+-- Insert tags mẫu
+INSERT INTO tags (name, slug) VALUES
+    ('phong thủy', 'phong-thuy'),
+    ('tử vi', 'tu-vi'),
+    ('năm 2026', 'nam-2026'),
+    ('cưới hỏi', 'cuoi-hoi'),
+    ('nhập trạch', 'nhap-trach'),
+    ('khai trương', 'khai-truong'),
+    ('khởi công', 'khoi-cong'),
+    ('học bổng', 'hoc-bong'),
+    ('từ thiện', 'tu-thien'),
+    ('mệnh', 'menh')
+ON CONFLICT (slug) DO NOTHING;
 
 -- Insert blog posts mẫu
 INSERT INTO blog_posts (title, slug, content, excerpt, category, status, published_at) VALUES

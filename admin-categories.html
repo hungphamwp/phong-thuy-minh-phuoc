@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Danh Mục - Admin</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+
+    <style>
+        .category-form {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-form h3 {
+            margin: 0 0 1.5rem;
+            color: var(--admin-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--admin-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--admin-primary);
+        }
+
+        .category-item {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .category-item:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-item.child {
+            margin-left: 2rem;
+            border-left: 3px solid var(--admin-primary);
+        }
+
+        .category-info {
+            flex: 1;
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: var(--admin-dark);
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .category-meta {
+            font-size: 0.85rem;
+            color: #6c757d;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .category-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon-sm {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .btn-icon-sm.edit {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .btn-icon-sm.edit:hover {
+            background: #1976d2;
+            color: white;
+        }
+
+        .btn-icon-sm.delete {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .btn-icon-sm.delete:hover {
+            background: #d32f2f;
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            opacity: 0.5;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <img src="logo.jpg" alt="Minh Phước" class="admin-sidebar-logo">
+                <h2>Admin Panel</h2>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="admin-posts.html" class="admin-nav-item">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Bài Viết</span>
+                </a>
+                <a href="admin-editor.html" class="admin-nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tạo Bài Viết Mới</span>
+                </a>
+                <a href="admin-categories.html" class="admin-nav-item active">
+                    <i class="fas fa-folder"></i>
+                    <span>Danh Mục</span>
+                </a>
+                <a href="admin-tags.html" class="admin-nav-item">
+                    <i class="fas fa-tags"></i>
+                    <span>Tags</span>
+                </a>
+                <a href="admin-media.html" class="admin-nav-item">
+                    <i class="fas fa-images"></i>
+                    <span>Thư Viện Media</span>
+                </a>
+                <a href="admin-settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Cài Đặt</span>
+                </a>
+                <a href="index.html" class="admin-nav-item" target="_blank">
+                    <i class="fas fa-globe"></i>
+                    <span>Xem Website</span>
+                </a>
+            </nav>
+
+            <div class="admin-user-section">
+                <div class="admin-user-info">
+                    <div class="admin-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="admin-user-details">
+                        <h4 id="userName">Admin</h4>
+                        <p id="userEmail">admin@minhphuoc.com</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btnLogout">
+                    <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>Quản Lý Danh Mục</h1>
+                    <div class="admin-breadcrumb">
+                        <a href="admin-posts.html">Dashboard</a> / Danh Mục
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add/Edit Category Form -->
+            <div class="category-form">
+                <h3>
+                    <i class="fas fa-plus-circle"></i>
+                    <span id="formTitle">Thêm Danh Mục Mới</span>
+                </h3>
+                <form id="categoryForm">
+                    <input type="hidden" id="categoryId">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="categoryName">Tên danh mục *</label>
+                            <input type="text" id="categoryName" required placeholder="Nhập tên danh mục">
+                        </div>
+                        <div class="form-group">
+                            <label for="categorySlug">Đường dẫn (Slug)</label>
+                            <input type="text" id="categorySlug" placeholder="tu-dong-tao-tu-ten">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="categoryParent">Danh mục cha</label>
+                            <select id="categoryParent">
+                                <option value="">— Không có —</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryDescription">Mô tả</label>
+                            <input type="text" id="categoryDescription" placeholder="Mô tả ngắn về danh mục">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> <span id="btnSubmitText">Thêm Danh Mục</span>
+                        </button>
+                        <button type="button" class="btn-secondary" id="btnCancel" style="display: none;">
+                            <i class="fas fa-times"></i> Hủy
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Categories List -->
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h2>Danh Sách Danh Mục</h2>
+                    <div class="search-bar" style="max-width: 300px;">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm danh mục...">
+                    </div>
+                </div>
+                <div class="content-card-body" style="padding: 1.5rem;">
+                    <div id="categoriesList">
+                        <!-- Categories will be loaded here -->
+                    </div>
+                    <div id="emptyState" class="empty-state" style="display: none;">
+                        <i class="fas fa-folder-open"></i>
+                        <p>Chưa có danh mục nào</p>
+                        <p style="font-size: 0.9rem;">Hãy tạo danh mục đầu tiên</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- App Scripts -->
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/admin-categories.js"></script>
+
+    <script>
+        // Protect page
+        auth.requireAuth('admin.html');
+
+        // Display user info
+        const session = auth.getSession();
+        if (session) {
+            document.getElementById('userName').textContent = session.name;
+            document.getElementById('userEmail').textContent = session.email;
+        }
+
+        // Logout
+        document.getElementById('btnLogout').addEventListener('click', function () {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                auth.logout();
+                window.location.href = 'admin.html';
+            }
+        });
+
+        let editingId = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (window.supabaseInitPromise) {
+                await window.supabaseInitPromise;
+            }
+            await categoryManager.checkSupabaseConnection();
+            await loadCategories();
+            await loadParentOptions();
+        });
+
+        // Load categories list
+        async function loadCategories(searchQuery = '') {
+            const container = document.getElementById('categoriesList');
+            const emptyState = document.getElementById('emptyState');
+
+            let categories = await categoryManager.getAllCategories();
+
+            if (searchQuery) {
+                categories = categories.filter(cat =>
+                    cat.name.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+
+            if (categories.length === 0) {
+                container.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            // Build tree structure
+            const rootCategories = categories.filter(cat => !cat.parent_id);
+            const getChildren = (parentId) => categories.filter(cat => cat.parent_id === parentId);
+
+            let html = '';
+            for (const cat of rootCategories) {
+                html += renderCategoryItem(cat, false);
+                const children = getChildren(cat.id);
+                for (const child of children) {
+                    html += renderCategoryItem(child, true);
+                }
+            }
+
+            container.innerHTML = html;
+        }
+
+        // Render category item
+        function renderCategoryItem(cat, isChild) {
+            return `
+                <div class="category-item ${isChild ? 'child' : ''}" data-id="${cat.id}">
+                    <div class="category-info">
+                        <div class="category-name">
+                            <i class="fas fa-folder${isChild ? '' : '-open'}" style="margin-right: 0.5rem; color: var(--admin-primary);"></i>
+                            ${cat.name}
+                        </div>
+                        <div class="category-meta">
+                            <span><i class="fas fa-link"></i> ${cat.slug}</span>
+                            <span><i class="fas fa-newspaper"></i> ${cat.post_count || 0} bài viết</span>
+                        </div>
+                    </div>
+                    <div class="category-actions">
+                        <button class="btn-icon-sm edit" onclick="editCategory('${cat.id}')" title="Chỉnh sửa">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon-sm delete" onclick="deleteCategory('${cat.id}')" title="Xóa">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load parent options for select
+        async function loadParentOptions() {
+            const select = document.getElementById('categoryParent');
+            const categories = await categoryManager.getAllCategories();
+            const rootCategories = categories.filter(cat => !cat.parent_id);
+
+            select.innerHTML = '<option value="">— Không có —</option>';
+            rootCategories.forEach(cat => {
+                if (cat.id !== editingId) {
+                    select.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+                }
+            });
+        }
+
+        // Auto-generate slug
+        document.getElementById('categoryName').addEventListener('input', function (e) {
+            if (!document.getElementById('categorySlug').value || !editingId) {
+                document.getElementById('categorySlug').value = categoryManager.generateSlug(e.target.value);
+            }
+        });
+
+        // Form submit
+        document.getElementById('categoryForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const data = {
+                name: document.getElementById('categoryName').value,
+                slug: document.getElementById('categorySlug').value,
+                description: document.getElementById('categoryDescription').value,
+                parent_id: document.getElementById('categoryParent').value || null
+            };
+
+            let result;
+            if (editingId) {
+                result = await categoryManager.updateCategory(editingId, data);
+            } else {
+                result = await categoryManager.createCategory(data);
+            }
+
+            if (result.success) {
+                alert(editingId ? 'Đã cập nhật danh mục!' : 'Đã thêm danh mục mới!');
+                resetForm();
+                await loadCategories();
+                await loadParentOptions();
+            } else {
+                alert('Lỗi: ' + result.error);
+            }
+        });
+
+        // Edit category
+        async function editCategory(id) {
+            const cat = await categoryManager.getCategoryById(id);
+            if (!cat) return;
+
+            editingId = id;
+            document.getElementById('categoryId').value = id;
+            document.getElementById('categoryName').value = cat.name;
+            document.getElementById('categorySlug').value = cat.slug;
+            document.getElementById('categoryDescription').value = cat.description || '';
+            document.getElementById('categoryParent').value = cat.parent_id || '';
+
+            document.getElementById('formTitle').textContent = 'Chỉnh Sửa Danh Mục';
+            document.getElementById('btnSubmitText').textContent = 'Cập Nhật';
+            document.getElementById('btnCancel').style.display = 'inline-flex';
+
+            await loadParentOptions();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Delete category
+        async function deleteCategory(id) {
+            if (!confirm('Bạn có chắc muốn xóa danh mục này?')) return;
+
+            const result = await categoryManager.deleteCategory(id);
+            if (result.success) {
+                alert('Đã xóa danh mục!');
+                await loadCategories();
+                await loadParentOptions();
+            } else {
+                alert('Lỗi: ' + result.error);
+            }
+        }
+
+        // Cancel edit
+        document.getElementById('btnCancel').addEventListener('click', resetForm);
+
+        function resetForm() {
+            editingId = null;
+            document.getElementById('categoryForm').reset();
+            document.getElementById('categoryId').value = '';
+            document.getElementById('formTitle').textContent = 'Thêm Danh Mục Mới';
+            document.getElementById('btnSubmitText').textContent = 'Thêm Danh Mục';
+            document.getElementById('btnCancel').style.display = 'none';
+        }
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', function (e) {
+            loadCategories(e.target.value.trim());
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Tags - Admin</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+
+    <style>
+        .tag-form {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .tag-form h3 {
+            margin: 0 0 1.5rem;
+            color: var(--admin-dark);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--admin-dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--admin-primary);
+        }
+
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 0.6rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border: 1px solid #dee2e6;
+        }
+
+        .tag-item:hover {
+            background: linear-gradient(135deg, var(--admin-primary) 0%, #a0522d 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+        }
+
+        .tag-item .tag-name {
+            font-weight: 500;
+        }
+
+        .tag-item .tag-count {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+
+        .tag-item:hover .tag-count {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .tag-actions {
+            display: none;
+            gap: 0.25rem;
+        }
+
+        .tag-item:hover .tag-actions {
+            display: flex;
+        }
+
+        .tag-action-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.3);
+            color: inherit;
+        }
+
+        .tag-action-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .bulk-add {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .bulk-add textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            opacity: 0.5;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <img src="logo.jpg" alt="Minh Phước" class="admin-sidebar-logo">
+                <h2>Admin Panel</h2>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="admin-posts.html" class="admin-nav-item">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Bài Viết</span>
+                </a>
+                <a href="admin-editor.html" class="admin-nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tạo Bài Viết Mới</span>
+                </a>
+                <a href="admin-categories.html" class="admin-nav-item">
+                    <i class="fas fa-folder"></i>
+                    <span>Danh Mục</span>
+                </a>
+                <a href="admin-tags.html" class="admin-nav-item active">
+                    <i class="fas fa-tags"></i>
+                    <span>Tags</span>
+                </a>
+                <a href="admin-media.html" class="admin-nav-item">
+                    <i class="fas fa-images"></i>
+                    <span>Thư Viện Media</span>
+                </a>
+                <a href="admin-settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Cài Đặt</span>
+                </a>
+                <a href="index.html" class="admin-nav-item" target="_blank">
+                    <i class="fas fa-globe"></i>
+                    <span>Xem Website</span>
+                </a>
+            </nav>
+
+            <div class="admin-user-section">
+                <div class="admin-user-info">
+                    <div class="admin-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="admin-user-details">
+                        <h4 id="userName">Admin</h4>
+                        <p id="userEmail">admin@minhphuoc.com</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btnLogout">
+                    <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>Quản Lý Tags</h1>
+                    <div class="admin-breadcrumb">
+                        <a href="admin-posts.html">Dashboard</a> / Tags
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Tag Form -->
+            <div class="tag-form">
+                <h3><i class="fas fa-tag"></i> <span id="formTitle">Thêm Tag Mới</span></h3>
+                <form id="tagForm">
+                    <input type="hidden" id="tagId">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tagName">Tên tag *</label>
+                            <input type="text" id="tagName" required placeholder="Nhập tên tag">
+                        </div>
+                        <div class="form-group">
+                            <label for="tagSlug">Đường dẫn (Slug)</label>
+                            <input type="text" id="tagSlug" placeholder="tu-dong-tao">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> <span id="btnSubmitText">Thêm Tag</span>
+                        </button>
+                        <button type="button" class="btn-secondary" id="btnCancel" style="display: none;">
+                            <i class="fas fa-times"></i> Hủy
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Bulk Add -->
+                <div class="bulk-add">
+                    <label style="font-weight: 600; display: block; margin-bottom: 0.5rem;">
+                        <i class="fas fa-layer-group"></i> Thêm nhiều tags cùng lúc
+                    </label>
+                    <textarea id="bulkTags"
+                        placeholder="Nhập các tags, mỗi tag một dòng hoặc cách nhau bởi dấu phẩy"></textarea>
+                    <button type="button" class="btn-secondary" id="btnBulkAdd" style="margin-top: 0.5rem;">
+                        <i class="fas fa-plus"></i> Thêm Tất Cả
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tags List -->
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h2>Tất Cả Tags (<span id="tagCount">0</span>)</h2>
+                    <div class="search-bar" style="max-width: 300px;">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm tag...">
+                    </div>
+                </div>
+                <div class="tags-cloud" id="tagsCloud">
+                    <!-- Tags will be loaded here -->
+                </div>
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <i class="fas fa-tags"></i>
+                    <p>Chưa có tag nào</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/admin-tags.js"></script>
+
+    <script>
+        auth.requireAuth('admin.html');
+
+        const session = auth.getSession();
+        if (session) {
+            document.getElementById('userName').textContent = session.name;
+            document.getElementById('userEmail').textContent = session.email;
+        }
+
+        document.getElementById('btnLogout').addEventListener('click', function () {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                auth.logout();
+                window.location.href = 'admin.html';
+            }
+        });
+
+        let editingId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (window.supabaseInitPromise) {
+                await window.supabaseInitPromise;
+            }
+            await tagManager.checkSupabaseConnection();
+            await loadTags();
+        });
+
+        async function loadTags(searchQuery = '') {
+            const container = document.getElementById('tagsCloud');
+            const emptyState = document.getElementById('emptyState');
+
+            let tags = searchQuery
+                ? await tagManager.searchTags(searchQuery)
+                : await tagManager.getAllTags();
+
+            document.getElementById('tagCount').textContent = tags.length;
+
+            if (tags.length === 0) {
+                container.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            container.innerHTML = tags.map(tag => `
+                <div class="tag-item" data-id="${tag.id}">
+                    <i class="fas fa-tag"></i>
+                    <span class="tag-name">${tag.name}</span>
+                    <span class="tag-count">${tag.post_count || 0}</span>
+                    <div class="tag-actions">
+                        <button class="tag-action-btn" onclick="editTag('${tag.id}')" title="Sửa">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="tag-action-btn" onclick="deleteTag('${tag.id}')" title="Xóa">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Auto-generate slug
+        document.getElementById('tagName').addEventListener('input', function (e) {
+            if (!document.getElementById('tagSlug').value || !editingId) {
+                document.getElementById('tagSlug').value = tagManager.generateSlug(e.target.value);
+            }
+        });
+
+        // Form submit
+        document.getElementById('tagForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const data = {
+                name: document.getElementById('tagName').value,
+                slug: document.getElementById('tagSlug').value
+            };
+
+            let result;
+            if (editingId) {
+                result = await tagManager.updateTag(editingId, data);
+            } else {
+                result = await tagManager.createTag(data);
+            }
+
+            if (result.success) {
+                alert(editingId ? 'Đã cập nhật tag!' : 'Đã thêm tag mới!');
+                resetForm();
+                await loadTags();
+            } else {
+                alert('Lỗi: ' + result.error);
+            }
+        });
+
+        // Bulk add
+        document.getElementById('btnBulkAdd').addEventListener('click', async function () {
+            const text = document.getElementById('bulkTags').value.trim();
+            if (!text) return;
+
+            const names = text.split(/[,\n]/).map(s => s.trim()).filter(s => s);
+            if (names.length === 0) return;
+
+            const results = await tagManager.createMultipleTags(names);
+            const successCount = results.filter(r => r.success).length;
+
+            alert(`Đã thêm ${successCount}/${names.length} tags`);
+            document.getElementById('bulkTags').value = '';
+            await loadTags();
+        });
+
+        async function editTag(id) {
+            const tag = await tagManager.getTagById(id);
+            if (!tag) return;
+
+            editingId = id;
+            document.getElementById('tagId').value = id;
+            document.getElementById('tagName').value = tag.name;
+            document.getElementById('tagSlug').value = tag.slug;
+
+            document.getElementById('formTitle').textContent = 'Chỉnh Sửa Tag';
+            document.getElementById('btnSubmitText').textContent = 'Cập Nhật';
+            document.getElementById('btnCancel').style.display = 'inline-flex';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function deleteTag(id) {
+            if (!confirm('Bạn có chắc muốn xóa tag này?')) return;
+
+            const result = await tagManager.deleteTag(id);
+            if (result.success) {
+                alert('Đã xóa tag!');
+                await loadTags();
+            } else {
+                alert('Lỗi: ' + result.error);
+            }
+        }
+
+        document.getElementById('btnCancel').addEventListener('click', resetForm);
+
+        function resetForm() {
+            editingId = null;
+            document.getElementById('tagForm').reset();
+            document.getElementById('tagId').value = '';
+            document.getElementById('formTitle').textContent = 'Thêm Tag Mới';
+            document.getElementById('btnSubmitText').textContent = 'Thêm Tag';
+            document.getElementById('btnCancel').style.display = 'none';
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function (e) {
+            loadTags(e.target.value.trim());
+        });
+    </script>
+</body>
+
+</html>
