@@ -78,19 +78,23 @@ class BlogRenderer {
             const article = document.createElement('article');
             article.className = articleClass;
             article.innerHTML = `
-                <div class="blog-image">
-                    <img src="${post.featuredImage || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=400&fit=crop'}" 
-                         alt="${post.title}">
-                    <span class="blog-category">${post.category}</span>
-                    ${isFeatured ? '<span class="featured-badge">Nổi Bật</span>' : ''}
-                </div>
+                <a href="post-detail.html?id=${post.id}" class="blog-image-link">
+                    <div class="blog-image">
+                        <img src="${post.featuredImage || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=400&fit=crop'}" 
+                             alt="${post.title}">
+                        <span class="blog-category">${post.category}</span>
+                        ${isFeatured ? '<span class="featured-badge">Nổi Bật</span>' : ''}
+                    </div>
+                </a>
                 <div class="blog-content">
                     <div class="blog-meta">
                         <span><i class="fas fa-calendar"></i> ${formattedDate}</span>
                         <span><i class="fas fa-user"></i> ${post.author}</span>
                         ${post.views ? `<span><i class="fas fa-eye"></i> ${post.views.toLocaleString()} lượt xem</span>` : ''}
                     </div>
-                    <h${isFeatured ? '2' : '3'} class="blog-title">${post.title}</h${isFeatured ? '2' : '3'}>
+                    <a href="post-detail.html?id=${post.id}" class="blog-title-link">
+                        <h${isFeatured ? '2' : '3'} class="blog-title">${post.title}</h${isFeatured ? '2' : '3'}>
+                    </a>
                     <p class="blog-excerpt">${post.excerpt}</p>
                     <a href="post-detail.html?id=${post.id}" class="blog-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
                 </div>

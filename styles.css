@@ -972,6 +972,30 @@ h6 {
     transform: translateX(5px);
 }
 
+/* Blog clickable image and title links */
+.blog-image-link {
+    display: block;
+    text-decoration: none;
+}
+
+.blog-image-link:hover .blog-image img {
+    transform: scale(1.1);
+}
+
+.blog-title-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.blog-title-link:hover .blog-title {
+    color: var(--color-red);
+}
+
+.blog-title {
+    transition: color var(--transition-normal);
+}
+
 .blog-more {
     text-align: center;
     margin-top: var(--spacing-2xl);
