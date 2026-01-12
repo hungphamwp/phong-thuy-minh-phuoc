@@ -6,257 +6,464 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thư Viện Media - Admin</title>
 
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="admin-styles.css">
 
     <style>
-        .media-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.5rem;
-            padding: 1.5rem;
-        }
-
-        .media-item {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .media-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .media-item.selected {
-            border: 3px solid var(--admin-primary);
-            transform: scale(0.98);
-        }
-
-        .media-thumbnail {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: #f8f9fa;
-        }
-
-        .media-info {
-            padding: 1rem;
-        }
-
-        .media-filename {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--admin-dark);
-            margin-bottom: 0.5rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .media-meta {
-            font-size: 0.75rem;
-            color: #6c757d;
+        /* WordPress-like Media Library Styles */
+        .wp-media-header {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
-        .media-actions {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            display: flex;
-            gap: 0.3rem;
-            opacity: 0;
-            transition: opacity 0.3s;
+        .wp-media-header h1 {
+            font-size: 1.5rem;
+            margin: 0;
         }
 
-        .media-item:hover .media-actions {
-            opacity: 1;
-        }
-
-        .media-action-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
+        .btn-add-media {
+            background: #2271b1;
+            color: white;
+            padding: 0.4rem 1rem;
             border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            transition: all 0.3s;
+            gap: 0.5rem;
         }
 
-        .media-action-btn.view {
-            background: rgba(52, 152, 219, 0.9);
-            color: white;
+        .btn-add-media:hover {
+            background: #135e96;
         }
 
-        .media-action-btn.delete {
-            background: rgba(231, 76, 60, 0.9);
-            color: white;
+        /* Toolbar like WordPress */
+        .wp-media-toolbar {
+            background: #f6f7f7;
+            border: 1px solid #c3c4c7;
+            border-bottom: none;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
-        .upload-area {
-            border: 3px dashed #dee2e6;
-            border-radius: 15px;
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            background: #f8f9fa;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .upload-area:hover,
-        .upload-area.drag-over {
-            border-color: var(--admin-primary);
-            background: rgba(139, 69, 19, 0.05);
-        }
-
-        .upload-area i {
-            font-size: 3rem;
-            color: var(--admin-primary);
-            margin-bottom: 1rem;
-        }
-
-        .storage-info {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .storage-bar {
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 10px;
+        .wp-view-switch {
+            display: flex;
+            border: 1px solid #c3c4c7;
+            border-radius: 4px;
             overflow: hidden;
-            margin: 0.5rem 0;
         }
 
-        .storage-bar-fill {
+        .wp-view-switch button {
+            background: white;
+            border: none;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            color: #50575e;
+            transition: all 0.2s;
+        }
+
+        .wp-view-switch button:not(:last-child) {
+            border-right: 1px solid #c3c4c7;
+        }
+
+        .wp-view-switch button:hover {
+            background: #f0f0f1;
+        }
+
+        .wp-view-switch button.active {
+            background: #2271b1;
+            color: white;
+        }
+
+        .wp-filter-select {
+            padding: 0.4rem 0.6rem;
+            border: 1px solid #8c8f94;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            min-width: 120px;
+        }
+
+        .btn-bulk-select {
+            background: white;
+            border: 1px solid #2271b1;
+            color: #2271b1;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-bulk-select:hover {
+            background: #f0f7fc;
+        }
+
+        .btn-bulk-select.active {
+            background: #2271b1;
+            color: white;
+        }
+
+        .wp-search-media {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .wp-search-media label {
+            font-size: 0.9rem;
+            color: #50575e;
+        }
+
+        .wp-search-media input {
+            padding: 0.4rem 0.6rem;
+            border: 1px solid #8c8f94;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            width: 200px;
+        }
+
+        /* WordPress-style Media Grid */
+        .wp-media-container {
+            border: 1px solid #c3c4c7;
+            background: #f0f0f1;
+            min-height: 400px;
+            position: relative;
+        }
+
+        .wp-media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0;
+            padding: 0.5rem;
+        }
+
+        .wp-media-item {
+            position: relative;
+            aspect-ratio: 1;
+            margin: 0.25rem;
+            background: white;
+            border-radius: 2px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .wp-media-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 4px solid transparent;
+            transition: border-color 0.2s;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .wp-media-item:hover::before {
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .wp-media-item.selected::before {
+            border-color: #2271b1;
+        }
+
+        .wp-media-item img {
+            width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, var(--admin-primary), var(--admin-secondary));
-            transition: width 0.3s;
+            object-fit: cover;
+            display: block;
         }
 
-        .media-modal {
+        .wp-media-item .check {
+            position: absolute;
+            top: 0.25rem;
+            left: 0.25rem;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 2px solid #c3c4c7;
+            border-radius: 2px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .wp-media-item.bulk-mode .check {
+            display: flex;
+        }
+
+        .wp-media-item.selected .check {
+            background: #2271b1;
+            border-color: #2271b1;
+            color: white;
+            display: flex;
+        }
+
+        .wp-media-item .check i {
+            font-size: 10px;
+        }
+
+        /* Placeholder for non-image files */
+        .wp-media-item .file-icon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e5e5e5;
+            color: #50575e;
+            font-size: 2.5rem;
+        }
+
+        /* Upload Modal */
+        .wp-upload-modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 9999;
-            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
         }
 
-        .media-modal.active {
+        .wp-upload-modal.active {
             display: flex;
         }
 
-        .media-modal-content {
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
-        }
-
-        .media-modal-image {
-            max-width: 100%;
-            max-height: 80vh;
-            border-radius: 10px;
-        }
-
-        .media-modal-close {
-            position: absolute;
-            top: -50px;
-            right: 0;
+        .wp-upload-content {
             background: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow: hidden;
+        }
+
+        .wp-upload-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #dcdcde;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wp-upload-header h2 {
+            margin: 0;
             font-size: 1.2rem;
         }
 
-        .media-modal-info {
+        .wp-upload-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #50575e;
+        }
+
+        .wp-upload-body {
+            padding: 2rem;
+        }
+
+        .wp-upload-area {
+            border: 3px dashed #c3c4c7;
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .wp-upload-area:hover,
+        .wp-upload-area.drag-over {
+            border-color: #2271b1;
+            background: #f0f7fc;
+        }
+
+        .wp-upload-area i {
+            font-size: 3rem;
+            color: #2271b1;
+            margin-bottom: 1rem;
+        }
+
+        .wp-upload-area h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .wp-upload-area p {
+            color: #646970;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Details Sidebar (when item selected) */
+        .wp-attachment-details {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 350px;
+            height: 100vh;
             background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 1rem;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            overflow-y: auto;
         }
 
-        .filter-toolbar {
+        .wp-attachment-details.active {
+            display: block;
+        }
+
+        .wp-attachment-header {
+            padding: 1rem;
+            border-bottom: 1px solid #dcdcde;
             display: flex;
-            gap: 1rem;
+            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
         }
 
-        .view-toggle {
+        .wp-attachment-header h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .wp-attachment-preview {
+            padding: 1rem;
+            text-align: center;
+            background: #f0f0f1;
+        }
+
+        .wp-attachment-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 4px;
+        }
+
+        .wp-attachment-info {
+            padding: 1rem;
+        }
+
+        .wp-attachment-info .field {
+            margin-bottom: 1rem;
+        }
+
+        .wp-attachment-info label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1d2327;
+            margin-bottom: 0.25rem;
+        }
+
+        .wp-attachment-info input,
+        .wp-attachment-info textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #8c8f94;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .wp-attachment-info .meta {
+            font-size: 0.85rem;
+            color: #646970;
+            margin-bottom: 0.5rem;
+        }
+
+        .wp-attachment-actions {
+            padding: 1rem;
+            border-top: 1px solid #dcdcde;
             display: flex;
             gap: 0.5rem;
         }
 
-        .view-toggle button {
-            padding: 0.6rem 1rem;
-            border: 2px solid #dee2e6;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .view-toggle button.active {
-            background: var(--admin-primary);
-            color: white;
-            border-color: var(--admin-primary);
-        }
-
-        .media-list {
-            display: none;
-        }
-
-        .media-list.active {
-            display: block;
-        }
-
-        .media-list-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .media-list-thumbnail {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .media-list-info {
+        .btn-copy-url {
             flex: 1;
+            background: #2271b1;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .btn-delete-media {
+            background: #d63638;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        /* Empty state */
+        .wp-empty-state {
+            padding: 4rem 2rem;
+            text-align: center;
+            color: #646970;
+        }
+
+        .wp-empty-state i {
+            font-size: 4rem;
+            opacity: 0.3;
+            margin-bottom: 1rem;
+        }
+
+        /* Bulk action bar */
+        .wp-bulk-bar {
+            display: none;
+            background: #2271b1;
+            color: white;
+            padding: 0.75rem 1rem;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .wp-bulk-bar.active {
+            display: flex;
+        }
+
+        .wp-bulk-bar .count {
+            font-weight: 600;
+        }
+
+        .wp-bulk-bar .btn-bulk-delete {
+            background: white;
+            color: #d63638;
+            border: none;
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-left: auto;
+        }
+
+        .wp-bulk-bar .btn-cancel-bulk {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
         }
     </style>
 </head>
@@ -278,6 +485,10 @@
                 <a href="admin-posts.html" class="admin-nav-item">
                     <i class="fas fa-newspaper"></i>
                     <span>Bài Viết</span>
+                </a>
+                <a href="admin-editor.html" class="admin-nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tạo Bài Viết Mới</span>
                 </a>
                 <a href="admin-categories.html" class="admin-nav-item">
                     <i class="fas fa-folder"></i>
@@ -323,102 +534,131 @@
 
         <!-- Main Content -->
         <main class="admin-main">
-            <div class="admin-header">
-                <div>
-                    <h1>Thư Viện Media</h1>
-                    <div class="admin-breadcrumb">
-                        <a href="admin-posts.html">Dashboard</a> / Media
-                    </div>
+            <!-- Header -->
+            <div class="wp-media-header">
+                <h1>Thư viện Media</h1>
+                <button class="btn-add-media" id="btnAddMedia">
+                    <i class="fas fa-plus"></i> Thêm tệp tin Media
+                </button>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="wp-media-toolbar">
+                <div class="wp-view-switch">
+                    <button class="active" id="btnListView" title="Xem danh sách">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button id="btnGridView" title="Xem lưới">
+                        <i class="fas fa-th"></i>
+                    </button>
+                </div>
+
+                <select class="wp-filter-select" id="filterType">
+                    <option value="">Tất cả</option>
+                    <option value="image">Hình ảnh</option>
+                    <option value="video">Video</option>
+                    <option value="document">Tài liệu</option>
+                </select>
+
+                <select class="wp-filter-select" id="filterDate">
+                    <option value="">Tất cả các ngày</option>
+                </select>
+
+                <button class="btn-bulk-select" id="btnBulkSelect">Chọn nhiều</button>
+
+                <div class="wp-search-media">
+                    <label>Tìm tệp media:</label>
+                    <input type="text" id="searchMedia" placeholder="">
                 </div>
             </div>
 
-            <!-- Storage Info -->
-            <div class="storage-info">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                    <strong>Dung lượng lưu trữ</strong>
-                    <span id="storageText">0 / 5 MB</span>
-                </div>
-                <div class="storage-bar">
-                    <div class="storage-bar-fill" id="storageBarFill" style="width: 0%"></div>
-                </div>
-                <div
-                    style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.85rem; color: #6c757d;">
-                    <span id="mediaCount">0 ảnh</span>
-                    <span id="storagePercent">0%</span>
-                </div>
+            <!-- Bulk Action Bar -->
+            <div class="wp-bulk-bar" id="bulkBar">
+                <span class="count"><span id="selectedCount">0</span> mục đã chọn</span>
+                <button class="btn-cancel-bulk" id="btnCancelBulk">Hủy chọn</button>
+                <button class="btn-bulk-delete" id="btnBulkDelete">
+                    <i class="fas fa-trash"></i> Xóa vĩnh viễn
+                </button>
             </div>
 
-            <!-- Upload Area -->
-            <div class="upload-area" id="uploadArea">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <h3>Kéo thả ảnh vào đây hoặc click để chọn</h3>
-                <p>Hỗ trợ: JPG, PNG, GIF, WebP - Tối đa 5MB/ảnh</p>
-                <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
-            </div>
-
-            <!-- Filter Toolbar -->
-            <div class="content-card">
-                <div class="content-card-header">
-                    <h2>Thư Viện Ảnh</h2>
-                    <div class="filter-toolbar">
-                        <div class="search-bar">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="searchMedia" placeholder="Tìm kiếm ảnh...">
-                        </div>
-                        <div class="view-toggle">
-                            <button class="active" id="gridViewBtn" title="Grid View">
-                                <i class="fas fa-th"></i>
-                            </button>
-                            <button id="listViewBtn" title="List View">
-                                <i class="fas fa-list"></i>
-                            </button>
-                        </div>
-                        <button class="btn-danger" id="cleanupBtn" style="margin-left: auto;">
-                            <i class="fas fa-trash-alt"></i> Xóa Ảnh Không Dùng
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Grid View -->
-                <div class="media-grid" id="mediaGrid">
+            <!-- Media Grid Container -->
+            <div class="wp-media-container">
+                <div class="wp-media-grid" id="mediaGrid">
                     <!-- Media items will be loaded here -->
                 </div>
 
-                <!-- List View -->
-                <div class="media-list" id="mediaList">
-                    <!-- Media items in list format -->
+                <div class="wp-empty-state" id="emptyState" style="display: none;">
+                    <i class="fas fa-photo-video"></i>
+                    <h3>Chưa có tệp tin media nào</h3>
+                    <p>Nhấp vào "Thêm tệp tin Media" để tải lên</p>
                 </div>
+            </div>
 
-                <div id="emptyState" style="display: none; padding: 3rem; text-align: center; color: #6c757d;">
-                    <i class="fas fa-images" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                    <p>Chưa có ảnh nào trong thư viện</p>
-                    <p style="font-size: 0.9rem;">Upload ảnh để bắt đầu sử dụng</p>
-                </div>
+            <!-- Pagination Info -->
+            <div style="padding: 1rem; color: #50575e; font-size: 0.9rem;" id="mediaInfo">
+                <span id="totalCount">0</span> mục
             </div>
         </main>
     </div>
 
-    <!-- Media Modal -->
-    <div class="media-modal" id="mediaModal">
-        <div class="media-modal-content">
-            <button class="media-modal-close" id="closeModal">
-                <i class="fas fa-times"></i>
-            </button>
-            <img id="modalImage" class="media-modal-image" src="" alt="">
-            <div class="media-modal-info">
-                <h3 id="modalFilename"></h3>
-                <p><strong>Kích thước:</strong> <span id="modalDimensions"></span></p>
-                <p><strong>Dung lượng:</strong> <span id="modalSize"></span></p>
-                <p><strong>Ngày upload:</strong> <span id="modalDate"></span></p>
-                <div style="margin-top: 1rem; display: flex; gap: 1rem;">
-                    <button class="btn-primary" id="copyUrlBtn">
-                        <i class="fas fa-copy"></i> Copy URL
-                    </button>
-                    <button class="btn-danger" id="deleteFromModalBtn">
-                        <i class="fas fa-trash"></i> Xóa
-                    </button>
-                </div>
+    <!-- Upload Modal -->
+    <div class="wp-upload-modal" id="uploadModal">
+        <div class="wp-upload-content">
+            <div class="wp-upload-header">
+                <h2><i class="fas fa-upload"></i> Thêm tệp tin Media</h2>
+                <button class="wp-upload-close" id="closeUploadModal">&times;</button>
             </div>
+            <div class="wp-upload-body">
+                <div class="wp-upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Kéo thả tệp tin vào đây</h3>
+                    <p>hoặc click để chọn file từ máy tính</p>
+                    <p style="margin-top: 1rem; font-size: 0.8rem;">Hỗ trợ: JPG, PNG, GIF, WebP, PDF - Tối đa 5MB</p>
+                </div>
+                <input type="file" id="fileInput" multiple accept="image/*,.pdf" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Attachment Details Sidebar -->
+    <div class="wp-attachment-details" id="attachmentDetails">
+        <div class="wp-attachment-header">
+            <h3>Chi tiết đính kèm</h3>
+            <button class="wp-upload-close" id="closeDetails">&times;</button>
+        </div>
+        <div class="wp-attachment-preview">
+            <img id="detailImage" src="" alt="">
+        </div>
+        <div class="wp-attachment-info">
+            <div class="meta" id="detailMeta"></div>
+
+            <div class="field">
+                <label for="detailAlt">Văn bản thay thế (Alt)</label>
+                <input type="text" id="detailAlt" placeholder="">
+            </div>
+
+            <div class="field">
+                <label for="detailTitle">Tiêu đề</label>
+                <input type="text" id="detailTitle" placeholder="">
+            </div>
+
+            <div class="field">
+                <label for="detailCaption">Chú thích</label>
+                <textarea id="detailCaption" rows="2"></textarea>
+            </div>
+
+            <div class="field">
+                <label>URL tệp tin</label>
+                <input type="text" id="detailUrl" readonly style="background: #f6f7f7;">
+            </div>
+        </div>
+        <div class="wp-attachment-actions">
+            <button class="btn-copy-url" id="btnCopyUrl">
+                <i class="fas fa-copy"></i> Copy URL
+            </button>
+            <button class="btn-delete-media" id="btnDeleteMedia">
+                <i class="fas fa-trash"></i> Xóa
+            </button>
         </div>
     </div>
 
@@ -427,19 +667,17 @@
     <script src="js/supabase-config.js"></script>
     <script src="js/admin-auth.js"></script>
     <script src="js/admin-media.js"></script>
-    <script src="script.js"></script>
+
     <script>
         // Protect page
         auth.requireAuth('admin.html');
 
-        // Display user info
         const session = auth.getSession();
         if (session) {
             document.getElementById('userName').textContent = session.name;
             document.getElementById('userEmail').textContent = session.email;
         }
 
-        // Logout
         document.getElementById('btnLogout').addEventListener('click', function () {
             if (confirm('Bạn có chắc muốn đăng xuất?')) {
                 auth.logout();
@@ -447,88 +685,244 @@
             }
         });
 
-        let currentMediaId = null;
         let currentView = 'grid';
+        let bulkMode = false;
+        let selectedItems = [];
+        let allMedia = [];
+        let currentMediaId = null;
 
-        // Load media library
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (window.supabaseInitPromise) {
+                await window.supabaseInitPromise;
+            }
+            await loadMedia();
+            populateDateFilter();
+        });
+
+        // Load media
         async function loadMedia() {
-            const media = await mediaManager.getAllMedia();
-            const gridContainer = document.getElementById('mediaGrid');
-            const listContainer = document.getElementById('mediaList');
-            const emptyState = document.getElementById('emptyState');
+            allMedia = await mediaManager.getAllMedia();
+            renderMedia();
+            updateInfo();
+        }
 
-            if (media.length === 0) {
-                gridContainer.innerHTML = '';
-                listContainer.innerHTML = '';
+        // Render media grid
+        function renderMedia() {
+            const container = document.getElementById('mediaGrid');
+            const emptyState = document.getElementById('emptyState');
+            const searchQuery = document.getElementById('searchMedia').value.toLowerCase();
+            const typeFilter = document.getElementById('filterType').value;
+            const dateFilter = document.getElementById('filterDate').value;
+
+            let filtered = [...allMedia];
+
+            // Apply search
+            if (searchQuery) {
+                filtered = filtered.filter(m =>
+                    (m.filename || '').toLowerCase().includes(searchQuery) ||
+                    (m.alt || '').toLowerCase().includes(searchQuery)
+                );
+            }
+
+            // Apply type filter
+            if (typeFilter === 'image') {
+                filtered = filtered.filter(m => m.type?.startsWith('image'));
+            } else if (typeFilter === 'video') {
+                filtered = filtered.filter(m => m.type?.startsWith('video'));
+            } else if (typeFilter === 'document') {
+                filtered = filtered.filter(m => !m.type?.startsWith('image') && !m.type?.startsWith('video'));
+            }
+
+            // Apply date filter
+            if (dateFilter) {
+                filtered = filtered.filter(m => {
+                    const date = new Date(m.uploadDate);
+                    const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                    return monthYear === dateFilter;
+                });
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
                 emptyState.style.display = 'block';
                 return;
             }
 
             emptyState.style.display = 'none';
+            container.innerHTML = filtered.map(m => {
+                const isSelected = selectedItems.includes(m.id);
+                const isImage = m.type?.startsWith('image') || m.url?.match(/\.(jpg|jpeg|png|gif|webp)$/i);
 
-            // Grid view
-            gridContainer.innerHTML = media.map(m => `
-                <div class="media-item" data-id="${m.id}" onclick="selectMedia('${m.id}')">
-                    <img src="${m.url}" alt="${m.alt || m.filename}" class="media-thumbnail">
-                    <div class="media-actions">
-                        <button class="media-action-btn view" onclick="event.stopPropagation(); viewMedia('${m.id}')" title="Xem">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="media-action-btn delete" onclick="event.stopPropagation(); deleteMedia('${m.id}')" title="Xóa">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                    <div class="media-info">
-                        <div class="media-filename" title="${m.filename}">${m.filename}</div>
-                        <div class="media-meta">
-                            <span>${m.width || '?'}x${m.height || '?'}</span>
-                            <span>${mediaManager.formatFileSize(m.size)}</span>
+                return `
+                    <div class="wp-media-item ${isSelected ? 'selected' : ''} ${bulkMode ? 'bulk-mode' : ''}" 
+                         data-id="${m.id}" onclick="handleItemClick('${m.id}', event)">
+                        <div class="check">
+                            ${isSelected ? '<i class="fas fa-check"></i>' : ''}
                         </div>
+                        ${isImage ?
+                        `<img src="${m.url}" alt="${m.alt || m.filename}" loading="lazy">` :
+                        `<div class="file-icon"><i class="fas fa-file"></i></div>`
+                    }
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
 
-            // List view
-            listContainer.innerHTML = media.map(m => `
-                <div class="media-list-item">
-                    <img src="${m.url}" alt="${m.alt || m.filename}" class="media-list-thumbnail">
-                    <div class="media-list-info">
-                        <strong>${m.filename}</strong>
-                        <p style="font-size: 0.85rem; color: #6c757d; margin: 0.5rem 0 0;">
-                            ${m.width || '?'}x${m.height || '?'} • ${mediaManager.formatFileSize(m.size)} • 
-                            ${new Date(m.uploadDate).toLocaleDateString('vi-VN')}
-                        </p>
-                    </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button class="btn-icon edit" onclick="viewMedia('${m.id}')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="btn-icon delete" onclick="deleteMedia('${m.id}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-
-            await updateStorageInfo();
+            document.getElementById('totalCount').textContent = filtered.length;
         }
 
-        // Update storage info
-        async function updateStorageInfo() {
-            const info = await mediaManager.getStorageInfo();
-            document.getElementById('storageText').textContent =
-                `${mediaManager.formatFileSize(info.storageUsed)} / ${mediaManager.formatFileSize(info.storageLimit)}`;
-            document.getElementById('storageBarFill').style.width = Math.min(info.percentUsed, 100) + '%';
-            document.getElementById('mediaCount').textContent = `${info.totalCount} ảnh`;
-            document.getElementById('storagePercent').textContent = Math.round(info.percentUsed) + '%';
+        // Update info
+        function updateInfo() {
+            document.getElementById('totalCount').textContent = allMedia.length;
+        }
 
-            // Warning if near limit
-            if (info.percentUsed > 80) {
-                document.getElementById('storageText').style.color = '#e74c3c';
+        // Populate date filter
+        function populateDateFilter() {
+            const dates = new Set();
+            allMedia.forEach(m => {
+                if (m.uploadDate) {
+                    const date = new Date(m.uploadDate);
+                    const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                    dates.add(monthYear);
+                }
+            });
+
+            const select = document.getElementById('filterDate');
+            select.innerHTML = '<option value="">Tất cả các ngày</option>';
+            Array.from(dates).sort().reverse().forEach(d => {
+                const [year, month] = d.split('-');
+                const monthName = new Date(year, month - 1).toLocaleString('vi-VN', { month: 'long', year: 'numeric' });
+                select.innerHTML += `<option value="${d}">${monthName}</option>`;
+            });
+        }
+
+        // Handle item click
+        function handleItemClick(id, event) {
+            if (bulkMode) {
+                toggleSelection(id);
+            } else {
+                showDetails(id);
             }
         }
 
-        // Upload area interactions
+        // Toggle selection
+        function toggleSelection(id) {
+            const index = selectedItems.indexOf(id);
+            if (index > -1) {
+                selectedItems.splice(index, 1);
+            } else {
+                selectedItems.push(id);
+            }
+            updateBulkBar();
+            renderMedia();
+        }
+
+        // Update bulk bar
+        function updateBulkBar() {
+            const bar = document.getElementById('bulkBar');
+            document.getElementById('selectedCount').textContent = selectedItems.length;
+
+            if (bulkMode && selectedItems.length > 0) {
+                bar.classList.add('active');
+            } else {
+                bar.classList.remove('active');
+            }
+        }
+
+        // Show details sidebar
+        async function showDetails(id) {
+            const media = await mediaManager.getMediaById(id);
+            if (!media) return;
+
+            currentMediaId = id;
+
+            document.getElementById('detailImage').src = media.url;
+            document.getElementById('detailAlt').value = media.alt || '';
+            document.getElementById('detailTitle').value = media.title || media.filename;
+            document.getElementById('detailCaption').value = media.caption || '';
+            document.getElementById('detailUrl').value = media.url;
+
+            const uploadDate = new Date(media.uploadDate).toLocaleDateString('vi-VN');
+            const size = mediaManager.formatFileSize(media.size);
+            const dimensions = media.width && media.height ? `${media.width} x ${media.height}` : 'N/A';
+
+            document.getElementById('detailMeta').innerHTML = `
+                <div><strong>${media.filename}</strong></div>
+                <div>${uploadDate}</div>
+                <div>${size}</div>
+                <div>${dimensions}</div>
+            `;
+
+            document.getElementById('attachmentDetails').classList.add('active');
+        }
+
+        // View toggles
+        document.getElementById('btnGridView').addEventListener('click', function () {
+            currentView = 'grid';
+            this.classList.add('active');
+            document.getElementById('btnListView').classList.remove('active');
+            document.querySelector('.wp-media-grid').style.gridTemplateColumns = 'repeat(auto-fill, minmax(150px, 1fr))';
+        });
+
+        document.getElementById('btnListView').addEventListener('click', function () {
+            currentView = 'list';
+            this.classList.add('active');
+            document.getElementById('btnGridView').classList.remove('active');
+            document.querySelector('.wp-media-grid').style.gridTemplateColumns = 'repeat(auto-fill, minmax(120px, 1fr))';
+        });
+
+        // Bulk select toggle
+        document.getElementById('btnBulkSelect').addEventListener('click', function () {
+            bulkMode = !bulkMode;
+            this.classList.toggle('active', bulkMode);
+            this.textContent = bulkMode ? 'Đang chọn...' : 'Chọn nhiều';
+
+            if (!bulkMode) {
+                selectedItems = [];
+                updateBulkBar();
+            }
+            renderMedia();
+        });
+
+        // Cancel bulk
+        document.getElementById('btnCancelBulk').addEventListener('click', function () {
+            selectedItems = [];
+            updateBulkBar();
+            renderMedia();
+        });
+
+        // Bulk delete
+        document.getElementById('btnBulkDelete').addEventListener('click', async function () {
+            if (selectedItems.length === 0) return;
+            if (!confirm(`Bạn có chắc muốn xóa ${selectedItems.length} mục đã chọn?`)) return;
+
+            for (const id of selectedItems) {
+                await mediaManager.deleteMedia(id);
+            }
+
+            selectedItems = [];
+            updateBulkBar();
+            await loadMedia();
+            alert('Đã xóa thành công!');
+        });
+
+        // Search
+        document.getElementById('searchMedia').addEventListener('input', renderMedia);
+
+        // Filters
+        document.getElementById('filterType').addEventListener('change', renderMedia);
+        document.getElementById('filterDate').addEventListener('change', renderMedia);
+
+        // Upload modal
+        document.getElementById('btnAddMedia').addEventListener('click', function () {
+            document.getElementById('uploadModal').classList.add('active');
+        });
+
+        document.getElementById('closeUploadModal').addEventListener('click', function () {
+            document.getElementById('uploadModal').classList.remove('active');
+        });
+
+        // Upload area
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
 
@@ -551,152 +945,55 @@
 
         fileInput.addEventListener('change', (e) => {
             handleFiles(e.target.files);
-            fileInput.value = ''; // Reset
+            fileInput.value = '';
         });
 
-        // Handle file upload
         async function handleFiles(files) {
             if (files.length === 0) return;
 
-            const btn = document.querySelector('.upload-area h3');
-            const originalText = btn.textContent;
-            btn.textContent = 'Đang upload...';
+            const h3 = uploadArea.querySelector('h3');
+            const originalText = h3.textContent;
 
             let successCount = 0;
             for (let i = 0; i < files.length; i++) {
+                h3.textContent = `Đang tải lên... (${i + 1}/${files.length})`;
                 const result = await mediaManager.uploadMedia(files[i]);
-                if (result.success) {
-                    successCount++;
-                } else {
-                    alert(result.error);
-                }
-                btn.textContent = `Đang upload... (${i + 1}/${files.length})`;
+                if (result.success) successCount++;
             }
 
-            btn.textContent = originalText;
-            loadMedia();
+            h3.textContent = originalText;
+            document.getElementById('uploadModal').classList.remove('active');
+            await loadMedia();
 
             if (successCount > 0) {
-                alert(`Đã upload thành công ${successCount}/${files.length} ảnh`);
+                alert(`Đã tải lên ${successCount}/${files.length} tệp tin`);
             }
         }
 
-        // Select media
-        function selectMedia(id) {
-            document.querySelectorAll('.media-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            event.currentTarget.classList.add('selected');
-            currentMediaId = id;
-        }
-
-        // View media in modal
-        async function viewMedia(id) {
-            const media = await mediaManager.getMediaById(id);
-            if (!media) return;
-
-            document.getElementById('modalImage').src = media.url;
-            document.getElementById('modalFilename').textContent = media.filename;
-            document.getElementById('modalDimensions').textContent = `${media.width || '?'}x${media.height || '?'}px`;
-            document.getElementById('modalSize').textContent = mediaManager.formatFileSize(media.size);
-            document.getElementById('modalDate').textContent = new Date(media.uploadDate).toLocaleString('vi-VN');
-
-            currentMediaId = id;
-            document.getElementById('mediaModal').classList.add('active');
-        }
-
-        // Close modal
-        document.getElementById('closeModal').addEventListener('click', () => {
-            document.getElementById('mediaModal').classList.remove('active');
-        });
-
-        document.getElementById('mediaModal').addEventListener('click', (e) => {
-            if (e.target.id === 'mediaModal') {
-                document.getElementById('mediaModal').classList.remove('active');
-            }
+        // Close details sidebar
+        document.getElementById('closeDetails').addEventListener('click', function () {
+            document.getElementById('attachmentDetails').classList.remove('active');
+            currentMediaId = null;
         });
 
         // Copy URL
-        document.getElementById('copyUrlBtn').addEventListener('click', async () => {
-            if (!currentMediaId) return;
-            const media = await mediaManager.getMediaById(currentMediaId);
-            navigator.clipboard.writeText(media.url).then(() => {
-                alert('Đã copy URL vào clipboard!');
+        document.getElementById('btnCopyUrl').addEventListener('click', function () {
+            const url = document.getElementById('detailUrl').value;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Đã copy URL!');
             });
         });
 
-        // Delete media
-        async function deleteMedia(id) {
-            if (!confirm('Bạn có chắc muốn xóa ảnh này?')) return;
+        // Delete from details
+        document.getElementById('btnDeleteMedia').addEventListener('click', async function () {
+            if (!currentMediaId) return;
+            if (!confirm('Bạn có chắc muốn xóa tệp tin này?')) return;
 
-            const result = await mediaManager.deleteMedia(id);
-            if (result.success) {
-                await loadMedia();
-                document.getElementById('mediaModal').classList.remove('active');
-            } else {
-                if (result.warning) {
-                    if (confirm(result.error + '\nBạn có muốn xóa bắt buộc không?')) {
-                        await mediaManager.forceDeleteMedia(id);
-                        await loadMedia();
-                        document.getElementById('mediaModal').classList.remove('active');
-                    }
-                } else {
-                    alert(result.error);
-                }
-            }
-        }
-
-        document.getElementById('deleteFromModalBtn').addEventListener('click', () => {
-            if (currentMediaId) deleteMedia(currentMediaId);
-        });
-
-        // Cleanup unused
-        document.getElementById('cleanupBtn').addEventListener('click', async () => {
-            const unused = await mediaManager.getUnusedMedia();
-            if (unused.length === 0) {
-                alert('Không có ảnh nào chưa được sử dụng');
-                return;
-            }
-            if (confirm(`Tìm thấy ${unused.length} ảnh chưa dùng. Xóa tất cả?`)) {
-                const result = await mediaManager.cleanupUnused();
-                alert(`Đã xóa ${result.count} ảnh`);
-                await loadMedia();
-            }
-        });
-
-        // Search
-        document.getElementById('searchMedia').addEventListener('input', async (e) => {
-            const query = e.target.value.trim();
-            const media = query ? await mediaManager.searchMedia(query) : await mediaManager.getAllMedia();
-            // Actually loadMedia re-fetches everything. We should probably pass media to loadMedia or separate fetching from rendering.
-            // For simplicity with current structure, if there's a query, we'll need a way for loadMedia to handle it.
-            // Let's just re-fetch for now to stay consistent with Supabase if query happens there.
+            await mediaManager.deleteMedia(currentMediaId);
+            document.getElementById('attachmentDetails').classList.remove('active');
+            currentMediaId = null;
             await loadMedia();
-        });
-
-        // View toggle
-        document.getElementById('gridViewBtn').addEventListener('click', () => {
-            currentView = 'grid';
-            document.getElementById('gridViewBtn').classList.add('active');
-            document.getElementById('listViewBtn').classList.remove('active');
-            document.getElementById('mediaGrid').style.display = 'grid';
-            document.getElementById('mediaList').classList.remove('active');
-        });
-
-        document.getElementById('listViewBtn').addEventListener('click', () => {
-            currentView = 'list';
-            document.getElementById('listViewBtn').classList.add('active');
-            document.getElementById('gridViewBtn').classList.remove('active');
-            document.getElementById('mediaGrid').style.display = 'none';
-            document.getElementById('mediaList').classList.add('active');
-        });
-
-        // Initial load
-        document.addEventListener('DOMContentLoaded', async () => {
-            if (window.supabaseInitPromise) {
-                await window.supabaseInitPromise;
-            }
-            loadMedia();
+            alert('Đã xóa!');
         });
     </script>
 </body>
