@@ -21,6 +21,12 @@
     padding: 2rem;
 }
 
+@media (max-width: 768px) {
+    .admin-body {
+        padding: 1rem;
+    }
+}
+
 /* Login Container */
 .admin-login-container {
     width: 100%;
@@ -386,6 +392,20 @@
     flex: 1;
     margin-left: 280px;
     padding: 2rem;
+    transition: margin 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+    .admin-main {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-main {
+        margin-left: 0;
+        padding: 1rem;
+    }
 }
 
 .admin-header {
@@ -588,9 +608,49 @@
     background: #f8f9fa;
 }
 
-.post-title-cell {
-    font-weight: 600;
-    color: var(--admin-dark);
+/* Responsive Table Wrapper */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+}
+
+.table-responsive .data-table {
+    min-width: 700px;
+    /* Force scroll on small screens */
+}
+
+/* WordPress Style Admin Responsiveness */
+@media (max-width: 768px) {
+    .wp-list-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .wp-form-field {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+    }
+
+    .wp-form-field label {
+        width: 100% !important;
+        flex: none !important;
+    }
+
+    .field-input {
+        width: 100% !important;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+    }
 }
 
 .post-category {
