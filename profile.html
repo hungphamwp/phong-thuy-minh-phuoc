@@ -626,13 +626,15 @@
                                 <i class="fas fa-gift"></i>
                             </div>
                             <div>
-                                <div class="package-name">Gói miễn phí</div>
-                                <div class="package-desc">Tính năng cơ bản</div>
+                                <div class="package-name" id="packageName">Gói miễn phí</div>
+                                <div class="package-desc" id="packageDesc">Tính năng cơ bản</div>
                             </div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 1rem;">
-                            <i class="fas fa-sync-alt" style="color: #999;"></i>
-                            <a href="tim-ngay-tot-premium.html" class="btn-upgrade"
+                            <i class="fas fa-sync-alt" id="refreshPackageBtn"
+                                style="color: #999; cursor: pointer; padding: 5px; transition: color 0.3s;"
+                                title="Cập nhật trạng thái"></i>
+                            <a href="tim-ngay-tot-premium.html" class="btn-upgrade" id="upgradeBtn"
                                 style="text-decoration: none; display: inline-block;">Nâng cấp</a>
                         </div>
                     </div>
@@ -785,6 +787,61 @@
                 if (profileData.birthDay) document.getElementById('birthDay').value = profileData.birthDay;
                 if (profileData.birthHour) document.getElementById('birthHour').value = profileData.birthHour;
                 if (profileData.birthMinute) document.getElementById('birthMinute').value = profileData.birthMinute;
+            }
+
+            // Update package UI initially
+            updatePackageUI();
+        });
+
+        // Update Package UI
+        function updatePackageUI() {
+            const user = userAuth.getSession();
+            const packageName = document.getElementById('packageName');
+            const packageDesc = document.getElementById('packageDesc');
+            const upgradeBtn = document.getElementById('upgradeBtn');
+            const agentTabLink = document.querySelector('[data-tab="agent"]');
+
+            if (!user) return;
+
+            if (user.isPremium || user.packageLevel === 'premium' || user.packageLevel === 'admin') {
+                packageName.textContent = user.packageLevel === 'admin' ? 'Gói Admin' : 'Gói Premium';
+                packageDesc.textContent = 'Toàn bộ tính năng cao cấp';
+                packageName.style.color = '#d4af37'; // Gold color
+                if (upgradeBtn) upgradeBtn.style.display = 'none';
+
+                // Unlock agent tab link visual if needed
+                if (agentTabLink) {
+                    agentTabLink.innerHTML = '<i class="fas fa-users"></i> Đại lý';
+                }
+            } else {
+                packageName.textContent = 'Gói miễn phí';
+                packageDesc.textContent = 'Tính năng cơ bản';
+                packageName.style.color = 'inherit';
+                if (upgradeBtn) upgradeBtn.style.display = 'inline-block';
+            }
+        }
+
+        // Refresh package status
+        document.getElementById('refreshPackageBtn').addEventListener('click', async function () {
+            const btn = this;
+            btn.classList.add('fa-spin');
+            btn.style.color = '#ff6b35';
+
+            try {
+                const result = await userAuth.refreshSession();
+                if (result.success) {
+                    updatePackageUI();
+                    // Optional: show a mini toast or message
+                } else {
+                    console.error('Refresh failed:', result.message);
+                }
+            } catch (error) {
+                console.error('Refresh error:', error);
+            } finally {
+                setTimeout(() => {
+                    btn.classList.remove('fa-spin');
+                    btn.style.color = '#999';
+                }, 1000);
             }
         });
 

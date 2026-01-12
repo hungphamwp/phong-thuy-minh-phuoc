@@ -178,7 +178,9 @@ class UserAuth {
                     id: data.user.id,
                     email: data.user.email,
                     fullName: profile?.full_name || data.user.user_metadata?.full_name || 'User',
-                    isPremium: profile?.role === 'admin', // Demo logic: admin is always premium
+                    role: profile?.role || 'user',
+                    packageLevel: profile?.package_level || 'free',
+                    isPremium: (profile?.role === 'admin' || profile?.package_level === 'premium' || profile?.package_level === 'admin'),
                     loginTime: new Date().toISOString(),
                     type: 'supabase'
                 };
@@ -248,6 +250,38 @@ class UserAuth {
         } catch (e) {
             return [];
         }
+    }
+
+    // Refresh user session data from Supabase
+    async refreshSession() {
+        const session = this.getSession();
+        if (!session || session.type !== 'supabase') return { success: false, message: 'Không có phiên đăng nhập Supabase' };
+
+        if (typeof supabaseClient !== 'undefined' && supabaseClient.isInitialized()) {
+            try {
+                const { data: profile, error } = await supabaseClient.getClient()
+                    .from('users')
+                    .select('full_name, role, package_level')
+                    .eq('id', session.id)
+                    .single();
+
+                if (error) throw error;
+
+                // Update session object
+                session.fullName = profile.full_name || session.fullName;
+                session.role = profile.role || session.role;
+                session.packageLevel = profile.package_level || 'free';
+                session.isPremium = (profile.role === 'admin' || profile.package_level === 'premium' || profile.package_level === 'admin');
+                session.lastRefresh = new Date().toISOString();
+
+                localStorage.setItem(this.SESSION_KEY, JSON.stringify(session));
+                return { success: true, user: session };
+            } catch (err) {
+                console.error('UserAuth: Lỗi khi làm mới session:', err);
+                return { success: false, message: err.message };
+            }
+        }
+        return { success: false, message: 'Supabase chưa kết nối' };
     }
 
     // Upgrade user to premium (for future use)
