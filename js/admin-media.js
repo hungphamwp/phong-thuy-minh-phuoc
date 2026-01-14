@@ -115,8 +115,9 @@ class MediaManager {
                 let userId = null;
                 if (typeof auth !== 'undefined') {
                     const session = auth.getSession();
-                    if (session) userId = session.id;
+                    if (session) userId = session.uid;
                 }
+
 
                 // 1. Upload to Storage
                 const fileExt = file.name.split('.').pop();

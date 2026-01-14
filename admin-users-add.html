@@ -2,6 +2,8 @@
 <html lang="vi">
 
 <head>
+    <!-- Auto Redirect -->
+    <script src="js/redirect.js"></script>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -246,7 +248,7 @@
                     </div>
                     <div class="admin-user-details">
                         <h4 id="currentUserName">Admin</h4>
-                        <p id="currentUserEmail">admin@minhphuoc.com</p>
+                        <p id="currentUserEmail">Tamphuoc.locnguyen.bt@gmail.com</p>
                     </div>
                 </div>
                 <button class="btn-logout" id="btnLogout">
@@ -335,6 +337,13 @@
                                 <label for="sendNotification">Gửi cho người dùng mới một email về tài khoản của
                                     họ</label>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
+                        <label for="newPhone">Số điện thoại</label>
+                        <div class="field-input">
+                            <input type="tel" id="newPhone" placeholder="0123.456.789">
                         </div>
                     </div>
 
@@ -459,6 +468,9 @@
             const firstName = document.getElementById('newFirstName').value.trim();
             const lastName = document.getElementById('newLastName').value.trim();
             const fullName = [lastName, firstName].filter(n => n).join(' ') || username;
+            const website = document.getElementById('newWebsite').value.trim();
+            const phone = document.getElementById('newPhone').value.trim();
+            const password = document.getElementById('newPassword').value;
             const role = document.getElementById('newRole').value;
 
             if (!username || !email) {
@@ -472,6 +484,9 @@
                 full_name: fullName,
                 first_name: firstName,
                 last_name: lastName,
+                website: website,
+                phone: phone,
+                password: password,
                 role: role,
                 is_active: true
             });

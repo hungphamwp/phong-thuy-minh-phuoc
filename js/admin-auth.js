@@ -58,9 +58,32 @@ class AdminAuth {
                     localStorage.setItem(this.SESSION_KEY, JSON.stringify(session));
                     return { success: true, session };
                 } else {
-                    console.log('Supabase login failed:', error?.message);
-                    // Don't return here, fall through to local storage check
-                    // or return error if we want to enforce Supabase
+                    console.log('Supabase auth failed, trying public users table...');
+                    // Try to find the user in the public.users table if they don't have an auth entry
+                    const { data: userProfile, error: profileError } = await supabaseClient.getClient()
+                        .from('users')
+                        .select('*')
+                        .or(`email.eq.${username},username.eq.${username}`)
+                        .eq('password', password)
+                        .eq('is_active', true)
+                        .single();
+
+                    if (!profileError && userProfile) {
+                        console.log('Public user login successful');
+                        const session = {
+                            username: userProfile.username || userProfile.email,
+                            name: userProfile.full_name,
+                            role: userProfile.role,
+                            loginTime: new Date().toISOString(),
+                            token: this.generateToken(),
+                            type: 'db',
+                            uid: userProfile.id
+                        };
+                        localStorage.setItem(this.SESSION_KEY, JSON.stringify(session));
+                        return { success: true, session };
+                    }
+
+                    console.log('Public user login failed:', profileError?.message);
                 }
             } catch (err) {
                 console.error('Supabase login error:', err);

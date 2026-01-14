@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <script src="js/redirect.js"></script>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Không Tìm Thấy Trang - Minh Phước Feng Shui</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .error-section {
+            padding: 100px 20px;
+            text-align: center;
+            background: var(--color-bg);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .error-image-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+            animation: fadeIn 1.5s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .error-code {
+            font-size: 150px;
+            font-weight: 800;
+            color: var(--color-red);
+            opacity: 0.05;
+            line-height: 1;
+            margin-bottom: -80px;
+            letter-spacing: 10px;
+        }
+
+        .error-image {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 4px solid #f9f9f9;
+            z-index: 1;
+        }
+
+        .error-content h1 {
+            font-size: 2.5rem;
+            color: var(--color-red);
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+
+        .error-content p {
+            font-size: 1.2rem;
+            color: var(--color-text-light);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-home {
+            padding: 15px 40px;
+            background: var(--color-red);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(231, 76, 60, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(231, 76, 60, 0.3);
+            background: #c0392b;
+        }
+
+        .btn-outline {
+            padding: 15px 40px;
+            border: 2px solid var(--color-red);
+            color: var(--color-red);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-outline:hover {
+            background: var(--color-red);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 80px;
+            }
+
+            .error-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .error-section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="logo.jpg" alt="Minh Phước Feng Shui" class="logo-img">
+                <div class="logo-text">
+                    <span class="brand-name">Minh Phước</span>
+                    <span class="brand-tagline">Feng Shui</span>
+                </div>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-yin-yang"></i>
+                            <span>Trang Chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gioi-thieu.html" class="nav-link">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Giới Thiệu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lap-la-tu-vi.html" class="nav-link">
+                            <i class="fas fa-star-and-crescent"></i>
+                            <span>Lập Lá Tử Vi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="xem-ngay-tot-xau.html" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Lịch Dụng Sự</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="tin-tuc.html" class="nav-link">
+                            <i class="fas fa-book-open"></i>
+                            <span>Quỹ Khuyến Học</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lien-he.html" class="nav-link">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <span>Liên Hệ</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="error-section">
+            <div class="error-container">
+                <div class="error-image-wrapper">
+                    <div class="error-code">404</div>
+                    <img src="logo.jpg" alt="Minh Phước Feng Shui" class="error-image">
+                </div>
+
+                <div class="error-content">
+                    <h1>Hữu Duyên Vô Phận</h1>
+                    <p>Có vẻ như con đường bạn đang tìm kiếm tạm thời không tồn tại hoặc đã thay đổi theo định mệnh. Hãy
+                        để tâm thanh tịnh và quay về trang chủ.</p>
+
+                    <div class="error-actions">
+                        <a href="index.html" class="btn-home">
+                            <i class="fas fa-home"></i>
+                            Quay Về Trang Chủ
+                        </a>
+                        <a href="lien-he.html" class="btn-outline">
+                            <i class="fas fa-phone-alt"></i>
+                            Hỗ Trợ Tư Vấn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Minh Phước Feng Shui. Bản quyền thuộc về Minh Phước.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

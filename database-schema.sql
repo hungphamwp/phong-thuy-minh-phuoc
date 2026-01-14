@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS users (
     gender TEXT CHECK (gender IN ('male', 'female', 'other')),
     avatar_url TEXT,
     role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('admin', 'user', 'guest')),
+    password TEXT,
     is_active BOOLEAN DEFAULT true,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -390,6 +391,10 @@ CREATE POLICY "Enable insert for all users" ON users
 CREATE POLICY "Users can update own profile" ON users
     FOR UPDATE USING (true) WITH CHECK (true);
 
+CREATE POLICY "Enable delete for users" ON users
+    FOR DELETE USING (true);
+
+
 -- Blog Posts: Public có thể đọc bài published
 CREATE POLICY "Public can read published posts" ON blog_posts
     FOR SELECT USING (status = 'published' OR true);
@@ -433,6 +438,16 @@ CREATE POLICY "Public can read media" ON media_library
 
 CREATE POLICY "Authenticated can upload media" ON media_library
     FOR INSERT WITH CHECK (true);
+
+-- Storage Policies (Run these in Supabase SQL Editor)
+-- 1. Cho phép mọi người xem ảnh (Public Read)
+-- INSERT INTO storage.buckets (id, name, public) VALUES ('media', 'media', true) ON CONFLICT (id) DO NOTHING;
+-- CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'media');
+-- 2. Cho phép người dùng đã đăng nhập upload (Authenticated Upload)
+-- CREATE POLICY "Authenticated Upload" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'media' AND auth.role() = 'authenticated');
+-- 3. Cho phép xoá ảnh
+-- CREATE POLICY "Authenticated Delete" ON storage.objects FOR DELETE USING (bucket_id = 'media' AND auth.role() = 'authenticated');
+
 
 -- Comments
 CREATE POLICY "Public can read approved comments" ON comments
@@ -502,7 +517,7 @@ CREATE POLICY "Admin can manage media_folders" ON media_folders
 
 -- Insert admin user mẫu
 INSERT INTO users (email, full_name, role, phone) VALUES
-    ('admin@minhphuoc.com', 'Quản Trị Viên', 'admin', '0123456789'),
+    ('Tamphuoc.locnguyen.bt@gmail.com', 'Quản Trị Viên', 'admin', '0888.08.1050'),
     ('user@example.com', 'Nguyễn Văn A', 'user', '0987654321')
 ON CONFLICT (email) DO NOTHING;
 
@@ -510,8 +525,8 @@ ON CONFLICT (email) DO NOTHING;
 INSERT INTO settings (setting_key, setting_value, setting_type, description) VALUES
     ('site_name', 'Minh Phước Feng Shui', 'text', 'Tên website'),
     ('site_description', 'Dịch vụ phong thủy, tử vi chuyên nghiệp', 'text', 'Mô tả website'),
-    ('contact_email', 'contact@minhphuoc.com', 'text', 'Email liên hệ'),
-    ('contact_phone', '0123456789', 'text', 'Số điện thoại liên hệ'),
+    ('contact_email', 'Tamphuoc.locnguyen.bt@gmail.com', 'text', 'Email liên hệ'),
+    ('contact_phone', '0888.08.1050', 'text', 'Số điện thoại liên hệ'),
     ('facebook_url', 'https://facebook.com/minhphuocfengshui', 'text', 'Link Facebook'),
     ('enable_consultations', 'true', 'boolean', 'Bật/tắt tính năng tư vấn'),
     ('enable_appointments', 'true', 'boolean', 'Bật/tắt tính năng đặt lịch')

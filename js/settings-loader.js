@@ -12,7 +12,7 @@ class SettingsLoader {
         this.defaults = {
             'site_name': 'Minh Phước Feng Shui',
             'site_description': 'Dịch vụ phong thủy, tử vi chuyên nghiệp',
-            'contact_email': 'contact@minhphuoc.com',
+            'contact_email': 'Tamphuoc.locnguyen.bt@gmail.com',
             'contact_phone': '0888.08.1050',
             'facebook_url': 'https://facebook.com/minhphuocfengshui',
             'zalo_phone': '0888.08.1050',
@@ -161,7 +161,7 @@ class SettingsLoader {
         });
 
         // Update email links
-        const email = this.getSetting('contact_email', 'contact@minhphuoc.com');
+        const email = this.getSetting('contact_email', 'Tamphuoc.locnguyen.bt@gmail.com');
         const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
         emailLinks.forEach(link => {
             link.href = 'mailto:' + email;

@@ -2,6 +2,8 @@
 <html lang="vi">
 
 <head>
+    <!-- Auto Redirect -->
+    <script src="js/redirect.js"></script>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -421,7 +423,7 @@
                     </div>
                     <div class="admin-user-details">
                         <h4 id="currentUserName">Admin</h4>
-                        <p id="currentUserEmail">admin@minhphuoc.com</p>
+                        <p id="currentUserEmail">Tamphuoc.locnguyen.bt@gmail.com</p>
                     </div>
                 </div>
                 <button class="btn-logout" id="btnLogout">
@@ -557,7 +559,22 @@
                     </div>
 
                     <div class="wp-form-field">
+                        <label for="editWebsite">Trang web</label>
+                        <div class="field-input">
+                            <input type="url" id="editWebsite" placeholder="https://">
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
+                        <label for="editPassword">Mật khẩu mới</label>
+                        <div class="field-input">
+                            <input type="password" id="editPassword" placeholder="Nhập để đổi mật khẩu">
+                        </div>
+                    </div>
+
+                    <div class="wp-form-field">
                         <label for="editRole">Vai trò</label>
+
                         <div class="field-input">
                             <select id="editRole">
                                 <option value="user">Thành viên</option>
@@ -798,6 +815,8 @@
             document.getElementById('editFirstName').value = user.first_name || '';
             document.getElementById('editLastName').value = user.last_name || '';
             document.getElementById('editPhone').value = user.phone || '';
+            document.getElementById('editWebsite').value = user.website || '';
+            document.getElementById('editPassword').value = user.password || '';
             document.getElementById('editRole').value = user.role || 'user';
             document.getElementById('editActive').checked = user.is_active !== false;
 
@@ -825,9 +844,12 @@
                 first_name: firstName,
                 last_name: lastName,
                 phone: document.getElementById('editPhone').value.trim(),
+                website: document.getElementById('editWebsite').value.trim(),
+                password: document.getElementById('editPassword').value,
                 role: document.getElementById('editRole').value,
                 is_active: document.getElementById('editActive').checked
             });
+
 
             if (result.success) {
                 alert('Đã cập nhật người dùng!');

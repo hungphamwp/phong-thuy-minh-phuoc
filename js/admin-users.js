@@ -19,7 +19,7 @@ class UserManager {
                     full_name: 'Thầy Minh Phước',
                     first_name: 'Phước',
                     last_name: 'Minh',
-                    email: 'admin@minhphuoc.com',
+                    email: 'Tamphuoc.locnguyen.bt@gmail.com',
                     role: 'admin',
                     avatar_url: '',
                     phone: '0888081050',
@@ -135,11 +135,16 @@ class UserManager {
                 const { data, error } = await client
                     .from('users')
                     .insert([{
+                        username: userData.username,
                         full_name: userData.full_name,
+                        first_name: userData.first_name || '',
+                        last_name: userData.last_name || '',
                         email: userData.email,
                         phone: userData.phone || '',
+                        website: userData.website || '',
                         role: userData.role || 'user',
                         avatar_url: userData.avatar_url || '',
+                        password: userData.password || '',
                         is_active: userData.is_active !== false
                     }])
                     .select()
@@ -184,11 +189,16 @@ class UserManager {
                 const { data, error } = await client
                     .from('users')
                     .update({
+                        username: userData.username,
                         full_name: userData.full_name,
+                        first_name: userData.first_name,
+                        last_name: userData.last_name,
                         email: userData.email,
                         phone: userData.phone,
+                        website: userData.website,
                         role: userData.role,
                         avatar_url: userData.avatar_url,
+                        password: userData.password,
                         is_active: userData.is_active
                     })
                     .eq('id', id)
@@ -202,6 +212,7 @@ class UserManager {
                 return { success: false, message: error.message };
             }
         }
+
 
         // localStorage fallback
         const users = this.getLocalUsers();
