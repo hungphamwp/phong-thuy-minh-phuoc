@@ -526,7 +526,10 @@ INSERT INTO settings (setting_key, setting_value, setting_type, description) VAL
     ('site_name', 'Minh Phước Feng Shui', 'text', 'Tên website'),
     ('site_description', 'Dịch vụ phong thủy, tử vi chuyên nghiệp', 'text', 'Mô tả website'),
     ('contact_email', 'Tamphuoc.locnguyen.bt@gmail.com', 'text', 'Email liên hệ'),
-    ('contact_phone', '0888.08.1050', 'text', 'Số điện thoại liên hệ'),
+    ('contact_phone', '0888.08.1050', 'text', 'Số điện thoại liên hệ chính'),
+    ('contact_phone_2', '0399.693.977', 'text', 'Số điện thoại liên hệ phụ'),
+    ('zalo_phone', '0888.08.1050', 'text', 'Số điện thoại Zalo chính'),
+    ('zalo_phone_2', '0399.693.977', 'text', 'Số điện thoại Zalo phụ'),
     ('facebook_url', 'https://facebook.com/minhphuocfengshui', 'text', 'Link Facebook'),
     ('enable_consultations', 'true', 'boolean', 'Bật/tắt tính năng tư vấn'),
     ('enable_appointments', 'true', 'boolean', 'Bật/tắt tính năng đặt lịch')
