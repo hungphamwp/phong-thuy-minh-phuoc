@@ -148,31 +148,19 @@ class SettingsLoader {
     /**
      * Apply settings to page elements
      * Call this after loadSettings() to update DOM elements with settings values
+     * 
+     * NOTE: Email và số điện thoại đã được hardcode trực tiếp trong HTML
+     * Không cần load từ database để tránh bị ghi đè bởi giá trị cũ trong cache
      */
     applyToPage() {
-        // Update phone number links
-        const phone = this.getSetting('contact_phone', '0888.08.1050');
-        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
-        phoneLinks.forEach(link => {
-            const cleanPhone = phone.replace(/\./g, '');
-            link.href = 'tel:' + cleanPhone;
-            // Update text content if it contains the phone number
-            if (link.textContent.includes('0888') || link.textContent.match(/\d{4}\.\d{2}\.\d{4}/)) {
-                link.textContent = phone;
-            }
-        });
+        // Email và số điện thoại được hardcode trong HTML, không cần update động
+        // - Email: Contact.minhphuocfs@gmail.com
+        // - Phone 1: 0888.08.1050
+        // - Phone 2: 0399.693.977
+        // - Zalo 1: 0888.08.1050
+        // - Zalo 2: 0399.693.977
 
-        // Update email links
-        const email = this.getSetting('contact_email', 'Contact.minhphuocfs@gmail.com');
-        const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
-        emailLinks.forEach(link => {
-            link.href = 'mailto:' + email;
-            if (link.textContent.includes('@')) {
-                link.textContent = email;
-            }
-        });
-
-        console.log('Settings applied to page');
+        console.log('Settings loaded (contact info hardcoded in HTML)');
     }
 }
 
