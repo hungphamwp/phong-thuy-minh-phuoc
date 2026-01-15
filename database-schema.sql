@@ -517,7 +517,7 @@ CREATE POLICY "Admin can manage media_folders" ON media_folders
 
 -- Insert admin user mẫu
 INSERT INTO users (email, full_name, role, phone) VALUES
-    ('Tamphuoc.locnguyen.bt@gmail.com', 'Quản Trị Viên', 'admin', '0888.08.1050'),
+    ('Contact.minhphuocfs@gmail.com', 'Quản Trị Viên', 'admin', '0888.08.1050'),
     ('user@example.com', 'Nguyễn Văn A', 'user', '0987654321')
 ON CONFLICT (email) DO NOTHING;
 
@@ -525,7 +525,7 @@ ON CONFLICT (email) DO NOTHING;
 INSERT INTO settings (setting_key, setting_value, setting_type, description) VALUES
     ('site_name', 'Minh Phước Feng Shui', 'text', 'Tên website'),
     ('site_description', 'Dịch vụ phong thủy, tử vi chuyên nghiệp', 'text', 'Mô tả website'),
-    ('contact_email', 'Tamphuoc.locnguyen.bt@gmail.com', 'text', 'Email liên hệ'),
+    ('contact_email', 'Contact.minhphuocfs@gmail.com', 'text', 'Email liên hệ'),
     ('contact_phone', '0888.08.1050', 'text', 'Số điện thoại liên hệ chính'),
     ('contact_phone_2', '0399.693.977', 'text', 'Số điện thoại liên hệ phụ'),
     ('zalo_phone', '0888.08.1050', 'text', 'Số điện thoại Zalo chính'),

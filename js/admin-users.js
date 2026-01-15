@@ -19,7 +19,7 @@ class UserManager {
                     full_name: 'Thầy Minh Phước',
                     first_name: 'Phước',
                     last_name: 'Minh',
-                    email: 'Tamphuoc.locnguyen.bt@gmail.com',
+                    email: 'Contact.minhphuocfs@gmail.com',
                     role: 'admin',
                     avatar_url: '',
                     phone: '0888081050',

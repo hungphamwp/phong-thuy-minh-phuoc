@@ -80,7 +80,7 @@
         <div class="footer">
             <p><strong>Minh Phước Feng Shui</strong></p>
             <p>Phong Thủy Chuyên Nghiệp - Tử Vi - Xem Ngày</p>
-            <p>📧 Email: Tamphuoc.locnguyen.bt@gmail.com | 📞 Hotline: 0888 081 050</p>
+            <p>📧 Email: Contact.minhphuocfs@gmail.com | 📞 Hotline: 0888 081 050</p>
             <p style="margin-top: 15px; color: #999;">
                 Email này được gửi tự động, vui lòng không trả lời.
             </p>

@@ -151,7 +151,7 @@ Dự án này được phát hành dưới giấy phép [MIT License](LICENSE)
 ## 📞 Liên Hệ
 
 **Minh Phước Feng Shui**
-- 📧 Email: Tamphuoc.locnguyen.bt@gmail.com
+- 📧 Email: Contact.minhphuocfs@gmail.com
 - 📱 Hotline: 0123 456 789
 - 🌐 Website: [minhphuoc.com](https://minhphuoc.com)
 - 📍 Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM
